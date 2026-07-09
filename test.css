@@ -8,18 +8,4 @@
 
 /* live.css rules: (none yet) */
 
-/* --- EXPERIMENT: pipeline test banner --- */
-html.cc-on body::before {
-  content: "✅ chabad-custom TEST — the pipeline works! (only you can see this)";
-  display: block;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 999999;
-  background: #6d28d9;
-  color: #ffffff;
-  text-align: center;
-  padding: 12px 8px;
-  font: bold 15px/1.3 Arial, sans-serif;
-}
+/* -- nothing being tested right now -- */
