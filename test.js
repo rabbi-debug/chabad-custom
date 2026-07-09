@@ -11,9 +11,6 @@ var CC_ENABLED = true;
   if (!CC_ENABLED) return;
 
   var PAGE_TYPES = {
-    "6409680": "form",
-    "7133250": "form",
-    "6735906": "form",
     "6072929": "info",
     "6528138": "info"
   };
@@ -21,6 +18,7 @@ var CC_ENABLED = true;
   var m = location.pathname.match(/\/aid\/(\d+)\//);
   var aid = m ? m[1] : null;
   var type = (aid && PAGE_TYPES[aid]) || null;
+  if (!type && /(^|\s)form(\s|$)/.test(document.body.className)) type = "form";
   if (type) document.documentElement.className += " cc-type-" + type;
 
   try { console.log("[chabad-custom] test.js loaded (PREVIEW MODE)", { aid: aid, type: type }); } catch (e) {}

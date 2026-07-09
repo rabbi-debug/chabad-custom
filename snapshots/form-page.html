@@ -1,0 +1,173 @@
+<!--
+  Snapshot: Friday Nights Summer Shabbat (aid 6735906) - FORM PAGE template
+  Captured 2026-07-09 from view-source. Trimmed for reference use:
+  - country <option> list condensed
+  - form-builder JSON config script summarized
+  - nav submenu internals condensed (same structure as info-page snapshot)
+  All class names, IDs, and structural elements preserved.
+
+  KEY FACTS:
+  - Body classes on FORM pages:  lang_en dir_ltr cco_body form secure sites-article
+    (the "form" class = auto-detection hook; info pages lack it)
+  - Form theme: Nova (formCss2.css + themes/nova.css)
+  - Both chabad-custom loader snippets confirmed installed (end of <head>, end of <body>)
+
+  SELECTOR CHEAT SHEET (form pages):
+    Page title:        h1.article-header__title
+    Breadcrumbs:       .breadcrumbs > a.breadcrumbs__crumb
+    Form wrapper:      #formContainer  >  form.userform-form  >  .form-all
+    Rows:              ul.form-section > li.form-line (ids like #id_5)
+    Section headers:   .form-header-group > h2.form-header
+    Labels:            .form-label-left > label
+    Required star:     span.form-required
+    Text inputs:       input.form-textbox   (email: #input_6, phone: #input_8_full)
+    Checkboxes:        span.form-checkbox-item, input.form-checkbox
+    Textarea:          textarea.form-textarea
+    Total display:     #total_amount
+    Payment table:     table.form-address-table (credit card rows: tr.credit_card)
+    Submit button:     button.form-submit-button (inside .form-buttons-wrapper)
+    Embedded image:    img.form-image
+    Rich text blocks:  .form-html
+    TLS notice:        div.center.small (below form)
+    Footer:            #footer .footer_container, social: .cs-f-social-icons
+  NOTE: an inline <style id="GenFormStyles"> sets .form-label widths (300px) with
+  !important - overriding label width requires equal specificity + !important.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- meta tags: og:*, viewport, keywords; scope-aids: 5618918-5618926-7134056-6735906 -->
+<link rel="canonical" href="https://www.chabadwhiteplains.com/templates/articlecco_cdo/aid/6735906/jewish/Friday-Nights-Summer-Shabbat.htm" />
+<link rel="Stylesheet" href="/css/fonts/font-awesome/font-awesome-5.css" id="kfont-awesome" type="text/css"/>
+<link rel="Stylesheet" href="/css/DefaultGrid.css" id="kgrid" type="text/css"/>
+<link rel="Stylesheet" href="/css/Elements.css" id="k6" type="text/css"/>
+<link rel="Stylesheet" href="/css/vendor/ds/tokens/sites.css" id="ksites-ds-css" type="text/css"/>
+<link rel="Stylesheet" href="/css/new/main.css" id="k7" type="text/css"/>
+<link rel="Stylesheet" href="/css/global.css" id="k3" type="text/css"/>
+<link rel="Stylesheet" href="/css/cco/home/widget-styles.css" id="k6" type="text/css"/>
+<link rel="Stylesheet" href="/css/sites6/blue-theme.css" id="k" type="text/css"/>
+<link rel="Stylesheet" href="/css/old/global.css" id="k2898" type="text/css"/>
+<link rel="Stylesheet" href="/css/cco/templates/forms/formCss2.css" id="kFormCss" type="text/css"/>
+<link rel="Stylesheet" href="/css/cco/templates/forms/themes/nova.css" id="kNova" type="text/css"/>
+<link rel="Stylesheet" href="/css/bootstrap/grid.css" id="kbootstrap4-grid" type="text/css"/>
+<title>Friday Nights Summer Shabbat - Chabad of White Plains</title>
+<!-- dataLayer/GTM + StatCounter scripts (omitted) -->
+<!-- chabad-custom HEADER loader snippet confirmed here -->
+</head>
+<body class="lang_en dir_ltr cco_body form secure sites-article">
+
+<div id="PrintCreditHeader" class="show_for_print">Printed from<b>ChabadWhitePlains.com</b></div>
+<div id="header">
+  <div class="wrapper header-wrapper">
+    <div id="feedback_bar" class="hide_for_print no_outline"><div class="wrapper"></div></div>
+    <!-- header_container: top bar links (Ask the Rabbi / Subscribe / Contact | Home / About / Sign In),
+         branding-search (logo, a.site_title, search form #MainSearchForm),
+         mobile menu button.cs-mobile-menu-open,
+         nav .site-nav-wrapper > #co_menu_container (table.main_menu_container):
+           menus: About(6072929), Community&Synagogue(7134056), Youth&Family(6309094),
+                  Visitors(7127259), On Campus(7121994), Donate
+         - full markup preserved in snapshots/info-page-partial.html -->
+    <div class="mobile-menu-bottom-links">
+      <a href="/6072929" class="site-menu-general__link">About</a>
+      <a href="/search">Search</a>
+      <a href="/article.asp?aid=6449033">Contact</a>
+    </div>
+  </div>
+</div>
+<div id="content">
+  <div id="BodyContainer" class="wrapper">
+    <div class="body_wrapper  no-hero-image clearfix">
+      <div class="co_content_container clearfix local_content" id="co_content_container">
+        <div class="clearfix">
+          <div class="clearfix bh mobile-only align_right">ב"ה</div>
+          <div class="master-content-wrapper g960">
+            <header class="article-header cf ">
+              <!-- BreadcrumbList JSON-LD (omitted) -->
+              <div class="breadcrumbs breadcrumbs hide_for_print" data-list-name="breadcrumbs">
+                <a class="breadcrumbs__crumb" href='/templates/articlecco_cdo/aid/7134056/jewish/Community-Synagogue.htm' data-aid="7134056">Community & Synagogue</a>
+              </div>
+              <h1 class="article-header__title js-article-title js-page-title">Friday Nights Summer Shabbat</h1>
+              <div></div>
+            </header>
+          </div>
+          <div class="body_wrapper clearfix co_body">
+            <div class="g960" id="co_body_container">
+              <div id="ContentBody">
+                <div class="content-area-parent no_margin">
+                  <div id="cco_body">
+                    <div class="content g960 no_margin no_overflow" id="co_content_container">
+                      <article class="content js-content">
+                        <div id="formContainer">
+                          <!-- formJson config script (form builder JSON: fields q5 fullName, q6 email,
+                               q8 phone, q16 attendees, q23 sponsorship checkboxes w/ pricing 36|54,
+                               q21 honor sponsorship 500, q24 textarea, q14 total, q9 payment,
+                               q7 optin, q2 submit; theme nova; conditions show/hide payment) -->
+                          <!-- inline <style id="GenFormStyles">: .form-label{width:300px !important}
+                               .form-line{padding:12px 0} .form-all{font-size:12px} + mobile breakpoint 750px -->
+<form class="userform-form" action="" method="post" name="form_6735906" id="6735906" accept-charset="utf-8"><input type="hidden" name="formID" value="6735906" /><div class="form-all dir_ltr" dir="ltr"><ul class="form-section">
+<li class="form-line" id="id_1"><div id="cid_1" class="form-input-wide"> <div style="text-align:center;"><img alt="" class="form-image" border="0" src="https://w2.chabad.org/media/images/1376/Ncdu13768867.png" height="558.75" width="745" /></div> </div></li>
+<li class="form-line" id="id_4"><div id="cid_4" class="form-input-wide"> <div id="text_4" class="form-html"><p style="text-align: center;">A summer night designed for community, connection, and great wine.</p>
+<p style="text-align: center;">Elevate your weekend at the Friday Night Summer Shabbat series. We are bringing adults of all generations together around one table to welcome the weekend with intention. Enjoy a beautifully prepared sit-down dinner, excellent wine, and a vibrant social atmosphere built for making real connections.</p>
+<p style="text-align: center;">Event Details<br />Dates: Friday, July 10 &amp; Friday, August 7</p>
+<p style="text-align: center;">Time: 7:30 PM</p>
+<p style="text-align: center;">Location: Private (Disclosed upon registration)</p>
+</div> </div></li>
+<li id="cid_17" class="form-input-wide"> <div class="form-header-group"><h2 id="header_17" class="form-header">1. Your Information</h2></div> </li>
+<li class="form-line" id="id_5"><div class="form-label-left" id="label_5"><label for="input_5"> Full Name<span class="form-required">*</span> </label><label class="label-message" for="input_5"> </label></div><div id="cid_5" class="form-input"> <span class="form-sub-label-container"><input class="form-textbox validate[required]" type="text" size="10" name="q5_fullName[first]" id="first_5" autocomplete="given-name" />  <label class="form-sub-label" for="first_5" id="sublabel_first">First Name</label></span><span class="form-sub-label-container"><input class="form-textbox validate[required]" type="text" size="15" name="q5_fullName[last]" id="last_5" autocomplete="family-name" />  <label class="form-sub-label" for="last_5" id="sublabel_last">Last Name</label></span> </div></li>
+<li class="form-line" id="id_6"><div class="form-label-left" id="label_6"><label for="input_6"> E-mail<span class="form-required">*</span> </label><label class="label-message" for="input_6"> </label></div><div id="cid_6" class="form-input"> <input type="email" class=" form-textbox validate[required, Email]" id="input_6" name="q6_email" size="30" value="" autocomplete="email" /> </div></li>
+<li class="form-line" id="id_8"><div class="form-label-left" id="label_8"><label for="input_8"> Phone Number<span class="form-required">*</span> </label><label class="label-message" for="input_8"> </label></div><div id="cid_8" class="form-input"> <div class="dir_ltr"><span class="form-sub-label-container"><input data-type="mask-number" class="mask-phone-number form-textbox validate[required]" type="tel" name="q8_phoneNumber[full]" id="input_8_full" autocomplete="tel" />  <label class="form-sub-label" for="input_8_full"><span> </span></label></span></div> </div></li>
+<li id="cid_18" class="form-input-wide"> <div class="form-header-group"><h2 id="header_18" class="form-header">2. Reservation</h2></div> </li>
+<li class="form-line" id="id_16"><div class="form-label-left" id="label_16"><label for="input_16"> Number of Attendees<span class="form-required">*</span> </label><label class="label-message" for="input_16"> </label></div><div id="cid_16" class="form-input"> <input type="number" class="form-number-input  form-textbox validate[required]" id="input_16" name="q16_number" style="width:60px" size="5" value="" data-type="input-number" autocomplete="nope" min="0" data-numbermin="0" /> </div></li>
+<li id="cid_19" class="form-input-wide"> <div class="form-header-group"><h2 id="header_19" class="form-header">3. Optional Donation</h2></div> </li>
+<li class="form-line" id="id_20"><div id="cid_20" class="form-input-wide"> <div id="text_20" class="form-html"><p>Please consider sponsorship to make meaningful community gatherings like this and others possible. Your generosity makes these programs possible.<br /><br /><strong>Suggested Donation:  $36 per adult | $54 per family</strong></p></div> </div></li>
+<li class="form-line" id="id_23"><div class="form-label-left" id="label_23"><label for="input_23"> Adult or Couple Sponsorship </label><label class="label-message" for="input_23"> </label></div><div id="cid_23" class="form-input"> <div class="form-single-column"><span class="form-checkbox-item clear-left"><input type="checkbox" class="form-checkbox" id="input_23_0" name="q23_input23[]" value="Adult sponsorship $36" /><label id="label_input_23_0" for="input_23_0"><span>Adult sponsorship $36</span></label></span><span class="clearfix"></span><span class="form-checkbox-item clear-left"><input type="checkbox" class="form-checkbox" id="input_23_1" name="q23_input23[]" value="Couple Sponsorship $54" /><label id="label_input_23_1" for="input_23_1"><span>Couple Sponsorship $54</span></label></span><span class="clearfix"></span><span class="form-checkbox-item clear-left"><input type="checkbox" class="form-checkbox-other form-checkbox validate[other]" name="q23_input23[other]" id="other_23" value="" /><span><input type="number" min="1" class="form-checkbox-other-input form-textbox undefined" name="q23_input23[other][text]" data-otherhint="Other" size="15" id="input_23" disabled="disabled" /></span><br /></span></div> </div></li>
+<li class="form-line" id="id_21"><div class="form-label-left" id="label_21"><label for="input_21"> I would like to Sponsor Summer Shabbat Event in honor of a loved one at $360 </label><label class="label-message" for="input_21"> </label></div><div id="cid_21" class="form-input"> <div class="form-single-column"><span class="form-checkbox-item clear-left"><input type="checkbox" class="form-checkbox" id="input_21_0" name="q21_input21[]" value="Yes!" /><label id="label_input_21_0" for="input_21_0"><span>Yes!</span></label></span><span class="clearfix"></span></div> </div></li>
+<li class="form-line" id="id_24"><div class="form-label-left" id="label_24"><label for="input_24"> In Honor of </label><label class="label-message" for="input_24"> The dedication will be announced during the event</label></div><div id="cid_24" class="form-input"> <textarea id="input_24" class="form-textarea" name="q24_input24" cols="40" rows="5"></textarea> </div></li>
+<li class="form-line" id="id_14"><div class="form-label-left" id="label_14"><label for="input_14"> Total </label></div><div id="cid_14" class="form-input"> <div id="total_amount">$0.00 </div> </div></li>
+<li class="form-line" id="id_9"><div class="form-label-left" id="label_9"><label for="input_9"> Payment </label><label class="label-message" for="input_9"> </label></div><div id="cid_9" class="form-input"> <table summary="" class="form-address-table" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td colspan="2" class="form-payment-methods form-multiple-column"></td></tr><tr class="credit_card "><th colspan="2">Credit Card</th></tr><tr class="credit_card "><td colspan="2" style="padding:0"><table cellpadding="0" cellspacing="0"><tbody><tr><td colspan="2"><span class="form-sub-label-container">  <label class="form-sub-label">We accept Visa, MasterCard, American Express</label></span><div class="cc-icons"><div class="cc-icon visa-icon"></div><div class="cc-icon mastercard-icon"></div><div class="cc-icon amex-icon"></div></div><input type="hidden" name="q9_payment[cc_type]" id="input_9_cc_type" value="" /></td></tr><tr><td><div class="cc-field-wrapper"><span class="form-sub-label-container"><input class="form-textbox form-creditcard js-cc-number validate[visible, creditcard]" type="text" name="q9_payment[cc_number]" id="input_9_cc_number" autocomplete="cc-number" size="20" />  <label class="form-sub-label" for="input_9_cc_number" id="sublabel_cc_number">Credit Card Number</label></span></div></td><td class="cc_ccv "><span class="form-sub-label-container"><input class="form-textbox validate[visible]" type="text" name="q9_payment[cc_ccv]" id="input_9_cc_ccv" autocomplete="cc-csc" size="6" />  <label class="form-sub-label" for="input_9_cc_ccv" id="sublabel_cc_ccv">Security Code</label></span></td></tr><tr><td colspan="2" class="cc_name_on_card "><span class="form-sub-label-container"><input class="form-textbox validate[visible]" type="text" name="q9_payment[cc_nameOnCard]" id="input_9_cc_nameOnCard" autocomplete="cc-name" size="33" />  <label class="form-sub-label" for="input_9_cc_nameOnCard" id="sublabel_cc_nameOnCard">Name on Card</label></span></td></tr><tr class="credit_card "><td colspan=""><span class="form-sub-label-container"><select class="form-textbox validate[visible]" name="q9_payment[cc_exp_month]" id="input_9_cc_exp_month" autocomplete="cc-exp-month"><!-- month options 1-12 --></select>  <label class="form-sub-label" for="input_9_cc_exp_month" id="sublabel_cc_exp_month">Expiration Month</label></span></td><td><span class="form-sub-label-container"><select class="form-textbox validate[visible]" name="q9_payment[cc_exp_year]" id="input_9_cc_exp_year" autocomplete="cc-exp-year"><!-- year options 2026-2035 --></select>  <label class="form-sub-label" for="input_9_cc_exp_year" id="sublabel_cc_exp_year">Expiration Year</label></span></td></tr></tbody></table></td></tr><tr class="billing_address "><th colspan="2">Billing Address</th></tr><tr class="billing_address "><td colspan="2"><span class="form-sub-label-container"><input class="form-textbox form-address-line" type="text" name="q9_payment[addr_line1]" id="input_9_addr_line1" autocomplete="billing address-line1" />  <label class="form-sub-label" for="input_9_addr_line1" id="sublabel_9_addr_line1">Street Address</label></span></td></tr><tr class="billing_address "><td width="50%"><span class="form-sub-label-container"><input class="form-textbox form-address-city" type="text" name="q9_payment[city]" id="input_9_city" autocomplete="billing address-level2" />  <label class="form-sub-label" for="input_9_city" id="sublabel_9_city">City</label></span></td><td><span class="form-sub-label-container"><input class="form-textbox form-address-state" type="text" name="q9_payment[state]" id="input_9_state" autocomplete="billing address-level1" />  <label class="form-sub-label" for="input_9_state" id="sublabel_9_state">State / Province</label></span></td></tr><tr class="billing_address "><td width="50%"><span class="form-sub-label-container"><input class="form-textbox form-address-postal" type="text" name="q9_payment[postal]" id="input_9_postal" size="10" autocomplete="billing postal-code" />  <label class="form-sub-label" for="input_9_postal" id="sublabel_9_postal">Postal / Zip Code</label></span></td><td><span class="form-sub-label-container"><select class="form-dropdown form-address-country" name="q9_payment[country]" id="input_9_country" autocomplete="billing country-name"><option value="" selected="selected">Please Select</option><option value="United States">United States</option><!-- ~190 more country options condensed --></select>  <label class="form-sub-label" for="input_9_country" id="sublabel_9_country">Country</label></span></td></tr></tbody></table> </div></li>
+<li class="form-line" id="id_7"><div class="form-label-left form-label-hidden" id="label_7"></div><div id="cid_7" class="form-input"> <div class="form-single-column form-checkbox-item"><input name="optin" value="true" type="checkbox" checked="checked" class="form-checkbox" id="input_7" /><label id="label_input_7" for="input_7">I would like to receive news and updates by email</label></div> </div></li>
+<li class="form-line" id="id_2"><div id="cid_2" class="form-input-wide"> <div style="text-align: center; text-indent:306px;" class="form-buttons-wrapper button-align-auto"><button id="input_2" type="submit" class="form-submit-button  form-submit-button-none;">Submit</button></div> </div></li>
+<li style="display:none">Should be Empty: <input type="text" name="website" value="" /></li>
+</ul></div><input type="hidden" id="simple_spc" name="simple_spc" value="6735906" /><!-- recaptcha inputs --></form></div>
+<div class="center small"><img valign="absbottom" src="https://w2.chabad.org/images/global/icons/lock.gif" width="16" height="16" alt="Secure"> This page uses TLS encryption to keep your data secure.</div>
+<div class="break_floats"></div>
+<div class="content-footer"></div>
+                      </article>
+                    </div>
+                  </div>
+                </div>
+                <div class="break_floats"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <div class="wrapper body_container">
+    <div class="g960 footer_family_text bottom_padding">
+      <div class="footer_container footer_text copyright_text">
+        <div class="bottom_padding clear_float">
+          <img class="footer_hr" src="https://w2.chabad.org/images/global/spacer.gif" vspace="12" width="100%" height="1" /><br />
+          <div class="footer_inner_container clearfix">
+            <div class="footer3"><b>White Plains, NY - 914-998-6724</b></div>
+            <img src="https://w2.chabad.org/images/global/spacer.gif" width="1" height="6" border="0" /><br />
+            Powered by <a href="https://www.chabad.org/" target="_new" class="">Chabad.org</a> &copy; 1993-2026 <a href="/4026210" target="_blank" class="privacy-link">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="cs-f-social-icons">
+        <a href="https://www.facebook.com/jewishwhiteplains" class="fa fa-facebook facebook_homepage" title="Facebook"></a>
+        <a href="https://wa.me/19149986724" class="fa fa-whatsapp whatsapp_homepage" title="Whatsapp"></a>
+        <a href="https://www.instagram.com/jewishwhiteplains" class="fa fa-instagram instagram_homepage" title="Instagram"></a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- global script bundle: jquery, CoLib, sites6.js, userform.js, FormDecoder.js, etc. -->
+<!-- Co.Settings: ArticleId 6735906, SectionId 7134056, SiteId 11728 -->
+<!-- chabad-custom FOOTER loader snippet confirmed here -->
+</body>
+</html>

@@ -13,11 +13,8 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
     return;
   }
 
-  /* ---- Page registry: aid number -> page type ---- */
+  /* ---- Page registry: aid number -> page type (manual overrides) ---- */
   var PAGE_TYPES = {
-    "6409680": "form", /* Young Adults */
-    "7133250": "form", /* Hospital Visitation Request */
-    "6735906": "form", /* Friday Nights Summer Shabbat */
     "6072929": "info", /* About */
     "6528138": "info"  /* Kosher Explained */
   };
@@ -26,6 +23,11 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
   var m = location.pathname.match(/\/aid\/(\d+)\//);
   var aid = m ? m[1] : null;
   var type = (aid && PAGE_TYPES[aid]) || null;
+
+  /* Auto-detect form pages: Chabad One puts a "form" class on <body>
+     of every form page, so new forms are recognized automatically. */
+  if (!type && /(^|\s)form(\s|$)/.test(document.body.className)) type = "form";
+
   if (type) document.documentElement.className += " cc-type-" + type;
 
   /* Proof-of-life message (visible in the browser console) */
