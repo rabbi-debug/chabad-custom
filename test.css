@@ -62,6 +62,11 @@
   padding-bottom: 8px;
 }
 
+/* The name + phone block: no padding of its own */
+#footer .footer3 {
+  padding: 0 !important;
+}
+
 /* Line 1: the name — font copied from the site header by test.js;
    tracking echoes the phone number for consistency */
 #footer .cc-foot-place {
