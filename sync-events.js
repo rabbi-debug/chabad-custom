@@ -29,11 +29,12 @@ async function syncEvents() {
     }
   });
   
+  if (!response.ok) {
+    throw new Error(`Failed to fetch calendar: ${response.status} ${response.statusText}`);
+  }
+  
   const icsData = await response.text();
   console.log(`Received ${icsData.length} characters of calendar data.`);
-  console.log("--- START SERVER RESPONSE ---");
-  console.log(icsData);
-  console.log("--- END SERVER RESPONSE ---");
   
   // 3. Parse the iCal data
   const webEvents = await ical.async.parseICS(icsData);
