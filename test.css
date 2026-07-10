@@ -84,7 +84,7 @@
 
 /* Line 2: the phone number, soft gold, tappable */
 #footer .cc-foot-phone {
-  margin: 3px 0 8px;
+  margin: 0 !important;
 }
 #footer .cc-foot-phone a {
   font-size: 14px;
