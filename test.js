@@ -49,7 +49,6 @@ var CC_ENABLED = true;
       }
     }
   }, 100);
-}, 100);
 
   /* --- 2) Dynamic Upcoming Event Widget --- */
   (function() {
