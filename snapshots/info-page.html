@@ -1,0 +1,192 @@
+<!--
+  Snapshot: About (aid 6072929) - INFO/ARTICLE PAGE template - COMPLETE
+  Captured 2026-07-09 from view-source. Trimmed for reference use:
+  - analytics scripts summarized, nav submenu internals condensed
+  All class names, IDs, and structural elements preserved.
+
+  KEY FACTS:
+  - Body classes on INFO pages:  lang_en dir_ltr cco_body sites-article  (NO "form" class)
+  - Both chabad-custom loader snippets confirmed installed (end of <head>, end of <body>)
+
+  SELECTOR CHEAT SHEET (info/article pages):
+    Page title:         h1.article-header__title
+    Article wrapper:    article.content.js-content (schema.org/Article)
+    Article body:       .co_body.article-body   <- main content styling target
+      (lives inside div[itemprop="articleBody"] > co:body custom element;
+       target .article-body, do not try to select "co:body" in CSS)
+    Body text:          .article-body p    Bold leads: .article-body p strong
+    Links:              .article-body a    Images: .article-body img
+    Header area:        header.article-header  (breadcrumbs only on some pages)
+    Hebrew B"H mark:    .bh.mobile-only
+    Footer:             #footer .footer_container ; .footer3 (address line) ;
+                        social icons: .cs-f-social-icons a.fa
+    Top bar:            .cco_topbar_link (ask_the_rabbi_link / subscribe_link /
+                        contact_link / home_link / about_link), #mychabad_login_bar
+    Branding:           .site-logo-wrapper img ; a.site_title
+    Search:             #MainSearchForm input.co_search
+    Nav:                #co_menu_container td.co_menu_item ; a.parent ;
+                        submenu a.item / a.child_item
+    Mobile menu button: button.cs-mobile-menu-open
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- meta: og:*, viewport, keywords; scope-aids: 5618918-5618926-6072929 -->
+<link rel="canonical" href="https://www.chabadwhiteplains.com/templates/articlecco_cdo/aid/6072929/jewish/About.htm" />
+<link rel="Stylesheet" href="/css/fonts/font-awesome/font-awesome-5.css" id="kfont-awesome" type="text/css"/>
+<link rel="Stylesheet" href="/css/DefaultGrid.css" id="kgrid" type="text/css"/>
+<link rel="Stylesheet" href="/css/Elements.css" id="k6" type="text/css"/>
+<link rel="Stylesheet" href="/css/vendor/ds/tokens/sites.css" id="ksites-ds-css" type="text/css"/>
+<link rel="Stylesheet" href="/css/new/main.css" id="k7" type="text/css"/>
+<link rel="Stylesheet" href="/css/global.css" id="k3" type="text/css"/>
+<link rel="Stylesheet" href="/css/cco/home/widget-styles.css" id="k6" type="text/css"/>
+<link rel="Stylesheet" href="/css/sites6/blue-theme.css" id="k" type="text/css"/>
+<link rel="Stylesheet" href="/css/old/global.css" id="k2898" type="text/css"/>
+<link rel="Stylesheet" href="/css/bootstrap/grid.css" id="kbootstrap4-grid" type="text/css"/>
+<title>About - Chabad of White Plains</title>
+<!-- dataLayer/GTM + StatCounter scripts (omitted) -->
+<!-- chabad-custom HEADER loader snippet confirmed here -->
+</head>
+<body class="lang_en dir_ltr cco_body sites-article">
+
+<div id="PrintCreditHeader" class="show_for_print">Printed from<b>ChabadWhitePlains.com</b></div>
+<div id="header">
+  <div class="wrapper header-wrapper">
+    <div id="feedback_bar" class="hide_for_print no_outline"><div class="wrapper"></div></div>
+    <div id="header_container" class="header_container">
+      <div class="clearfix links">
+        <img src="https://w2.chabad.org/images/global/spacer.gif" width="15" height="8" class="baruch_hashem" />
+        <div class="float_right">
+          <div class="topBarLink cco_topbar_link ask_the_rabbi_link"><a href="/asktherabbi/default_cdo/jewish/Ask-the-Rabbi.htm">Ask the Rabbi</a></div>
+          <div id="HeaderSubscribe" class="top_bar_item topBarLink cco_topbar_link subscribe_link">Subscribe
+            <div id="HeaderSubscribeContainer" class="topBarLayer" style="display:none;width:295px;">
+              <!-- subscribe dropdown form: .co_form_container, inputs .co_global_input
+                   (#Fname #Lname #SubscribeEmail), submit .co_global_submit button#CoButton -->
+            </div>
+          </div>
+          <div class="topBarLink cco_topbar_link contact_link"><a href="/article.asp?aid=6449033">Contact</a></div>
+        </div>
+        <div class="float_left">
+          <div class="topBarLink cco_topbar_link home_link"><a href="/">Home</a></div>
+          <div class="topBarLink cco_topbar_link about_link"><a href="/6072929">About</a></div>
+          <div class="topBarLink mychabad_login_bar" id="mychabad_login_bar">
+            <a href="/tools/login/default.asp?aid=6072929&amp;jewish=About.htm" class="login_link" id="login_link">Sign In</a>
+          </div>
+        </div>
+      </div>
+      <div class="break_floats"></div>
+    </div>
+    <div class="clearfix branding-search">
+      <div id="header_branding" class="no_outline  logo">
+        <div class="g260 no_margin cco_search_header float_right">
+          <div class="co_search_form margin05">
+            <form name="MainSearchForm" id="MainSearchForm" method="get" action="/search/results.asp" class="clearfix">
+              <div class="co_global_submit"><button type="submit" class="button" value=" "><span> </span></button></div>
+              <div class="co_global_input_container clearfix">
+                <input id="topAreaTopSearch_search" placeholder="Search" class="co_global_input co_search js-search-field active js-mirrored-input" name="searchWord" type="text" />
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="float_left site-logo-wrapper"><a href="/"><img src="https://w2.chabad.org/media/images/1345/LJvC13457818.png" width="100" height="100" border="0" /></a></div>
+        <a href="/default.asp" title="Chabad of White Plains" class="site_title">Chabad of White Plains<span class="site_subtitle clearfix"> </span></a>
+      </div>
+    </div>
+    <button type='button' class='cs-mobile-menu-open js-mobile-menu-open'><i class='fa fa-bars'></i></button>
+    <div class="site-nav-wrapper">
+      <div id="co_menu_container_wrapper" class="co_menu_container_wrapper " data-list-name="primary navigation">
+        <div class="co_menu_container clearfix" id="co_menu_container">
+          <a class="menu_logo" href="/"></a>
+          <!-- table.main_menu_container: menus About(6072929), Community&Synagogue(7134056),
+               Youth&Family(6309094), Visitors(7127259), On Campus(7121994), Donate.
+               Each: td.co_menu_item > .co_submenu_container with a.item + .menu_child tables.
+               Full submenu markup preserved in snapshots/form-page.html header comment refs. -->
+        </div>
+      </div>
+      <div class="mobile-menu-bottom-links">
+        <a href="/6072929" class="site-menu-general__link">About</a>
+        <a href="/search">Search</a>
+        <a href="/article.asp?aid=6449033">Contact</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="content">
+  <div id="BodyContainer" class="wrapper">
+    <div class="body_wrapper  no-hero-image clearfix">
+      <div class="co_content_container clearfix local_content" id="co_content_container">
+        <div class="clearfix">
+          <div class="clearfix bh mobile-only align_right">ב"ה</div>
+          <div class="master-content-wrapper g960">
+            <header class="article-header cf ">
+              <h1 class="article-header__title js-article-title js-page-title">About</h1>
+              <div></div>
+            </header>
+          </div>
+          <div class="body_wrapper clearfix co_body">
+            <div class="g960" id="co_body_container">
+              <div id="ContentBody">
+                <div class="content-area-parent no_margin">
+                  <div id="cco_body">
+                    <div class="content g960 no_margin no_overflow" id="co_content_container">
+                      <article class="content js-content" itemscope itemtype="http://schema.org/Article">
+                        <!-- schema.org meta tags (omitted) -->
+                        <div itemprop="articleBody">
+                          <co:body xmlns:co="www1.chabadonline.com/alpha1" xmlns:ext="urn:xslt-extensions">
+                            <div class="co_body article-body cf">
+<p><strong>About Us - Chabad of White Plains</strong></p>
+<p>Welcome to Chabad of White Plains! We are a vibrant and inclusive center for Jewish life in White Plains, dedicated to serving the local Jewish community and beyond. Guided by the leadership of Rabbi Zalmy and Musia Plotke, we have proudly been part of White Plains since 2021, creating a warm and inviting space where everyone can explore and celebrate Jewish culture, heritage, and values.</p>
+<p><strong>Our Vision</strong></p>
+<p>Our vision is firmly rooted in the love for humanity and the core principles of <a href="/article.asp?AID=36226">Chabad-Lubavitch philosophy</a>. We place a strong emphasis on cherishing every member of the Jewish community and reaching out to each individual. Our mission is to enrich Jewish life in White Plains by offering educational, religious, social, and cultural activities for people of all ages and backgrounds.</p>
+<p><strong>Our Activities</strong></p>
+<p>Chabad of White Plains offers a diverse range of programs and events, including engaging Torah classes, festive holiday celebrations, lively Shabbat meals, and enriching youth programs. Our primary goal is to provide a welcoming, non-judgmental environment where everyone can learn, grow, and experience the joys of Judaism.</p>
+<p><strong>Join Us</strong></p>
+<p>Whether you're new to White Plains, just visiting, or have been a part of this community for years, we wholeheartedly welcome you to be a part of our Chabad family. At Chabad, there are no membership fees or tickets required – everyone is considered family. We invite you to explore our website, participate in our programs, and become an integral part of our vibrant community!</p>
+<p style="text-align:center"><img alt="Rabbi Zalmy and Musia Plotke with their family" height="660" src="https://chabadwhiteplains.com/media/images/1321/nwrY13213984.jpg" style="max-width: 100%; height: auto; border-radius: 12px;" width="495"></p>
+<p style="text-align: center;">Rabbi Zalmy and Musia Plotke</p>
+                            </div>
+                          </co:body>
+                        </div>
+                        <div class="break_floats"></div>
+                        <div class="break_floats"></div>
+                        <div class="content-footer"></div>
+                      </article>
+                    </div>
+                  </div>
+                </div>
+                <div class="break_floats"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="break_floats"></div>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <div class="wrapper body_container">
+    <div class="g960 footer_family_text bottom_padding">
+      <div class="footer_container footer_text copyright_text">
+        <div class="bottom_padding clear_float">
+          <img class="footer_hr" src="https://w2.chabad.org/images/global/spacer.gif" vspace="12" width="100%" height="1" /><br />
+          <div class="footer_inner_container clearfix">
+            <div class="footer3"><b>White Plains, NY - 914-998-6724</b></div>
+            <img src="https://w2.chabad.org/images/global/spacer.gif" width="1" height="6" border="0" /><br />
+            Powered by <a href="https://www.chabad.org/" target="_new" class="">Chabad.org</a> &copy; 1993-2026 <a href="/4026210" target="_blank" class="privacy-link">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="cs-f-social-icons">
+        <a href="https://www.facebook.com/jewishwhiteplains" class="fa fa-facebook facebook_homepage" title="Facebook"></a>
+        <a href="https://wa.me/19149986724" class="fa fa-whatsapp whatsapp_homepage" title="Whatsapp"></a>
+        <a href="https://www.instagram.com/jewishwhiteplains" class="fa fa-instagram instagram_homepage" title="Instagram"></a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- global script bundle: jquery, CoLib, sites6.js, primarynavigation.js, etc. -->
+<!-- Co.Settings: ArticleId 6072929, SectionId 6072929, SiteId 11728 -->
+<!-- chabad-custom FOOTER loader snippet confirmed here -->
+</body>
+</html>

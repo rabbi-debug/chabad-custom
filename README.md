@@ -5,7 +5,7 @@ Custom CSS/JS for **chabadwhiteplains.com** (Chabad of White Plains), injected v
 ## Note for Claude (or any assistant) starting a new session
 
 Read this file top to bottom — it is the complete system documentation. Then:
-1. For styling work, consult `snapshots/form-page.html` (complete, has a selector cheat sheet in its header comment) and `snapshots/info-page-partial.html` (head + header/nav only).
+1. For styling work, consult `snapshots/form-page.html` and `snapshots/info-page.html` — both complete, each with a selector cheat sheet in its header comment.
 2. Make changes in `test.css`/`test.js` first; the owner previews them with the bookmarklet, then says "promote" → copy test into live.
 3. Keep `test.*` mirroring `live.*` plus the current experiment (in preview mode, test files REPLACE live files).
 4. The owner is new to GitHub/coding — explain in plain language and handle the technical steps.
@@ -24,7 +24,7 @@ Read this file top to bottom — it is the complete system documentation. Then:
 | `live.css` / `live.js` | What every visitor gets |
 | `test.css` / `test.js` | Private sandbox, visible only in preview mode |
 | `snapshots/form-page.html` | COMPLETE form-page template (aid 6735906) with selector cheat sheet |
-| `snapshots/info-page-partial.html` | Info-page template (aid 6072929) — head/header/nav only; content area + footer not yet captured |
+| `snapshots/info-page.html` | COMPLETE info/article-page template (aid 6072929) with selector cheat sheet |
 
 ## Page targeting
 
@@ -47,7 +47,8 @@ body.form .form-submit-button { ... }
 
 - Platform: Chabad One (chabad.org sites). Template pages: `/templates/articlecco_cdo/aid/<AID>/jewish/<Slug>.htm`
 - Form pages: body class `cco_body form secure sites-article`; forms use the Nova theme (`formCss2.css` + `nova.css`)
-- Gotcha: an inline `<style id="GenFormStyles">` sets `.form-label` width `300px !important` — overriding label widths needs equal specificity + `!important`
+- Info pages: body class `cco_body sites-article` (no `form`); article text lives in `.co_body.article-body`
+- Gotcha: on form pages an inline `<style id="GenFormStyles">` sets `.form-label` width `300px !important` — overriding label widths needs equal specificity + `!important`
 - Useful aids: About 6072929 · Kosher Explained 6528138 (info) · Friday Nights Summer Shabbat 6735906 · Young Adults 6409680 · Hospital Visitation 7133250 (forms) · Donate 4970020
 
 ## Kill switch
