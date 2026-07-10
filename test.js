@@ -30,16 +30,28 @@ var CC_ENABLED = true;
      Experiments go below this line
      ============================================ */
 
-  /* EXPERIMENT: footer redesign, Option A (classic serif)
-     Rewrites the single bold line "White Plains, NY - 914-998-6724"
-     into two lines: name + tappable phone number.
-     The styling lives in test.css. */
+  /* EXPERIMENT: footer redesign (Option A layout)
+     - Rewrites the single bold line into two lines: name + tappable phone.
+     - Copies the exact font used by the site header title onto the
+       footer name, so the two always match.
+     Styling lives in test.css. */
   (function () {
     var el = document.querySelector("#footer .footer3");
-    if (!el || el.querySelector(".cc-foot-place")) return; /* not found or already done */
+    if (!el || el.querySelector(".cc-foot-place")) return;
     el.innerHTML =
       '<div class="cc-foot-place">Chabad of White Plains</div>' +
       '<div class="cc-foot-phone"><a href="tel:+19149986724">914 · 998 · 6724</a></div>';
+
+    /* Match the header title's font exactly */
+    var title = document.querySelector("#header a.site_title, #header .site_title, #header .branding-search a");
+    var place = el.querySelector(".cc-foot-place");
+    if (title && place) {
+      try {
+        var cs = window.getComputedStyle(title);
+        if (cs.fontFamily) place.style.fontFamily = cs.fontFamily;
+        if (cs.fontWeight) place.style.fontWeight = cs.fontWeight;
+      } catch (e) {}
+    }
   })();
 
 })();
