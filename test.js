@@ -52,8 +52,12 @@ var CC_ENABLED = true;
 
   /* --- 2) Dynamic Upcoming Event Widget --- */
   (function() {
-    var placeholder = document.getElementById('cc-upcoming-event-placeholder');
-    if (!placeholder) return;
+    // Look for native homepage layout row first, fallback to the manual placeholder if needed
+    var homepageTarget = document.querySelector('.hp_content_wrapper');
+    var manualPlaceholder = document.getElementById('cc-upcoming-event-placeholder');
+    
+    // If neither element is present on this page, exit early to minimize tracking footprint
+    if (!homepageTarget && !manualPlaceholder) return;
 
     // Fetch the automated events database from GitHub Pages
     var dbUrl = 'https://rabbi-debug.github.io/chabad-custom/events.json';
@@ -82,7 +86,9 @@ var CC_ENABLED = true;
 
         var nextEvent = futureEvents[0];
         if (!nextEvent) {
-          placeholder.innerHTML = '<div class="cc-no-events">Check back soon for upcoming events!</div>';
+          if (manualPlaceholder) {
+            manualPlaceholder.innerHTML = '<div class="cc-no-events">Check back soon for upcoming events!</div>';
+          }
           return;
         }
 
@@ -121,7 +127,14 @@ var CC_ENABLED = true;
         
         html += '</div></div>';
 
-        placeholder.innerHTML = html;
+        // Determine where to output layout natively
+        if (homepageTarget) {
+          // Wrap inside a structural layout row matching Chabad One's framework
+          var rowWrapperHtml = '<div class="hp-row cc-automated-event-row">' + html + '</div>';
+          homepageTarget.insertAdjacentHTML('beforebegin', rowWrapperHtml);
+        } else if (manualPlaceholder) {
+          manualPlaceholder.innerHTML = html;
+        }
       })
       .catch(function(err) {
         console.error('[chabad-custom] Failed to load upcoming event:', err);
