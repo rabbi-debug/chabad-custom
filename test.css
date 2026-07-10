@@ -9,7 +9,7 @@
 /* live.css rules: (none yet) */
 
 /* ============================================================
-   EXPERIMENT: footer + mailing-list band redesign
+   EXPERIMENT: footer redesign
    ============================================================ */
 
 /* ---- 1) Remove dead space between page content and footer ---- */
@@ -29,29 +29,7 @@
   margin-bottom: 0;
 }
 
-/* ---- 2) Mailing-list band (elements are tagged by test.js) ----
-   Flat navy background is applied by JS (sampled from the footer
-   so it always matches). These rules handle spacing + inputs. */
-.cc-mailing-band {
-  padding-top: 36px !important;
-  padding-bottom: 40px !important;
-  margin-bottom: 0 !important;
-}
-.cc-mail-heading {
-  letter-spacing: 0.12em !important;
-  margin-bottom: 18px !important;
-}
-.cc-mailing-band input.cc-mail-input {
-  background: #fdfdfb !important;
-  color: #1f2a3a !important;
-  border: 1px solid rgba(255, 255, 255, 0.35) !important;
-  border-radius: 4px !important;
-}
-.cc-mailing-band input.cc-mail-input::placeholder {
-  color: #6b7684;
-}
-
-/* ---- 3) Footer ---- */
+/* ---- 2) Footer ---- */
 
 /* Hide the old full-width gray rule and the little spacer image */
 #footer .footer_hr,
