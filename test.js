@@ -29,22 +29,25 @@ var CC_ENABLED = true;
 
   /* ============================================
      Experiments go below this line
-     /* --- 1) Footer Text Formatting Experiment --- */
-  // Find the container holding the footer text
-  var footerEl = document.querySelector('#footer .footer3') || document.querySelector('#footer .bottom_padding');
-  
-  if (footerEl) {
-    var content = footerEl.innerHTML;
-    // Look for the specific string (handles potential extra spaces just in case)
-    var targetString = /Chabad of White Plains\s*White Plains, NY\s*-\s*914-998-6724/i;
-    
-    // Replace it with our new two-line HTML structure
-    if (targetString.test(content)) {
-      var newFooterText = '<div class="cc-foot-place">Chabad of White Plains</div>' +
-                          '<div class="cc-foot-phone">White Plains, NY &bull; <a href="tel:914-998-6724">914-998-6724</a></div>';
-      footerEl.innerHTML = content.replace(targetString, newFooterText);
-    }
-  }
      ============================================ */
+
+  /* --- Footer Text Formatting --- */
+  // Wrap in a small timeout to ensure ChabadOne's scripts have finished rendering the footer
+  setTimeout(function() {
+    var footerEl = document.querySelector('#footer .footer3') || document.querySelector('#footer .bottom_padding');
+    
+    if (footerEl) {
+      var content = footerEl.innerHTML;
+      // Using a highly flexible regex to catch the string regardless of spacing or dashes
+      var targetRegex = /Chabad of White Plains[\s\S]*?White Plains,\s*NY[\s\S]*?914-998-6724/i;
+      
+      if (targetRegex.test(content)) {
+        var newFooterText = '<div class="cc-foot-place">Chabad of White Plains</div>' +
+                            '<div class="cc-foot-phone">White Plains, NY &bull; <a href="tel:914-998-6724">914-998-6724</a></div>';
+        
+        footerEl.innerHTML = content.replace(targetRegex, newFooterText);
+      }
+    }
+  }, 100);
 
 })();
