@@ -1,1 +1,41 @@
-{}
+{
+  "-11728-21322761@www.chabadwhiteplains.com": {
+    "uid": "-11728-21322761@www.chabadwhiteplains.com",
+    "title": {
+      "params": {
+        "ENCODING": "QUOTED-PRINTABLE"
+      },
+      "val": "Friday Night Summer Shabbat"
+    },
+    "description": "A summer night designed for community, connection, and great wine.  Elevate your weekend at the Friday Night Summer Shabbat series. We are bringing adults of all generations together around one table to welcome the weekend with intention. Enjoy a beautifully prepared sit-down dinner, excellent wine, and a vibrant social atmosphere built for making real connections",
+    "start": "2026-07-10T23:30:00.000Z",
+    "end": "2026-07-10T23:30:00.000Z",
+    "location": "Chabad of White Plains - 31 Soundview Ave White Plains, NY 10606 USA"
+  },
+  "-11728-21335489@www.chabadwhiteplains.com": {
+    "uid": "-11728-21335489@www.chabadwhiteplains.com",
+    "title": {
+      "params": {
+        "ENCODING": "QUOTED-PRINTABLE"
+      },
+      "val": "☕️ Coffee, Connection, & Minyan"
+    },
+    "description": "Great communities are built one small gathering at a time. This week, we are officially beginning a new Shabbat minyan, and you are invited to be part of the foundation.<BR><BR>We are starting small and keeping the environment highly welcoming and accessible. Rather than a large, formal service, this is an intimate setting—an opportunity to pray, center your week, and connect with a few fellow community members.<BR><BR>Whether we have a full minyan of ten or just a handful of us coming together to pray, the doors will be open to all. We would love for you to be part of the core group that helps get this off the ground.<BR><BR>When\\: Shabbat (Saturday) June 7<BR>10am\\: Coffee and Chasidic discussion<BR>10\\:30am\\: Prayers<BR>12pm\\: Light Kiddush Lunch<BR><BR>Where\\: 31 Soundview Ave",
+    "start": "2026-07-11T14:00:00.000Z",
+    "end": "2026-07-11T16:30:00.000Z",
+    "location": "Chabad of White Plains - 31 Soundview Ave White Plains, NY 10606 USA"
+  },
+  "-11728-21322762@www.chabadwhiteplains.com": {
+    "uid": "-11728-21322762@www.chabadwhiteplains.com",
+    "title": {
+      "params": {
+        "ENCODING": "QUOTED-PRINTABLE"
+      },
+      "val": "Friday Night Summer Shabbat"
+    },
+    "description": "A summer night designed for community, connection, and great wine.<BR><BR>Elevate your weekend at the Friday Night Summer Shabbat series. We are bringing adults of all generations together around one table to welcome the weekend with intention. Enjoy a beautifully prepared sit-down dinner, excellent wine, and a vibrant social atmosphere built for making real connections.",
+    "start": "2026-08-07T23:30:00.000Z",
+    "end": "2026-08-07T23:30:00.000Z",
+    "location": "Chabad of White Plains - 31 Soundview Ave White Plains, NY 10606 USA"
+  }
+}
