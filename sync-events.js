@@ -2,7 +2,7 @@ const fs = require('fs');
 const ical = require('node-ical');
 
 // Switched to HTTPS for a secure connection
-const ICAL_URL = 'https://www.chabadwhiteplains.com/calendar/view/eventexport_cdo/cid/70CB8844-2204-4807-BC79-07E424B2A95A';
+const ICAL_URL = 'https://www.chabadwhiteplains.com/templates/eventexport.asp?mid=11728';
 const DB_FILE = 'events.json';
 
 async function syncEvents() {
