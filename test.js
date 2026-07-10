@@ -129,8 +129,8 @@ var CC_ENABLED = true;
 
         // Determine where to output layout natively
         if (homepageTarget) {
-          // Wrap inside a structural layout row matching Chabad One's framework
-          var rowWrapperHtml = '<div class="hp-row cc-automated-event-row">' + html + '</div>';
+          // Wrapped safely inside Chabad's native layout wrapper container
+          var rowWrapperHtml = '<div class="hp-row cc-automated-event-row"><div class="wrapper">' + html + '</div></div>';
           homepageTarget.insertAdjacentHTML('beforebegin', rowWrapperHtml);
         } else if (manualPlaceholder) {
           manualPlaceholder.innerHTML = html;
