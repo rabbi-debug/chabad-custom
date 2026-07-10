@@ -8,4 +8,50 @@
 
 /* live.css rules: (none yet) */
 
-/* -- nothing being tested right now -- */
+/* ---- EXPERIMENT: footer redesign, Option A (classic serif) ---- */
+
+/* Hide the old full-width gray rule and the little spacer image */
+#footer .footer_hr,
+#footer .footer_inner_container > img {
+  display: none;
+}
+
+/* Center the footer block and give it breathing room */
+#footer .footer_inner_container {
+  text-align: center;
+  padding: 6px 0 2px;
+  line-height: 1.7;
+}
+
+/* Short gold hairline above the name */
+#footer .footer_inner_container::before {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 1px;
+  background: #b08d3e;
+  margin: 0 auto 16px;
+}
+
+/* Line 1: the name, in an elegant serif */
+#footer .cc-foot-place {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  color: #2b2b2b;
+}
+
+/* Line 2: the phone number, soft gray, tappable */
+#footer .cc-foot-phone {
+  margin: 7px 0 14px;
+}
+#footer .cc-foot-phone a {
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: #8a8a86;
+  text-decoration: none;
+}
+#footer .cc-foot-phone a:hover {
+  color: #b08d3e;
+}
