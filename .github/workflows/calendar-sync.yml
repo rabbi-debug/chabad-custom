@@ -1,0 +1,34 @@
+name: Daily Calendar Sync
+
+on:
+  schedule:
+    - cron: '0 6 * * *' # Runs at 6 AM UTC (2 AM EDT) every day
+  workflow_dispatch: # Gives you a manual "Run" button in GitHub
+
+jobs:
+  update-events:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Allows the bot to save the events.json file back to your repo
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install node-ical
+
+      - name: Run Sync Script
+        run: node sync-events.js
+
+      - name: Save new events to GitHub
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
+          git add events.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-sync calendar events"
+          git push
