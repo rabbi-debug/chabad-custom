@@ -1,143 +1,277 @@
 /* ============================================================
-   TEST scripts — only run in preview mode (bookmarklet ON).
+   TEST styles — only visible in preview mode (bookmarklet ON).
    Visitors never load this file.
-   Note: in preview mode this file REPLACES live.js, so it
-   should mirror live.js plus whatever is being tested.
+   Note: in preview mode this file REPLACES live.css, so when
+   testing, this file should contain live.css's rules plus the
+   new experiment.
    ============================================================ */
 
-var CC_ENABLED = true;
+/* live.css rules: (none yet) */
 
-(function () {
-  if (!CC_ENABLED) return;
+/* ============================================================
+   EXPERIMENT: footer redesign + dead-space cleanup
+   (email sign-up band left at the site's default styling)
+   ============================================================ */
 
-  var PAGE_TYPES = {
-    "6072929": "info",
-    "6528138": "info"
-  };
+/* ---- 1) Remove dead space ----
+   The homepage stacks ~130 empty <div class="clear"> spacers before
+   the footer; flatten them (clearing still works at zero height).
+   Article pages get stretched by a min-height on the content area. */
+#content div.clear {
+  height: 0 !important;
+  line-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0;
+}
+.content-footer {
+  height: 0;
+  padding: 0;
+  margin: 0;
+}
+#content,
+#BodyContainer,
+.body_container,
+.sites-article article {
+  min-height: 0 !important;
+}
+.sites-article article {
+  padding-bottom: 12px;
+  margin-bottom: 0;
+}
 
-  var m = location.pathname.match(/\/aid\/(\d+)\//);
-  var aid = m ? m[1] : null;
-  var type = (aid && PAGE_TYPES[aid]) || null;
-  if (!type && /(^|\s)form(\s|$)/.test(document.body.className)) type = "form";
-  if (!type && (location.pathname === "/" || /^\/default\.asp/i.test(location.pathname))) type = "home";
-  if (type) document.documentElement.className += " cc-type-" + type;
+/* ---- 2) Footer ---- */
 
-  try { console.log("[chabad-custom] test.js loaded (PREVIEW MODE)", { aid: aid, type: type }); } catch (e) {}
+/* Hide the old full-width gray rule and the little spacer image */
+#footer .footer_hr,
+#footer .footer_inner_container > img {
+  display: none;
+}
 
-  function onPage(id, fn) { if (aid === String(id)) fn(); }
-  function onType(t, fn) { if (type === t) fn(); }
+/* Tighter overall block, centered */
+#footer {
+  padding-top: 26px !important;
+  padding-bottom: 20px !important;
+}
+#footer .footer_inner_container {
+  text-align: center;
+  padding: 0;
+  line-height: 1.5;
+}
+#footer .bottom_padding {
+  padding-bottom: 8px;
+}
 
-  /* ============================================
-     Experiments go below this line
-     ============================================ */
+/* The inner wrapper around the name/phone/copyright: no padding */
+#footer .bottom_padding.clear_float {
+  padding: 0 !important;
+}
 
-  /* --- Footer Text Formatting --- */
-  // Wrap in a small timeout to ensure ChabadOne's scripts have finished rendering the footer
-  setTimeout(function() {
-    var footerEl = document.querySelector('#footer .footer3') || document.querySelector('#footer .bottom_padding');
-    
-    if (footerEl) {
-      var content = footerEl.innerHTML;
-      // Using a highly flexible regex to catch the string regardless of spacing or dashes
-      var targetRegex = /Chabad of White Plains[\s\S]*?White Plains,\s*NY[\s\S]*?914-998-6724/i;
-      
-      if (targetRegex.test(content)) {
-        var newFooterText = '<div class="cc-foot-place">Chabad of White Plains</div>' +
-                            '<div class="cc-foot-phone">White Plains, NY &bull; <a href="tel:914-998-6724">914-998-6724</a></div>';
-        
-        footerEl.innerHTML = content.replace(targetRegex, newFooterText);
-      }
-    }
-  }, 100);
+/* The name + phone block: no padding of its own */
+#footer .footer3 {
+  padding: 0 !important;
+}
 
-  /* --- 2) Dynamic Upcoming Event Widget --- */
-  (function() {
-    // Look for native homepage layout row first, fallback to the manual placeholder if needed
-    var homepageTarget = document.querySelector('.hp_content_wrapper');
-    var manualPlaceholder = document.getElementById('cc-upcoming-event-placeholder');
-    
-    // If neither element is present on this page, exit early to minimize tracking footprint
-    if (!homepageTarget && !manualPlaceholder) return;
+/* Line 1: The organization name */
+#footer .cc-foot-place {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #ffffff; /* Crisp white for better contrast */
+  margin-bottom: 4px; /* Adds a little breathing room between the lines */
+}
 
-    // Fetch the automated events database from GitHub Pages
-    var dbUrl = 'https://rabbi-debug.github.io/chabad-custom/events.json';
+/* Line 2: The address and phone number */
+#footer .cc-foot-phone {
+  margin: 0 !important;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: #e0e0e0; /* Slightly softer white/grey for visual hierarchy */
+}
 
-    fetch(dbUrl)
-      .then(function(res) { return res.json(); })
-      .then(function(events) {
-        var now = new Date();
-        var futureEvents = [];
+/* Make the phone number a tappable gold link */
+#footer .cc-foot-phone a {
+  color: #c9b788;
+  text-decoration: none;
+  letter-spacing: 0.12em;
+}
 
-        // Convert events object to array & filter out past events
-        for (var key in events) {
-          if (events.hasOwnProperty(key)) {
-            var ev = events[key];
-            var eventEnd = ev.end ? new Date(ev.end) : new Date(ev.start);
-            if (eventEnd >= now) {
-              futureEvents.push(ev);
-            }
-          }
-        }
+#footer .cc-foot-phone a:hover {
+  color: #ffffff;
+}
 
-        // Sort events so the closest upcoming one is first
-        futureEvents.sort(function(a, b) {
-          return new Date(a.start) - new Date(b.start);
-        });
+/* Social icons: larger, lighter, with a hover state */
+#footer .cs-f-social-icons {
+  margin-top: 16px;
+}
+#footer .cs-f-social-icons a {
+  font-size: 19px !important;
+  color: #c9b788 !important;
+  margin: 0 10px;
+  transition: color 0.15s ease;
+}
+#footer .cs-f-social-icons a:hover {
+  color: #ffffff !important;
+}
 
-        var nextEvent = futureEvents[0];
-        if (!nextEvent) {
-          if (manualPlaceholder) {
-            manualPlaceholder.innerHTML = '<div class="cc-no-events">Check back soon for upcoming events!</div>';
-          }
-          return;
-        }
+/* ============================================================
+   EXPERIMENT: Dynamic Upcoming Event Widget Layout
+   ============================================================ */
 
-        // Format Date and Time nicely
-        var startDt = new Date(nextEvent.start);
-        var dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
-        var timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
-        
-        var dateStr = startDt.toLocaleDateString('en-US', dateOptions);
-        var timeStr = startDt.toLocaleTimeString('en-US', timeOptions);
+#cc-upcoming-event-placeholder {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 0 15px;
+}
 
-        // Build HTML layout
-        var html = '<div class="cc-event-card">';
-        
-        if (nextEvent.flyer) {
-          html += '<div class="cc-event-image-wrap">' +
-                    '<img src="' + nextEvent.flyer + '" alt="' + nextEvent.title + '" class="cc-event-flyer" />' +
-                  '</div>';
-        }
-        
-        html += '<div class="cc-event-details">';
-        html += '  <span class="cc-event-tag">UPCOMING EVENT</span>';
-        html += '  <h2 class="cc-event-title">' + nextEvent.title + '</h2>';
-        html += '  <div class="cc-event-meta">';
-        html += '    <div class="cc-meta-item"><strong>Date:</strong> ' + dateStr + '</div>';
-        html += '    <div class="cc-meta-item"><strong>Time:</strong> ' + timeStr + '</div>';
-        if (nextEvent.location) {
-          html += '    <div class="cc-meta-item"><strong>Location:</strong> ' + nextEvent.location.split(' - ')[0] + '</div>';
-        }
-        html += '  </div>';
-        html += '  <div class="cc-event-desc">' + nextEvent.description + '</div>';
-        
-        if (nextEvent.signUp) {
-          html += '  <a href="' + nextEvent.signUp + '" class="cc-event-btn" target="_blank">Register / More Info</a>';
-        }
-        
-        html += '</div></div>';
+/* Spacing and alignments for the automated injection engine on the homepage */
+.hp-table .cc-automated-event-row {
+  margin: 0 0 40px 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
 
-        // Determine where to output layout natively
-        if (homepageTarget) {
-          // Wrapped safely inside Chabad's native layout wrapper container
-          var rowWrapperHtml = '<div class="hp-row cc-automated-event-row"><div class="wrapper">' + html + '</div></div>';
-          homepageTarget.insertAdjacentHTML('beforebegin', rowWrapperHtml);
-        } else if (manualPlaceholder) {
-          manualPlaceholder.innerHTML = html;
-        }
-      })
-      .catch(function(err) {
-        console.error('[chabad-custom] Failed to load upcoming event:', err);
-      });
-  })();
-})();
+.cc-event-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid #eef0f2;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  max-width: 960px; /* Force structural alignment match with desktop grid */
+  margin: 0 auto;   /* Center item cleanly within parent row view */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cc-event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Flex row split layout on desktop (tablet screens and up) */
+@media (min-width: 768px) {
+  .cc-event-card {
+    flex-direction: row;
+    min-height: 420px;
+  }
+  
+  .cc-event-image-wrap {
+    flex: 1.1;
+    max-width: 50%;
+  }
+  
+  .cc-event-details {
+    flex: 1.2;
+    padding: 40px !important;
+  }
+}
+
+/* Flyer Image styling container */
+.cc-event-image-wrap {
+  position: relative;
+  background: #faf9f6; /* Soft warm backdrop that complements natural paper flyers */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px; /* Adds safe breathing room so flyer doesn't touch the card borders */
+  box-sizing: border-box;
+}
+
+.cc-event-flyer {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Prevents text cropping by fitting the whole image naturally */
+  display: block;
+}
+
+/* Event Details Area */
+.cc-event-details {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cc-event-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #c9b788; /* Accent Gold */
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.cc-event-title {
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0b2240; /* Dark Navy */
+  margin: 0 0 16px 0 !important;
+  line-height: 1.2;
+}
+
+.cc-event-meta {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f0f2f5;
+  padding-bottom: 16px;
+}
+
+.cc-meta-item {
+  font-size: 14px;
+  color: #4a5568;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.cc-meta-item strong {
+  color: #1a202c;
+  font-weight: 600;
+}
+
+.cc-event-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4a5568;
+  margin-bottom: 24px;
+}
+
+/* Premium Gold Action Button */
+.cc-event-btn {
+  align-self: flex-start;
+  background-color: #c9b788;
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none !important;
+  padding: 12px 28px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  box-shadow: 0 4px 12px rgba(201, 183, 136, 0.2);
+  text-align: center;
+}
+
+.cc-event-btn:hover {
+  background-color: #bfae7e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(201, 183, 136, 0.3);
+}
+
+.cc-event-btn:active {
+  transform: translateY(1px);
+}
+
+.cc-no-events {
+  text-align: center;
+  padding: 40px;
+  color: #718096;
+  font-size: 16px;
+  background: #f7f9fa;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e0;
+}
