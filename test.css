@@ -8,7 +8,8 @@
 
 /* live.css rules: (none yet) */
 
-/* ---- EXPERIMENT: footer redesign, Option A (classic serif) ---- */
+/* ---- EXPERIMENT: footer redesign, Option A (classic serif)
+        Colors tuned for the site's dark navy footer band. ---- */
 
 /* Hide the old full-width gray rule and the little spacer image */
 #footer .footer_hr,
@@ -33,25 +34,25 @@
   margin: 0 auto 16px;
 }
 
-/* Line 1: the name, in an elegant serif */
+/* Line 1: the name, in an elegant serif — warm ivory on navy */
 #footer .cc-foot-place {
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: normal;
-  letter-spacing: 0.04em;
-  color: #2b2b2b;
+  letter-spacing: 0.05em;
+  color: #f2ede2;
 }
 
-/* Line 2: the phone number, soft gray, tappable */
+/* Line 2: the phone number, soft gold, tappable */
 #footer .cc-foot-phone {
   margin: 7px 0 14px;
 }
 #footer .cc-foot-phone a {
   font-size: 14px;
   letter-spacing: 0.12em;
-  color: #8a8a86;
+  color: #c9b788;
   text-decoration: none;
 }
 #footer .cc-foot-phone a:hover {
-  color: #b08d3e;
+  color: #ffffff;
 }
