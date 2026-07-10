@@ -22,7 +22,7 @@ async function syncEvents() {
 
   console.log('Fetching calendar data...');
   
-  // 2. Fetch the data using modern native fetch with a User-Agent header to bypass bot blocks
+  // 2. Fetch the data using modern native fetch with a User-Agent header
   const response = await fetch(ICAL_URL, {
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
@@ -45,12 +45,36 @@ async function syncEvents() {
     if (webEvents.hasOwnProperty(key)) {
       const ev = webEvents[key];
       
-      // We only want actual calendar events
       if (ev.type === 'VEVENT') {
+        let rawDesc = ev.description || "";
+        let flyerUrl = "";
+        let signUpUrl = ""; // This will hold either "Sign Up" OR "More Info" links
+
+        // --- THE SCANNER ---
+        // Hunt for Flyer link and remove it from description
+        const flyerMatch = rawDesc.match(/Flyer:\s*(https?:\/\/[^\s]+)/i);
+        if (flyerMatch) {
+          flyerUrl = flyerMatch[1];
+          rawDesc = rawDesc.replace(flyerMatch[0], "").trim();
+        }
+
+        // Hunt for either "Sign Up:" OR "More Info:" and save it to the same signUp data point
+        const signUpMatch = rawDesc.match(/(?:Sign Up|More Info):\s*(https?:\/\/[^\s]+)/i);
+        if (signUpMatch) {
+          signUpUrl = signUpMatch[1];
+          rawDesc = rawDesc.replace(signUpMatch[0], "").trim();
+        }
+
+        // Clean up any weird double-spacing left behind by the removal
+        rawDesc = rawDesc.replace(/[\r\n]{3,}/g, '\n\n').trim();
+
+        // Save the neatly separated data
         db[ev.uid] = {
           uid: ev.uid,
           title: ev.summary || "No Title",
-          description: ev.description || "",
+          description: rawDesc,
+          flyer: flyerUrl,
+          signUp: signUpUrl, // Populated whether you write "Sign Up" or "More Info"
           start: ev.start,
           end: ev.end,
           location: ev.location || ""
