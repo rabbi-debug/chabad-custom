@@ -72,28 +72,34 @@
   padding: 0 !important;
 }
 
-/* Line 1: the name — font copied from the site header by test.js;
-   tracking echoes the phone number for consistency */
+/* Line 1: The organization name */
 #footer .cc-foot-place {
   font-family: inherit;
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: #f2ede2;
+  color: #ffffff; /* Crisp white for better contrast */
+  margin-bottom: 4px; /* Adds a little breathing room between the lines */
 }
 
-/* Line 2: the phone number, soft gold, tappable */
+/* Line 2: The address and phone number */
 #footer .cc-foot-phone {
   margin: 0 !important;
-}
-#footer .cc-foot-phone a {
   font-size: 14px;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.05em;
+  color: #e0e0e0; /* Slightly softer white/grey for visual hierarchy */
+}
+
+/* Make the phone number a tappable gold link */
+#footer .cc-foot-phone a {
   color: #c9b788;
   text-decoration: none;
+  letter-spacing: 0.12em;
 }
+
 #footer .cc-foot-phone a:hover {
   color: #ffffff;
+}
 }
 
 /* Social icons: larger, lighter, with a hover state */
