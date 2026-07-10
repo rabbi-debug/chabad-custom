@@ -1,10 +1,105 @@
 /* ============================================================
-   chabadwhiteplains.com — LIVE styles (all visitors see this)
-   Loaded on every page by the header snippet.
-
-   Global rule:            .some-element { ... }
-   One page only:          html.cc-aid-6072929 .some-element { ... }
-   (6072929 = the aid number from the page's URL)
+   LIVE styles — visible to all visitors.
    ============================================================ */
 
-/* -- no customizations yet -- */
+/* ---- 1) Remove dead space ----
+   The homepage stacks ~130 empty <div class="clear"> spacers before
+   the footer; flatten them (clearing still works at zero height).
+   Article pages get stretched by a min-height on the content area. */
+#content div.clear {
+  height: 0 !important;
+  line-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0;
+}
+.content-footer {
+  height: 0;
+  padding: 0;
+  margin: 0;
+}
+#content,
+#BodyContainer,
+.body_container,
+.sites-article article {
+  min-height: 0 !important;
+}
+.sites-article article {
+  padding-bottom: 12px;
+  margin-bottom: 0;
+}
+
+/* ---- 2) Footer ---- */
+
+/* Hide the old full-width gray rule and the little spacer image */
+#footer .footer_hr,
+#footer .footer_inner_container > img {
+  display: none;
+}
+
+/* Tighter overall block, centered */
+#footer {
+  padding-top: 26px !important;
+  padding-bottom: 20px !important;
+}
+#footer .footer_inner_container {
+  text-align: center;
+  padding: 0;
+  line-height: 1.5;
+}
+#footer .bottom_padding {
+  padding-bottom: 8px;
+}
+
+/* The inner wrapper around the name/phone/copyright: no padding */
+#footer .bottom_padding.clear_float {
+  padding: 0 !important;
+}
+
+/* The name + phone block: no padding of its own */
+#footer .footer3 {
+  padding: 0 !important;
+}
+
+/* Line 1: The organization name */
+#footer .cc-foot-place {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #ffffff; 
+  margin-bottom: 4px; 
+}
+
+/* Line 2: The address and phone number */
+#footer .cc-foot-phone {
+  margin: 0 !important;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  color: #e0e0e0; 
+}
+
+/* Make the phone number a tappable gold link */
+#footer .cc-foot-phone a {
+  color: #c9b788;
+  text-decoration: none;
+  letter-spacing: 0.12em;
+}
+
+#footer .cc-foot-phone a:hover {
+  color: #ffffff;
+}
+
+/* Social icons: larger, lighter, with a hover state */
+#footer .cs-f-social-icons {
+  margin-top: 16px;
+}
+#footer .cs-f-social-icons a {
+  font-size: 19px !important;
+  color: #c9b788 !important;
+  margin: 0 10px;
+  transition: color 0.15s ease;
+}
+#footer .cs-f-social-icons a:hover {
+  color: #ffffff !important;
+}
