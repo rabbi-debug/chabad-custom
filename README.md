@@ -5,7 +5,7 @@ Custom CSS/JS for **chabadwhiteplains.com** (Chabad of White Plains), injected v
 ## Note for Claude (or any assistant) starting a new session
 
 Read this file top to bottom — it is the complete system documentation. Then:
-1. For styling work, consult `snapshots/form-page.html` and `snapshots/info-page.html` — both complete, each with a selector cheat sheet in its header comment.
+1. For styling work, consult the snapshots — all complete, each with a selector cheat sheet in its header comment: `snapshots/form-page.html`, `snapshots/info-page.html`, `snapshots/home-page.html`.
 2. Make changes in `test.css`/`test.js` first; the owner previews them with the bookmarklet, then says "promote" → copy test into live.
 3. Keep `test.*` mirroring `live.*` plus the current experiment (in preview mode, test files REPLACE live files).
 4. The owner is new to GitHub/coding — explain in plain language and handle the technical steps.
@@ -23,12 +23,13 @@ Read this file top to bottom — it is the complete system documentation. Then:
 |---|---|
 | `live.css` / `live.js` | What every visitor gets |
 | `test.css` / `test.js` | Private sandbox, visible only in preview mode |
-| `snapshots/form-page.html` | COMPLETE form-page template (aid 6735906) with selector cheat sheet |
-| `snapshots/info-page.html` | COMPLETE info/article-page template (aid 6072929) with selector cheat sheet |
+| `snapshots/form-page.html` | Form-page template (aid 6735906) with selector cheat sheet |
+| `snapshots/info-page.html` | Info/article-page template (aid 6072929) with selector cheat sheet |
+| `snapshots/home-page.html` | Homepage widget template with selector cheat sheet |
 
 ## Page targeting
 
-Every Chabad One page URL contains a unique ID: `/aid/6072929/` (the About page).
+Most Chabad One page URLs contain a unique ID: `/aid/6072929/` (the About page).
 
 **Single page (CSS):** the header snippet tags the page instantly with a class like `cc-aid-6072929`:
 ```css
@@ -39,15 +40,22 @@ html.cc-aid-6072929 h1 { color: navy; }
 ```css
 body.form .form-submit-button { ... }
 ```
-⚠️ Do NOT key CSS off `cc-type-*` classes — those are added by JS after page load, so CSS depending on them applies late (visible flash). Use `body.form` (native) or `html.cc-aid-XXXX` (header snippet) for CSS. The `cc-type-*` classes and `onType()` are fine for JS.
 
-**JS targeting:** `live.js` identifies the page (`aid`), auto-detects form pages from the body class, applies the `PAGE_TYPES` registry for manual categories (e.g. `info`), and provides `onPage(id, fn)` / `onType(type, fn)` helpers.
+**Homepage (CSS):** the homepage URL has NO aid, so `cc-aid-*` does not exist there. However, homepage widget classes (`.hp-table`, `.hp-row`, `.promo_slider`, `.sneak-peek-item`, `.candlelighting`, etc.) appear ONLY on the homepage — so targeting them directly is automatically homepage-scoped:
+```css
+.hp-row .widget_header h5 { ... }   /* homepage-only by nature */
+```
+
+⚠️ Do NOT key CSS off `cc-type-*` classes — those are added by JS after page load, so CSS depending on them applies late (visible flash). Use `body.form` (native), `html.cc-aid-XXXX` (header snippet), or homepage-unique classes for CSS. The `cc-type-*` classes and `onType()` are fine for JS.
+
+**JS targeting:** `live.js` identifies the page (`aid`), auto-detects form pages (body class) and the homepage (pathname), applies the `PAGE_TYPES` registry for manual categories (e.g. `info`), and provides `onPage(id, fn)` / `onType(type, fn)` helpers. Types: `form`, `home`, `info` (registry).
 
 ## Known site facts
 
-- Platform: Chabad One (chabad.org sites). Template pages: `/templates/articlecco_cdo/aid/<AID>/jewish/<Slug>.htm`
+- Platform: Chabad One (chabad.org sites). Template pages: `/templates/articlecco_cdo/aid/<AID>/jewish/<Slug>.htm`; homepage is `/`
 - Form pages: body class `cco_body form secure sites-article`; forms use the Nova theme (`formCss2.css` + `nova.css`)
 - Info pages: body class `cco_body sites-article` (no `form`); article text lives in `.co_body.article-body`
+- Homepage: body class `cco_body` only; widget-based layout (`.hp-table`/`.hp-row`); internal id 5618929; slider uses jquery.cycle; photos widget is JS-populated
 - Gotcha: on form pages an inline `<style id="GenFormStyles">` sets `.form-label` width `300px !important` — overriding label widths needs equal specificity + `!important`
 - Useful aids: About 6072929 · Kosher Explained 6528138 (info) · Friday Nights Summer Shabbat 6735906 · Young Adults 6409680 · Hospital Visitation 7133250 (forms) · Donate 4970020
 

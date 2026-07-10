@@ -19,6 +19,7 @@ var CC_ENABLED = true;
   var aid = m ? m[1] : null;
   var type = (aid && PAGE_TYPES[aid]) || null;
   if (!type && /(^|\s)form(\s|$)/.test(document.body.className)) type = "form";
+  if (!type && (location.pathname === "/" || /^\/default\.asp/i.test(location.pathname))) type = "home";
   if (type) document.documentElement.className += " cc-type-" + type;
 
   try { console.log("[chabad-custom] test.js loaded (PREVIEW MODE)", { aid: aid, type: type }); } catch (e) {}
@@ -29,24 +30,5 @@ var CC_ENABLED = true;
   /* ============================================
      Experiments go below this line
      ============================================ */
-
-  /* EXPERIMENT: footer redesign
-     Two lines (name + tappable phone), font copied from the header. */
-  (function () {
-    var el = document.querySelector("#footer .footer3");
-    if (!el || el.querySelector(".cc-foot-place")) return;
-    el.innerHTML =
-      '<div class="cc-foot-place">Chabad of White Plains</div>' +
-      '<div class="cc-foot-phone"><a href="tel:+19149986724">914 \u00b7 998 \u00b7 6724</a></div>';
-
-    var title = document.querySelector("#header a.site_title, #header .site_title, #header .branding-search a");
-    var place = el.querySelector(".cc-foot-place");
-    if (title && place) {
-      try {
-        var cs = window.getComputedStyle(title);
-        if (cs.fontFamily) place.style.fontFamily = cs.fontFamily;
-      } catch (e) {}
-    }
-  })();
 
 })();

@@ -28,6 +28,9 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
      of every form page, so new forms are recognized automatically. */
   if (!type && /(^|\s)form(\s|$)/.test(document.body.className)) type = "form";
 
+  /* Auto-detect the homepage (no aid in URL) */
+  if (!type && (location.pathname === "/" || /^\/default\.asp/i.test(location.pathname))) type = "home";
+
   if (type) document.documentElement.className += " cc-type-" + type;
 
   /* Proof-of-life message (visible in the browser console) */

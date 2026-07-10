@@ -1,0 +1,227 @@
+<!--
+  Snapshot: Homepage (/) - CUSTOM HOME PAGE template - COMPLETE
+  Captured 2026-07-10 from view-source. Trimmed for reference use:
+  - latest-photos image JSON, analytics, and nav submenu internals condensed
+  All class names, IDs, and structural elements preserved.
+
+  KEY FACTS:
+  - URL is / (or /default.asp) - NO aid number, so the loader's cc-aid-* class
+    is NOT added here. But homepage widget classes are unique to the homepage,
+    so targeting them directly is effectively homepage-only scoping.
+  - Body classes: lang_en dir_ltr cco_body   (no sites-article, no form)
+  - Internal page id: primaryArticleId 5618929 ("Custom Home Page")
+  - Both chabad-custom loader snippets confirmed installed.
+
+  SELECTOR CHEAT SHEET (homepage):
+    Layout grid:        .hp-table > .hp-row (first row: .hp-row-first)
+    Widget shell:       .widget-4 (+ variant class), inner .wrapper,
+                        header .widget_header > h5, body .widget_content
+    Hero slider:        .widget-4.promo_slider ; slides .slider > .slides >
+                        .slide_wrapper img ; captions ul.captionList li.cycle-html-caption
+                        (caption title inside <big>), link a.readMore
+    About message box:  .widget-4.message .widget_content.message_format ; a.readMore
+    Programs grid:      .sneak-peek-container ; section title .header-title ;
+                        tiles .sneak-peek-item (item-1..6, odd/even) ;
+                        tile title h6.title_only a ; image a.thumbnail img
+                        (image set via background-image on spacer img)
+    Latest photos:      .widget-4.latest_photos (populated by JS from Facebook/site)
+    Upcoming events:    .widget-4.upcoming_events .widget_content.list_format ul li
+                        (small = date, h6 a = event) ; a.readMore
+    Shabbat times:      .widget-4.candlelighting ; .candlelighting_content ;
+                        .section_heading / .section_subheading ; .times_wrapper ;
+                        .when_to_light ; .parsha_content ; .upcomingholiday_content
+    Daily thought:      .widget-4.daily_thought .widget_content.article_format ;
+                        .item .title a ; .body.text_expandable
+    Mailing list:       .hp-row.hp_subscribe .widget-4.subscribe ; #formContainer
+                        fieldset ; inputs .co_global_input ; submit input.buttonStyle1
+    Header/nav/footer:  identical to inner pages - see other snapshots
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- meta omitted; canonical: https://www.chabadwhiteplains.com/ -->
+<!-- stylesheets: same core set as inner pages, plus calendarpicker.css and prettyPhoto.min.css -->
+<title>Chabad of White Plains</title>
+<!-- dataLayer: primaryArticleId 5618929 "Custom Home Page" -->
+<!-- chabad-custom HEADER loader snippet confirmed here -->
+</head>
+<body class="lang_en dir_ltr cco_body">
+
+<div id="PrintCreditHeader" class="show_for_print">Printed from<b>ChabadWhitePlains.com</b></div>
+<div id="header">
+  <!-- identical structure to inner pages: top bar (.cco_topbar_link ...), branding
+       (.site-logo-wrapper, a.site_title), search (#MainSearchForm), nav
+       (#co_menu_container), mobile menu button - see snapshots/info-page.html -->
+</div>
+<div id="content">
+  <div id="BodyContainer" class="wrapper">
+    <div class="body_wrapper no-hero-image clearfix">
+      <div class="g960"><div class="main clearfix">
+        <div class="g960 no_margin">
+          <div class="hp-table">
+
+            <div class="hp-row hp-row-first">
+              <div class="widget-4 promo_slider custom v380 feed">
+                <div class="wrapper">
+                  <div class="widget_content html_format">
+                    <div class="slider">
+                      <div class="slides">
+                        <div class="slide_wrapper" caption=".caption-0"><img src="https://w2.chabad.org/media/images/1273/CLed12735052.png" alt="" /></div>
+                        <div class="slide_wrapper" caption=".caption-1"><a target="" href="/6735906"><img src="https://w2.chabad.org/media/images/707/jrYN7075892.jpg" alt="" /></a></div>
+                        <div class="slide_wrapper" caption=".caption-2"><a target="" href="/7108468"><img src="https://w2.chabad.org/media/images/817/IWjl8173045.jpg" alt="" /></a></div>
+                      </div>
+                      <ul class="captionList">
+                        <li class="cycle-html-caption caption-0"><span><big>Chabad of White Plains</big>Welcome to our online center.<br/>Check out our innovative, informative and lively programs for every age and stage</span></li>
+                        <li class="cycle-html-caption caption-1"><span><big>Synagogue Services</big>A community that prays together stays together. Join us for regular daily, shabbat and holiday services in a warm, friendly environment.</span><a href="/6735906" class="readMore" target="">Learn More</a></li>
+                        <li class="cycle-html-caption caption-2"><span><big>Cteen</big>CTeen offers programs that bring teens together to embrace their shared faith and give back to their communities and the environment.</span><a href="/7108468" class="readMore" target="">Read More</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hp-row">
+              <div class="widget-4 message custom v380 feed">
+                <div class="wrapper">
+                  <div class="widget_header"><h5>About</h5></div>
+                  <div class="widget_content message_format">
+                    <div class="bottom_padding">Welcome to Chabad of White Plains, the vibrant hub of Jewish life in our community, guided by the Chabad-Lubavitch philosophy of love for humanity and inclusion. <br/>Discover Jewish values, culture, and heritage through Torah classes, holiday celebrations, Shabbat meals, and youth programs. Join our welcoming Chabad family by exploring our website and engaging in our programs today!</div>
+                    <a class="readMore" href="/about"> Learn More </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hp-row">
+              <div class="sneak-peek-container clearfix">
+                <div class="header-title">Programs</div>
+                <div class="sneak-peek-item item-1 even g320 no_margin">
+                  <div class="widget-1 sneak_peek custom v200 feed"><div class="wrapper"><div class="widget_content">
+                    <h6 class="title_only"><a target="" href="/6735906"> Synagogue Services </a></h6>
+                    <a href="/6735906" class="thumbnail" target=""><img src="https://w2.chabad.org/images/global/spacer.gif" style="background-image:url(https://w2.chabad.org/media/images/1097/PgBS10976181.jpg);" alt="" /><span></span></a>
+                  </div></div></div>
+                </div>
+                <!-- items 2-6 identical structure: Adult Education (/6441808), Youth Programs (/contact),
+                     Holiday Celebrations (/tools/subscribe/default.htm), Women's Events (/contact),
+                     Community Services (/contact) -->
+              </div>
+            </div>
+
+            <div class="hp-row">
+              <div class="widget-4 latest_photos custom v420 feed widget_index_3 loading" max_items="27">
+                <div class="wrapper">
+                  <div class="widget_header"><h5>Latest Photos</h5></div>
+                  <div class="widget_content"></div>
+                  <!-- populated by LatestPhotos JS from an Images array (site + Facebook photos);
+                       lightbox via prettyPhoto -->
+                </div>
+              </div>
+            </div>
+
+            <div class="hp-row hp_content_wrapper">
+              <div class="no_margin g320 no_margin">
+                <div class="widget-4 upcoming_events custom v400 feed">
+                  <div class="wrapper">
+                    <div class="widget_header"><h5>Upcoming Events</h5></div>
+                    <div class="widget_content list_format"><ul>
+                      <li><small>Fri, July 10, 2026 - 7:30pm</small><h6><a href="/calendar/view/day.asp?tdate=7/10/2026" target="">Friday Night Summer Shabbat</a></h6></li>
+                      <li><small>Fri, August 7, 2026 - 7:30pm</small><h6><a href="/calendar/view/day.asp?tdate=8/7/2026" target="">Friday Night Summer Shabbat</a></h6></li>
+                    </ul>
+                    <a href="/templates/events.htm" target="" class="readMore">View more Upcoming Events</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="g320">
+                <div class="widget-4 candlelighting custom v400 feed">
+                  <div class="wrapper">
+                    <div class="widget_header"><h5>Shabbat & Holidays</h5></div>
+                    <div class="widget_content"><div>
+                      <div class="clearfix horizontal_padding vertical_padding">
+                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_candles.png" alt="" /></div>
+                        <div class="candlelighting_content">
+                          <div class="large_left_margin candlelighting_heading">
+                            <div class="medium_left_margin uppercase bold section_heading">Candle Lighting Times</div>
+                            <div class="medium_left_margin bold section_subheading">White Plains, NY</div>
+                          </div>
+                          <div class="times_wrapper make_scrollable">
+                            <div class="medium_top_padding clearfix"><small class="when_to_light uppercase float_left small_right_margin">Light Candles at</small><div class="float_left"><a href="/calendar/candlelighting.htm"><span class="bold large">8:11 PM</span>&#160;&#160;-&#160;&#160;Friday, July 10</a></div></div>
+                            <div class="medium_top_padding clearfix"><small class="when_to_light uppercase float_left small_right_margin">Shabbat Ends</small><div class="float_left"><a href="/calendar/candlelighting.htm"><span class="bold large">9:18 PM</span>&#160;&#160;-&#160;&#160;Shabbat, July 11</a></div></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="separator"></div>
+                      <div class="clearfix horizontal_padding vertical_padding">
+                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_torah.png" alt="" /></div>
+                        <div class="large_left_margin parsha_content">
+                          <div class="medium_left_margin uppercase bold section_heading">Weekly Torah Portion</div>
+                          <div class="medium_left_margin small_top_padding"><span class="bold large"><a href="/parshah/default.asp?tdate=7/10/2026">Matot-Massei</a></span></div>
+                        </div>
+                      </div>
+                      <div class="separator"></div>
+                      <div class="clearfix horizontal_padding top_padding">
+                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_calendar.png" alt="" /></div>
+                        <div class="large_left_margin upcomingholiday_content">
+                          <div class="medium_left_margin uppercase bold section_heading">Upcoming Holiday</div>
+                          <div class="medium_left_margin small_vertical_padding"><span class="bold large"><a href="/article.asp?aid=144558">The Three Weeks</a></span></div>
+                          <div class="medium_left_margin">Jul. 2 - Jul. 23</div>
+                        </div>
+                      </div>
+                    </div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="rightColumn g320">
+                <div class="widget-4 daily_thought custom v400 feed">
+                  <div class="wrapper">
+                    <div class="widget_header"><h5>Daily Thought</h5></div>
+                    <div class="widget_content article_format">
+                      <div class="item first last clearfix">
+                        <div class="title"><a href="/article.asp?aid=7419853" target="">Unconditional Love</a></div>
+                        <div class="body text_expandable" container="widget-4" TextContainerClass="inner"><!-- daily thought text, refreshed daily --></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hp-row hp_subscribe">
+              <div class="widget-4 subscribe custom v280 feed">
+                <div class="wrapper">
+                  <div class="widget_header"><h5>Join our mailing list</h5></div>
+                  <div class="widget_content"><div id="formContainer">
+                    <form novalidate="true" action="" method="get" target="">
+                      <fieldset>
+                        <label for="Fname">First Name</label>
+                        <input id="Fname" type="text" name="fname" maxlength="50" placeholder="First Name" class="co_global_input" required="visible" />
+                        <label for="Lname">Last Name</label>
+                        <input id="Lname" type="text" name="lname" maxlength="50" placeholder="Last Name" class="co_global_input" required="visible" />
+                        <label for="Email">Email Address</label>
+                        <input id="Email" type="email" name="email" placeholder="Email Address" class="co_global_input" required="true" data_type="email" />
+                        <input type="submit" id="submit" name="submit" value="Subscribe" class="buttonStyle1" />
+                        <small>Weekly articles in your inbox</small>
+                      </fieldset>
+                    </form>
+                  </div>
+                  <small id="response" style="display:none;height:147px;"></small></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div></div>
+      <div class="break_floats"></div>
+    </div>
+  </div>
+</div>
+<div id="footer">
+  <!-- identical to inner pages: .footer_container, .footer3, .cs-f-social-icons -->
+</div>
+<!-- scripts: jquery, jquery.cycle (slider), prettyPhoto (photo lightbox), LatestPhotos.js, CoLib, sites6.js, etc. -->
+<!-- Co.Settings: ArticleId 5618929, SiteId 11728 -->
+<!-- chabad-custom FOOTER loader snippet confirmed here -->
+</body>
+</html>
