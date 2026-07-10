@@ -120,14 +120,14 @@
    ============================================================ */
 
 #cc-upcoming-event-placeholder {
-  max-width: 1100px;
+  max-width: 960px;
   margin: 40px auto;
   padding: 0 15px;
 }
 
 /* Spacing and alignments for the automated injection engine on the homepage */
 .hp-table .cc-automated-event-row {
-  margin: 0 0 35px 0 !important;
+  margin: 0 0 40px 0 !important;
   padding: 0 !important;
   width: 100%;
 }
@@ -141,6 +141,10 @@
   overflow: hidden;
   border: 1px solid #eef0f2;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  max-width: 960px; /* Force structural alignment match with desktop grid */
+  margin: 0 auto;   /* Center item cleanly within parent row view */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .cc-event-card:hover {
