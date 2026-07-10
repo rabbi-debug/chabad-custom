@@ -49,5 +49,83 @@ var CC_ENABLED = true;
       }
     }
   }, 100);
+}, 100);
 
+  /* --- 2) Dynamic Upcoming Event Widget --- */
+  (function() {
+    var placeholder = document.getElementById('cc-upcoming-event-placeholder');
+    if (!placeholder) return;
+
+    // Fetch the automated events database from GitHub Pages
+    var dbUrl = 'https://rabbi-debug.github.io/chabad-custom/events.json';
+
+    fetch(dbUrl)
+      .then(function(res) { return res.json(); })
+      .then(function(events) {
+        var now = new Date();
+        var futureEvents = [];
+
+        // Convert events object to array & filter out past events
+        for (var key in events) {
+          if (events.hasOwnProperty(key)) {
+            var ev = events[key];
+            var eventEnd = ev.end ? new Date(ev.end) : new Date(ev.start);
+            if (eventEnd >= now) {
+              futureEvents.push(ev);
+            }
+          }
+        }
+
+        // Sort events so the closest upcoming one is first
+        futureEvents.sort(function(a, b) {
+          return new Date(a.start) - new Date(b.start);
+        });
+
+        var nextEvent = futureEvents[0];
+        if (!nextEvent) {
+          placeholder.innerHTML = '<div class="cc-no-events">Check back soon for upcoming events!</div>';
+          return;
+        }
+
+        // Format Date and Time nicely
+        var startDt = new Date(nextEvent.start);
+        var dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+        var timeOptions = { hour: 'numeric', minute: '2-digit', hour12: true };
+        
+        var dateStr = startDt.toLocaleDateString('en-US', dateOptions);
+        var timeStr = startDt.toLocaleTimeString('en-US', timeOptions);
+
+        // Build HTML layout
+        var html = '<div class="cc-event-card">';
+        
+        if (nextEvent.flyer) {
+          html += '<div class="cc-event-image-wrap">' +
+                    '<img src="' + nextEvent.flyer + '" alt="' + nextEvent.title + '" class="cc-event-flyer" />' +
+                  '</div>';
+        }
+        
+        html += '<div class="cc-event-details">';
+        html += '  <span class="cc-event-tag">UPCOMING EVENT</span>';
+        html += '  <h2 class="cc-event-title">' + nextEvent.title + '</h2>';
+        html += '  <div class="cc-event-meta">';
+        html += '    <div class="cc-meta-item"><strong>Date:</strong> ' + dateStr + '</div>';
+        html += '    <div class="cc-meta-item"><strong>Time:</strong> ' + timeStr + '</div>';
+        if (nextEvent.location) {
+          html += '    <div class="cc-meta-item"><strong>Location:</strong> ' + nextEvent.location.split(' - ')[0] + '</div>';
+        }
+        html += '  </div>';
+        html += '  <div class="cc-event-desc">' + nextEvent.description + '</div>';
+        
+        if (nextEvent.signUp) {
+          html += '  <a href="' + nextEvent.signUp + '" class="cc-event-btn" target="_blank">Register / More Info</a>';
+        }
+        
+        html += '</div></div>';
+
+        placeholder.innerHTML = html;
+      })
+      .catch(function(err) {
+        console.error('[chabad-custom] Failed to load upcoming event:', err);
+      });
+  })();
 })();
