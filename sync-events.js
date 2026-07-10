@@ -22,7 +22,7 @@ async function syncEvents() {
 
   console.log('Fetching calendar data...');
   
-  // 2. Fetch the data using modern native fetch with a User-Agent header
+  // 2. Fetch the data using modern native fetch
   const response = await fetch(ICAL_URL, {
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
@@ -46,35 +46,51 @@ async function syncEvents() {
       const ev = webEvents[key];
       
       if (ev.type === 'VEVENT') {
+        // Fix Title object issue (handles QUOTED-PRINTABLE objects from Chabad One)
+        let titleStr = "No Title";
+        if (ev.summary) {
+          if (typeof ev.summary === 'object' && ev.summary.val) {
+            titleStr = ev.summary.val;
+          } else {
+            titleStr = String(ev.summary);
+          }
+        }
+
         let rawDesc = ev.description || "";
+        
+        // Clean up backslashes that Chabad One's exporter adds (e.g. "Sign Up\: https\:\/\/...")
+        rawDesc = rawDesc.replace(/\\/g, '');
+
         let flyerUrl = "";
-        let signUpUrl = ""; // This will hold either "Sign Up" OR "More Info" links
+        let signUpUrl = "";
 
         // --- THE SCANNER ---
-        // Hunt for Flyer link and remove it from description
-        const flyerMatch = rawDesc.match(/Flyer:\s*(https?:\/\/[^\s]+)/i);
+        // Hunt for Flyer link (matching up to a space or an HTML tag like <BR>)
+        const flyerMatch = rawDesc.match(/Flyer:\s*(https?:\/\/[^\s<]+)/i);
         if (flyerMatch) {
           flyerUrl = flyerMatch[1];
           rawDesc = rawDesc.replace(flyerMatch[0], "").trim();
         }
 
-        // Hunt for either "Sign Up:" OR "More Info:" and save it to the same signUp data point
-        const signUpMatch = rawDesc.match(/(?:Sign Up|More Info):\s*(https?:\/\/[^\s]+)/i);
+        // Hunt for either "Sign Up:" OR "More Info:" and save to signUpUrl (up to a space or HTML tag)
+        const signUpMatch = rawDesc.match(/(?:Sign Up|More Info):\s*(https?:\/\/[^\s<]+)/i);
         if (signUpMatch) {
           signUpUrl = signUpMatch[1];
           rawDesc = rawDesc.replace(signUpMatch[0], "").trim();
         }
 
-        // Clean up any weird double-spacing left behind by the removal
-        rawDesc = rawDesc.replace(/[\r\n]{3,}/g, '\n\n').trim();
+        // Clean up any trailing <BR> tags left at the end of the description after parsing
+        rawDesc = rawDesc.replace(/(?:<br\s*\/?>\s*)+$/i, '').trim();
+        // Clean up any double/triple spacing or excess <BR> tags in the middle
+        rawDesc = rawDesc.replace(/(?:<br\s*\/?>\s*){3,}/ig, '<BR><BR>').trim();
 
         // Save the neatly separated data
         db[ev.uid] = {
           uid: ev.uid,
-          title: ev.summary || "No Title",
+          title: titleStr,
           description: rawDesc,
           flyer: flyerUrl,
-          signUp: signUpUrl, // Populated whether you write "Sign Up" or "More Info"
+          signUp: signUpUrl,
           start: ev.start,
           end: ev.end,
           location: ev.location || ""
