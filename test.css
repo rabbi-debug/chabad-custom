@@ -114,3 +114,150 @@
 #footer .cs-f-social-icons a:hover {
   color: #ffffff !important;
 }
+/* ============================================================
+   EXPERIMENT: Dynamic Upcoming Event Widget Layout
+   ============================================================ */
+
+#cc-upcoming-event-placeholder {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 15px;
+}
+
+.cc-event-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid #eef0f2;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cc-event-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Flex row split layout on desktop (tablet screens and up) */
+@media (min-width: 768px) {
+  .cc-event-card {
+    flex-direction: row;
+    min-height: 420px;
+  }
+  
+  .cc-event-image-wrap {
+    flex: 1.1;
+    max-width: 50%;
+  }
+  
+  .cc-event-details {
+    flex: 1.2;
+    padding: 40px !important;
+  }
+}
+
+/* Flyer Image styling */
+.cc-event-image-wrap {
+  position: relative;
+  background: #f7f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cc-event-flyer {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Event Details Area */
+.cc-event-details {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cc-event-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #c9b788; /* Accent Gold */
+  margin-bottom: 8px;
+  display: inline-block;
+}
+
+.cc-event-title {
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: 700;
+  color: #0b2240; /* Dark Navy */
+  margin: 0 0 16px 0 !important;
+  line-height: 1.2;
+}
+
+.cc-event-meta {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f0f2f5;
+  padding-bottom: 16px;
+}
+
+.cc-meta-item {
+  font-size: 14px;
+  color: #4a5568;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.cc-meta-item strong {
+  color: #1a202c;
+  font-weight: 600;
+}
+
+.cc-event-desc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4a5568;
+  margin-bottom: 24px;
+}
+
+/* Premium Gold Action Button */
+.cc-event-btn {
+  align-self: flex-start;
+  background-color: #c9b788;
+  color: #ffffff !important;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none !important;
+  padding: 12px 28px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  box-shadow: 0 4px 12px rgba(201, 183, 136, 0.2);
+  text-align: center;
+}
+
+.cc-event-btn:hover {
+  background-color: #bfae7e;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(201, 183, 136, 0.3);
+}
+
+.cc-event-btn:active {
+  transform: translateY(1px);
+}
+
+.cc-no-events {
+  text-align: center;
+  padding: 40px;
+  color: #718096;
+  font-size: 16px;
+  background: #f7f9fa;
+  border-radius: 8px;
+  border: 1px dashed #cbd5e0;
+}
