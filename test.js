@@ -29,6 +29,22 @@ var CC_ENABLED = true;
 
   /* ============================================
      Experiments go below this line
+     /* --- 1) Footer Text Formatting Experiment --- */
+  // Find the container holding the footer text
+  var footerEl = document.querySelector('#footer .footer3') || document.querySelector('#footer .bottom_padding');
+  
+  if (footerEl) {
+    var content = footerEl.innerHTML;
+    // Look for the specific string (handles potential extra spaces just in case)
+    var targetString = /Chabad of White Plains\s*White Plains, NY\s*-\s*914-998-6724/i;
+    
+    // Replace it with our new two-line HTML structure
+    if (targetString.test(content)) {
+      var newFooterText = '<div class="cc-foot-place">Chabad of White Plains</div>' +
+                          '<div class="cc-foot-phone">White Plains, NY &bull; <a href="tel:914-998-6724">914-998-6724</a></div>';
+      footerEl.innerHTML = content.replace(targetString, newFooterText);
+    }
+  }
      ============================================ */
 
 })();
