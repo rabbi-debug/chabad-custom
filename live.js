@@ -43,5 +43,20 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
   /* ============================================
      Customizations go below this line
      ============================================ */
-
+/* --- Footer Text Formatting --- */
+  setTimeout(function() {
+    var footerEl = document.querySelector('#footer .footer3') || document.querySelector('#footer .bottom_padding');
+    
+    if (footerEl) {
+      var content = footerEl.innerHTML;
+      var targetRegex = /Chabad of White Plains[\s\S]*?White Plains,\s*NY[\s\S]*?914-998-6724/i;
+      
+      if (targetRegex.test(content)) {
+        var newFooterText = '<div class="cc-foot-place">Chabad of White Plains</div>' +
+                            '<div class="cc-foot-phone">White Plains, NY &bull; <a href="tel:914-998-6724">914-998-6724</a></div>';
+        
+        footerEl.innerHTML = content.replace(targetRegex, newFooterText);
+      }
+    }
+  }, 100);
 })();
