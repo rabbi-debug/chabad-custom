@@ -9,10 +9,21 @@
 /* live.css rules: (none yet) */
 
 /* ============================================================
-   EXPERIMENT: footer redesign
+   EXPERIMENT: footer + homepage mailing-list band redesign
+   (band selectors taken from the real homepage source)
    ============================================================ */
 
-/* ---- 1) Remove dead space between page content and footer ---- */
+/* ---- 1) Remove dead space ----
+   The homepage stacks ~130 empty <div class="clear"> spacers before
+   the footer; flatten them (clearing still works at zero height).
+   Article pages get stretched by a min-height on the content area. */
+#content div.clear {
+  height: 0 !important;
+  line-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 0;
+}
 .content-footer {
   height: 0;
   padding: 0;
@@ -29,7 +40,63 @@
   margin-bottom: 0;
 }
 
-/* ---- 2) Footer ---- */
+/* ---- 2) Mailing-list band (homepage .hp_subscribe widget) ----
+   Flat navy instead of the teal gradient; test.js fine-tunes the
+   shade to match the footer exactly. */
+.hp_subscribe .widget-4.subscribe,
+.hp_subscribe .widget-4.subscribe .wrapper,
+.hp_subscribe .widget-4.subscribe .widget_header,
+.hp_subscribe .widget-4.subscribe .widget_content {
+  background: #14315a !important;
+  background-image: none !important;
+}
+.hp_subscribe .widget-4.subscribe .wrapper {
+  padding: 34px 26px 38px !important;
+}
+
+/* Heading: tracked caps to match the footer's typography */
+.hp_subscribe .widget_header h5 {
+  color: #f2ede2 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase;
+  margin-bottom: 16px !important;
+}
+
+/* Labels + helper text legible on navy */
+.hp_subscribe fieldset label {
+  color: #e6e2d8 !important;
+}
+.hp_subscribe fieldset small {
+  color: #9fb0c8 !important;
+}
+
+/* Uniform near-white inputs with dark text (fixes the mismatched
+   teal First/Last Name fields) */
+.hp_subscribe input.co_global_input {
+  background: #fdfdfb !important;
+  color: #1f2a3a !important;
+  border: 1px solid rgba(255, 255, 255, 0.35) !important;
+  border-radius: 4px !important;
+}
+.hp_subscribe input.co_global_input::placeholder {
+  color: #6b7684;
+}
+
+/* Subscribe button: gold accent tying into the footer */
+.hp_subscribe input.buttonStyle1 {
+  background: #b08d3e !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 4px !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.hp_subscribe input.buttonStyle1:hover {
+  background: #9a7a33 !important;
+}
+
+/* ---- 3) Footer ---- */
 
 /* Hide the old full-width gray rule and the little spacer image */
 #footer .footer_hr,

@@ -30,7 +30,7 @@ var CC_ENABLED = true;
      Experiments go below this line
      ============================================ */
 
-  /* EXPERIMENT: footer redesign
+  /* EXPERIMENT A: footer redesign
      Two lines (name + tappable phone), font copied from the header. */
   (function () {
     var el = document.querySelector("#footer .footer3");
@@ -47,6 +47,30 @@ var CC_ENABLED = true;
         if (cs.fontFamily) place.style.fontFamily = cs.fontFamily;
       } catch (e) {}
     }
+  })();
+
+  /* EXPERIMENT B: mailing-list band — match the footer's navy exactly.
+     test.css already paints the band a default navy; this samples the
+     footer's actual background color and applies it so the band and
+     footer are always identical. */
+  (function () {
+    try {
+      var parts = document.querySelectorAll(
+        ".hp_subscribe .widget-4.subscribe," +
+        ".hp_subscribe .widget-4.subscribe .wrapper," +
+        ".hp_subscribe .widget-4.subscribe .widget_header," +
+        ".hp_subscribe .widget-4.subscribe .widget_content"
+      );
+      if (!parts.length) return;
+      var footer = document.getElementById("footer");
+      if (!footer) return;
+      var bg = window.getComputedStyle(footer).backgroundColor;
+      if (!bg || bg === "transparent" || bg === "rgba(0, 0, 0, 0)") return;
+      for (var i = 0; i < parts.length; i++) {
+        parts[i].style.setProperty("background-image", "none", "important");
+        parts[i].style.setProperty("background-color", bg, "important");
+      }
+    } catch (e) {}
   })();
 
 })();
