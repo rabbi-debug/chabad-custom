@@ -59,12 +59,12 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
       }
     }
   }, 100);
-   /* --- Next Upcoming Event Box --- */
+
+  /* --- Next Upcoming Event Box --- */
   (function () {
     if (type !== "home") return;
 
-    // UPDATE THIS URL to point to your live events.json file on GitHub
-    var JSON_URL = "https://raw.githubusercontent.com/rabbi-debug/chabad-custom/refs/heads/main/events.json";
+    var JSON_URL = "https://rabbi-debug.github.io/chabad-custom/events.json";
 
     function esc(s) {
       return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -72,7 +72,6 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
       });
     }
 
-    // Format the date to match the site's aesthetic
     function fmtDate(iso) {
       var d = new Date(iso);
       if (isNaN(d.getTime())) return "";
@@ -83,7 +82,6 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
       } catch (e) { return d.toLocaleString(); }
     }
 
-    // Clean up HTML tags and shorten the description
     function snippet(desc, max) {
       var t = String(desc || "").replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
       if (t.length > max) t = t.slice(0, max).replace(/\s+\S*$/, "") + "\u2026";
@@ -96,53 +94,29 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var now = Date.now();
         var list = [];
         
-        // Loop through JSON, ignore removed/past events
         for (var k in db) {
           if (!db.hasOwnProperty(k)) continue;
           var ev = db[k];
           if (ev.removedFromFeed) continue;
           var t = new Date(ev.start).getTime();
-          // Keep events that haven't finished (allowing a 4-hour buffer)
           if (!isNaN(t) && t >= now - (4 * 3600 * 1000)) list.push(ev);
         }
         
-        if (list.length === 0) return; // Exit if no future events exist
+        if (list.length === 0) return; 
         
-        // Sort chronologically and isolate the VERY NEXT event
         list.sort(function (a, b) { return new Date(a.start) - new Date(b.start); });
         var nextEvent = list[0];
 
-        // 1. Locate the insertion point (the "About" row)
         var table = document.querySelector(".hp-table");
         var aboutWidget = document.querySelector(".hp-table .widget-4.message");
         if (!table || !aboutWidget) return;
         
-        // Walk up the DOM to find the exact .hp-row containing the About widget
         var aboutRow = aboutWidget;
         while (aboutRow && aboutRow.parentNode !== table) {
            aboutRow = aboutRow.parentNode;
         }
         if (!aboutRow) return;
 
-        // 2. Build the new HTML structure
-        var section = document.createElement("div");
-        section.className = "hp-row cc-next-event-row";
-        
-        var img = nextEvent.flyer ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(nextEvent.flyer) + '&quot;)"></div>' : "";
-        var btnLabel = nextEvent.signUp ? "Sign Up" : "Learn More";
-        var btnLink = nextEvent.signUp || "/templates/events.htm";
-        var desc = snippet(nextEvent.description, 200);
-
-        // 2. Build the new HTML structure (Stripped down to use native classes)
-        var section = document.createElement("div");
-        section.className = "hp-row cc-next-event-row";
-        
-        var img = nextEvent.flyer ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(nextEvent.flyer) + '&quot;)"></div>' : "";
-        var btnLabel = nextEvent.signUp ? "Sign Up" : "Learn More";
-        var btnLink = nextEvent.signUp || "/templates/events.htm";
-        var desc = snippet(nextEvent.description, 200);
-
-        // 2. Build the new HTML structure (Stripped down to use native classes)
         var section = document.createElement("div");
         section.className = "hp-row cc-next-event-row";
         
@@ -152,9 +126,9 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var desc = snippet(nextEvent.description, 200);
 
         section.innerHTML = 
-          '<div class="wrapper">' + // Uses your native width/centering container
-             '<div class="header-title">Next Upcoming Event</div>' + // Uses your native section title styling
-             '<div class="cc-ev-box">' + // The custom flexbox card for the event itself
+          '<div class="wrapper">' + 
+             '<div class="header-title">Next Upcoming Event</div>' + 
+             '<div class="cc-ev-box">' + 
                 img +
                 '<div class="cc-ev-content">' +
                    '<h3 class="cc-ev-title">' + esc(nextEvent.title) + '</h3>' +
@@ -165,7 +139,9 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
              '</div>' +
           '</div>';
 
-        // 3. Inject it directly between the About row and the Programs row
         table.insertBefore(section, aboutRow.nextSibling);
+      })
+      .catch(function (e) { console.error("Event fetch error:", e); });
   })();
+
 })();
