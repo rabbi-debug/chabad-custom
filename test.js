@@ -142,6 +142,15 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var btnLink = nextEvent.signUp || "/templates/events.htm";
         var desc = snippet(nextEvent.description, 200);
 
+        // 2. Build the new HTML structure (Stripped down to use native classes)
+        var section = document.createElement("div");
+        section.className = "hp-row cc-next-event-row";
+        
+        var img = nextEvent.flyer ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(nextEvent.flyer) + '&quot;)"></div>' : "";
+        var btnLabel = nextEvent.signUp ? "Sign Up" : "Learn More";
+        var btnLink = nextEvent.signUp || "/templates/events.htm";
+        var desc = snippet(nextEvent.description, 200);
+
         section.innerHTML = 
           '<div class="wrapper">' + // Uses your native width/centering container
              '<div class="header-title">Next Upcoming Event</div>' + // Uses your native section title styling
