@@ -133,10 +133,19 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var btnLink = nextEvent.signUp || "/templates/events.htm";
         var desc = snippet(nextEvent.description, 200);
 
+        // 2. Build the new HTML structure (Stripped down to use native classes)
+        var section = document.createElement("div");
+        section.className = "hp-row cc-next-event-row";
+        
+        var img = nextEvent.flyer ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(nextEvent.flyer) + '&quot;)"></div>' : "";
+        var btnLabel = nextEvent.signUp ? "Sign Up" : "Learn More";
+        var btnLink = nextEvent.signUp || "/templates/events.htm";
+        var desc = snippet(nextEvent.description, 200);
+
         section.innerHTML = 
-          '<div class="cc-ev-container">' +
-             '<h2 class="cc-ev-section-title">Next Upcoming Event</h2>' +
-             '<div class="cc-ev-box">' +
+          '<div class="wrapper">' + // Uses your native width/centering container
+             '<div class="header-title">Next Upcoming Event</div>' + // Uses your native section title styling
+             '<div class="cc-ev-box">' + // The custom flexbox card for the event itself
                 img +
                 '<div class="cc-ev-content">' +
                    '<h3 class="cc-ev-title">' + esc(nextEvent.title) + '</h3>' +
@@ -149,7 +158,5 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
 
         // 3. Inject it directly between the About row and the Programs row
         table.insertBefore(section, aboutRow.nextSibling);
-      })
-      .catch(function (e) { console.error("Event fetch error:", e); });
   })();
 })();
