@@ -113,3 +113,117 @@
 #footer .cs-f-social-icons a:hover {
   color: #ffffff !important;
 }
+/* ============================================================
+   Custom Next Upcoming Event Box
+   ============================================================ */
+
+.cc-next-event-row {
+  background-color: #f9f9f9; /* Subtle contrast to separate it from the white rows */
+  padding: 60px 10px;
+}
+
+.cc-ev-container {
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Section Header to match the "Programs" and "Latest Photos" headers */
+.cc-ev-section-title {
+  color: #0F6CB8;
+  font-family: Muli, sans-serif;
+  font-size: 36px;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+}
+
+/* The Event Card */
+.cc-ev-box {
+  display: flex;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  overflow: hidden;
+  text-align: left;
+  margin: 0 auto;
+  max-width: 850px;
+}
+
+/* Flyer Image */
+.cc-ev-img {
+  flex: 0 0 40%;
+  background-size: cover;
+  background-position: center;
+  min-height: 280px;
+}
+
+/* Event Details */
+.cc-ev-content {
+  flex: 1;
+  padding: 35px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cc-ev-title {
+  color: #0F6CB8;
+  font-size: 26px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.cc-ev-date {
+  color: #2fd3c2;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.cc-ev-desc {
+  color: #626262;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* Sign Up Button */
+.cc-ev-btn {
+  align-self: flex-start;
+  background: #0F6CB8;
+  color: #fff !important;
+  padding: 12px 28px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+.cc-ev-btn:hover {
+  background: #2fd3c2;
+  text-decoration: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .cc-ev-section-title {
+    font-size: 28px;
+  }
+  .cc-ev-box {
+    flex-direction: column;
+  }
+  .cc-ev-img {
+    min-height: 220px;
+  }
+  .cc-ev-content {
+    padding: 25px;
+  }
+}
