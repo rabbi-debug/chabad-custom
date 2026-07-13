@@ -113,3 +113,104 @@
 #footer .cs-f-social-icons a:hover {
   color: #ffffff !important;
 }
+
+/* ============================================================
+   EXPERIMENT (TEST ONLY): Upcoming Events homepage section
+   ============================================================ */
+.cc-events-row {
+  position: relative;
+  padding: 36px 0 40px;
+}
+/* Full-bleed background band; the color is set by test.js so the
+   homepage's white/gray alternation stays intact */
+.cc-events-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: var(--cc-band, #ffffff);
+  z-index: 0;
+}
+/* Prevent a sliver of sideways scroll from the full-bleed band */
+html.cc-type-home body {
+  overflow-x: hidden;
+}
+.cc-events-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.cc-events-title {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.cc-ev-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.cc-ev-card {
+  background: #ffffff;
+  border: 1px solid #e6e4de;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+  width: 300px;
+  text-align: left;
+}
+.cc-ev-img {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+}
+.cc-ev-body {
+  padding: 14px 16px 18px;
+}
+.cc-ev-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+.cc-ev-date {
+  font-size: 13px;
+  color: #6c6c68;
+  margin-bottom: 12px;
+  letter-spacing: 0.03em;
+}
+.cc-ev-btn {
+  display: inline-block;
+  padding: 7px 16px;
+  border: 1px solid #b08d3e;
+  border-radius: 4px;
+  color: #8a6d2c;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.cc-ev-btn:hover {
+  background: #b08d3e;
+  color: #ffffff;
+}
+.cc-ev-more {
+  text-align: center;
+  margin-top: 22px;
+  font-size: 13px;
+}
+.cc-ev-more a {
+  color: #6c6c68;
+  text-decoration: none;
+}
+.cc-ev-more a:hover {
+  color: #b08d3e;
+}
+@media (max-width: 700px) {
+  .cc-ev-card {
+    width: 100%;
+  }
+}
