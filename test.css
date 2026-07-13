@@ -115,14 +115,15 @@
 }
 
 /* ============================================================
-   EXPERIMENT (TEST ONLY): Upcoming Events homepage section
+   EXPERIMENT (TEST ONLY): Upcoming Events homepage slider
+   Band + heading colors are sampled from the live page by test.js
+   so everything stays native.
    ============================================================ */
 .cc-events-row {
   position: relative;
   padding: 36px 0 40px;
 }
-/* Full-bleed background band; the color is set by test.js so the
-   homepage's white/gray alternation stays intact */
+/* Full-bleed background band; color set by test.js from native values */
 .cc-events-row::before {
   content: "";
   position: absolute;
@@ -131,60 +132,75 @@
   left: 50%;
   width: 100vw;
   transform: translateX(-50%);
-  background: var(--cc-band, #ffffff);
+  background: var(--cc-band, transparent);
   z-index: 0;
 }
-/* Prevent a sliver of sideways scroll from the full-bleed band */
 html.cc-type-home body {
   overflow-x: hidden;
 }
 .cc-events-inner {
   position: relative;
   z-index: 1;
-  max-width: 960px;
+  width: 100%;
   margin: 0 auto;
 }
 .cc-events-title {
   text-align: center;
   margin-bottom: 24px;
 }
-.cc-ev-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-.cc-ev-card {
-  background: #ffffff;
+
+/* ---- Slider: one event at a time, full section width ---- */
+.cc-ev-slider {
+  position: relative;
+  overflow: hidden;
   border: 1px solid #e6e4de;
   border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
-  overflow: hidden;
-  width: 300px;
-  text-align: left;
+  background: #ffffff;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.07);
+}
+.cc-ev-track {
+  display: flex;
+  transition: transform 0.45s ease;
+}
+.cc-ev-slide {
+  flex: 0 0 100%;
+  display: flex;
+  min-height: 260px;
 }
 .cc-ev-img {
-  height: 160px;
+  flex: 0 0 42%;
   background-size: cover;
   background-position: center;
 }
 .cc-ev-body {
-  padding: 14px 16px 18px;
+  flex: 1;
+  padding: 28px 34px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
 }
 .cc-ev-title {
   font-weight: 600;
-  font-size: 16px;
-  margin-bottom: 6px;
+  font-size: 21px;
+  margin-bottom: 8px;
 }
 .cc-ev-date {
-  font-size: 13px;
+  font-size: 14px;
   color: #6c6c68;
   margin-bottom: 12px;
   letter-spacing: 0.03em;
 }
+.cc-ev-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #55554f;
+  margin-bottom: 18px;
+}
 .cc-ev-btn {
   display: inline-block;
-  padding: 7px 16px;
+  align-self: flex-start;
+  padding: 8px 20px;
   border: 1px solid #b08d3e;
   border-radius: 4px;
   color: #8a6d2c;
@@ -197,9 +213,54 @@ html.cc-type-home body {
   background: #b08d3e;
   color: #ffffff;
 }
+
+/* Arrows */
+.cc-ev-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 36px;
+  text-align: center;
+  color: #55554f;
+  z-index: 2;
+  padding: 0;
+}
+.cc-ev-arrow:hover {
+  color: #b08d3e;
+}
+.cc-ev-prev { left: 10px; }
+.cc-ev-next { right: 10px; }
+
+/* Dots */
+.cc-ev-dots {
+  text-align: center;
+  margin-top: 14px;
+}
+.cc-ev-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #c9c7c0;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.cc-ev-dot.cc-on {
+  background: #b08d3e;
+}
+
+/* View-all link */
 .cc-ev-more {
   text-align: center;
-  margin-top: 22px;
+  margin-top: 18px;
   font-size: 13px;
 }
 .cc-ev-more a {
@@ -209,8 +270,16 @@ html.cc-type-home body {
 .cc-ev-more a:hover {
   color: #b08d3e;
 }
+
+/* Mobile: stack image above text */
 @media (max-width: 700px) {
-  .cc-ev-card {
-    width: 100%;
+  .cc-ev-slide {
+    flex-direction: column;
+  }
+  .cc-ev-img {
+    flex: 0 0 180px;
+  }
+  .cc-ev-body {
+    padding: 20px 22px;
   }
 }

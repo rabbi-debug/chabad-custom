@@ -60,16 +60,20 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
     }
   }, 100);
 
-  /* --- EXPERIMENT (TEST ONLY): "Upcoming Events" homepage section ---
-     Inserted between the About and Programs sections. Reads events from
-     the calendar archive (events.json) maintained by the daily GitHub
-     sync, and repaints the homepage's alternating white/gray bands so
-     the rhythm stays intact after the new section is added. */
+  /* --- EXPERIMENT (TEST ONLY): "Upcoming Events" homepage slider ---
+     One event at a time, full section width, inserted between About
+     and Programs. Reads events.json (the daily calendar archive).
+     All colors/heading styles are SAMPLED FROM THE LIVE PAGE so the
+     section stays native: the heading clones the Programs title's
+     computed style, and the band colors are read from the existing
+     sections. If the theme re-alternates section colors by itself
+     after insertion, this code touches nothing. */
   (function () {
     if (type !== "home") return;
 
     var JSON_URL = "https://rabbi-debug.github.io/chabad-custom/events.json";
     var isPreview = /(^|\s)cc-preview(\s|$)/.test(document.documentElement.className);
+    var WHITE = "rgb(255, 255, 255)";
 
     function esc(s) {
       return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
@@ -87,20 +91,29 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
       } catch (e) { return d.toLocaleString(); }
     }
 
-    function visibleBg(el) {
-      var c = window.getComputedStyle(el).backgroundColor;
-      if (!c || c === "transparent" || c === "rgba(0, 0, 0, 0)") return null;
-      return c;
+    function snippet(desc, max) {
+      var t = String(desc || "").replace(/<br\s*\/?>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+      if (t.length > max) t = t.slice(0, max).replace(/\s+\S*$/, "") + "\u2026";
+      return t;
     }
 
-    /* Find which element actually carries a row's band color (if any) */
-    function paintTarget(row) {
-      if (visibleBg(row)) return row;
-      var kids = row.querySelectorAll("*");
-      for (var i = 0; i < kids.length && i < 60; i++) {
-        if (visibleBg(kids[i])) return kids[i];
+    function bgOf(el, pseudo) {
+      try {
+        var c = window.getComputedStyle(el, pseudo || null).backgroundColor;
+        return (c && c !== "transparent" && c !== "rgba(0, 0, 0, 0)") ? c : null;
+      } catch (e) { return null; }
+    }
+    /* A row's visible band color: the row itself, its ::before/::after,
+       or a full-width child — whichever is actually painted */
+    function bandColor(row) {
+      var c = bgOf(row) || bgOf(row, "::before") || bgOf(row, "::after");
+      if (c) return c;
+      var kids = row.children;
+      for (var i = 0; i < kids.length; i++) {
+        c = bgOf(kids[i]) || bgOf(kids[i], "::before");
+        if (c) return c;
       }
-      return row; /* nothing painted: use the row itself as the canvas */
+      return null;
     }
 
     function build(events) {
@@ -111,60 +124,126 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
       while (aboutRow && aboutRow.parentNode !== table) aboutRow = aboutRow.parentNode;
       if (!aboutRow) return;
 
-      /* ---- Build the section ---- */
+      /* ---- Build the slider ---- */
       var section = document.createElement("div");
       section.className = "hp-row cc-events-row";
-      var cards = "";
+      var slides = "";
       for (var i = 0; i < events.length; i++) {
         var ev = events[i];
         var img = ev.flyer ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(ev.flyer) + '&quot;)"></div>' : "";
         var btn = ev.signUp
           ? '<a class="cc-ev-btn" href="' + esc(ev.signUp) + '">Sign Up</a>'
           : '<a class="cc-ev-btn" href="/templates/events.htm">Details</a>';
-        cards +=
-          '<div class="cc-ev-card">' + img +
+        var desc = snippet(ev.description, 220);
+        slides +=
+          '<div class="cc-ev-slide">' + img +
           '<div class="cc-ev-body">' +
           '<div class="cc-ev-title">' + esc(ev.title) + "</div>" +
           '<div class="cc-ev-date">' + esc(fmtDate(ev.start)) + "</div>" +
+          (desc ? '<div class="cc-ev-desc">' + esc(desc) + "</div>" : "") +
           btn +
           "</div></div>";
       }
+      var multi = events.length > 1;
       section.innerHTML =
         '<div class="cc-events-inner">' +
-        '<div class="header-title cc-events-title">Upcoming Events</div>' +
-        '<div class="cc-ev-grid">' + cards + "</div>" +
+        '<div class="cc-events-title">Upcoming Events</div>' +
+        '<div class="cc-ev-slider">' +
+        '<div class="cc-ev-track">' + slides + "</div>" +
+        (multi ? '<button class="cc-ev-arrow cc-ev-prev" aria-label="Previous event">\u2039</button>' +
+                 '<button class="cc-ev-arrow cc-ev-next" aria-label="Next event">\u203a</button>' : "") +
+        "</div>" +
+        (multi ? '<div class="cc-ev-dots"></div>' : "") +
         '<div class="cc-ev-more"><a href="/templates/events.htm">View all upcoming events \u00bb</a></div>' +
         "</div>";
       table.insertBefore(section, aboutRow.nextSibling);
 
-      /* ---- Keep the white/gray alternation intact ---- */
+      /* ---- Heading: clone the computed style of the native Programs title ---- */
+      try {
+        var ref = document.querySelector(".sneak-peek-container .header-title") || document.querySelector(".header-title");
+        var titleEl = section.querySelector(".cc-events-title");
+        if (ref && titleEl) {
+          var cs = window.getComputedStyle(ref);
+          ["fontFamily", "fontSize", "fontWeight", "color", "letterSpacing", "textTransform", "lineHeight"].forEach(function (p) {
+            titleEl.style[p] = cs[p];
+          });
+          titleEl.style.textAlign = "center";
+        }
+      } catch (e) {}
+
+      /* ---- Band colors: keep everything native ---- */
       try {
         var rows = [];
         for (var r = 0; r < table.children.length; r++) {
           if (/(^|\s)hp-row(\s|$)/.test(table.children[r].className)) rows.push(table.children[r]);
         }
-        /* Sample the "gray" band color from an existing painted row */
-        var grayC = null;
-        for (var g = 0; g < rows.length; g++) {
-          if (rows[g] === section) continue;
-          var c = visibleBg(paintTarget(rows[g]));
-          if (c && c !== "rgb(255, 255, 255)") { grayC = c; break; }
+        var myIdx = rows.indexOf(section);
+
+        /* Sample the two native colors from the OTHER rows */
+        var c0 = bandColor(rows[0]) || WHITE; /* anchor: first row keeps its color */
+        var alt = null;
+        for (var s = 1; s < rows.length; s++) {
+          if (rows[s] === section) continue;
+          var sc = bandColor(rows[s]) || WHITE;
+          if (sc !== c0) { alt = sc; break; }
         }
-        grayC = grayC || "#f4f4f4";
-        var whiteC = "#ffffff";
-        /* Keep the first row's current color as the anchor, then alternate */
-        var first = visibleBg(paintTarget(rows[0]));
-        var colors = (!first || first === "rgb(255, 255, 255)") ? [whiteC, grayC] : [first, whiteC];
+        if (!alt) alt = (c0 === WHITE) ? "rgb(244, 244, 244)" : WHITE;
+
+        /* Did the theme already re-alternate by itself (nth-child based)?
+           Check whether every non-section row already matches the pattern. */
+        var pattern = [c0, alt];
+        var nativeHandled = true;
         for (var q = 0; q < rows.length; q++) {
-          var color = colors[q % 2];
-          if (rows[q] === section) {
-            /* our band paints via its full-bleed ::before */
-            section.style.setProperty("--cc-band", color);
-          } else {
-            paintTarget(rows[q]).style.setProperty("background-color", color, "important");
+          if (rows[q] === section) continue;
+          if ((bandColor(rows[q]) || WHITE) !== pattern[q % 2]) { nativeHandled = false; break; }
+        }
+
+        /* My band always takes its slot's color (exact native value) */
+        section.style.setProperty("--cc-band", pattern[myIdx % 2]);
+
+        if (!nativeHandled) {
+          /* Shift the rows below to keep the alternation, using ONLY the
+             two sampled native colors. Overrides cover the row and its
+             ::before/::after, whichever the theme actually paints. */
+          var st = document.createElement("style");
+          st.textContent =
+            ".cc-band-0, .cc-band-0::before, .cc-band-0::after { background-color: " + pattern[0] + " !important; }" +
+            ".cc-band-1, .cc-band-1::before, .cc-band-1::after { background-color: " + pattern[1] + " !important; }";
+          document.head.appendChild(st);
+          for (var w = myIdx + 1; w < rows.length; w++) {
+            rows[w].className += " cc-band-" + (w % 2);
           }
         }
       } catch (e) {}
+
+      /* ---- Slider behavior ---- */
+      if (multi) {
+        var track = section.querySelector(".cc-ev-track");
+        var dotsEl = section.querySelector(".cc-ev-dots");
+        var idx = 0, total = events.length, timer = null;
+        var dots = [];
+        for (var d = 0; d < total; d++) {
+          var dot = document.createElement("span");
+          dot.className = "cc-ev-dot" + (d === 0 ? " cc-on" : "");
+          (function (n) { dot.onclick = function () { go(n); restart(); }; })(d);
+          dotsEl.appendChild(dot);
+          dots.push(dot);
+        }
+        function go(n) {
+          idx = (n + total) % total;
+          track.style.transform = "translateX(-" + (idx * 100) + "%)";
+          for (var j = 0; j < dots.length; j++) dots[j].className = "cc-ev-dot" + (j === idx ? " cc-on" : "");
+        }
+        function restart() {
+          if (timer) clearInterval(timer);
+          timer = setInterval(function () { go(idx + 1); }, 6000);
+        }
+        section.querySelector(".cc-ev-prev").onclick = function () { go(idx - 1); restart(); };
+        section.querySelector(".cc-ev-next").onclick = function () { go(idx + 1); restart(); };
+        section.onmouseenter = function () { if (timer) clearInterval(timer); timer = null; };
+        section.onmouseleave = restart;
+        restart();
+      }
     }
 
     fetch(JSON_URL + (isPreview ? "?t=" + Date.now() : ""))
@@ -180,7 +259,7 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
           if (!isNaN(t) && t >= cutoff) list.push(ev);
         }
         list.sort(function (a, b) { return String(a.start).localeCompare(String(b.start)); });
-        if (list.length) build(list.slice(0, 3));
+        if (list.length) build(list.slice(0, 5));
       })
       .catch(function (e) { try { console.log("[chabad-custom] events section skipped:", e); } catch (e2) {} });
   })();
