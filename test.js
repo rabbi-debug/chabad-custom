@@ -64,7 +64,7 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
     if (type !== "home") return;
 
     // UPDATE THIS URL to point to your live events.json file on GitHub
-    var JSON_URL = "https://rabbi-debug.github.io/chabad-custom/events.json";
+    var JSON_URL = "https://raw.githubusercontent.com/rabbi-debug/chabad-custom/refs/heads/main/events.json";
 
     function esc(s) {
       return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
