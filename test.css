@@ -118,33 +118,35 @@
    Custom Next Upcoming Event Box
    ============================================================ */
 
+/* ============================================================
+   Custom Next Upcoming Event Box - Updated Final
+   ============================================================ */
+
 .cc-next-event-row {
-  background-color: #f9f9f9; 
+  background-color: #f9f9f9; /* Reverted to your original alternating gray */
   padding: 60px 10px;
 }
 
-/* The Event Card */
 .cc-ev-box {
   display: flex;
   background: #fff;
-  border: 1px solid #e2e2e2;
+  border: 1px solid #e2e2e2; /* Reverted to your original border */
   border-radius: 4px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06); /* Reverted to your original shadow */
   overflow: hidden;
   text-align: left;
   margin: 0 auto;
   max-width: 850px;
 }
 
-/* Flyer Image */
 .cc-ev-img {
-  flex: 0 0 40%;
-  background-size: cover;
+  flex: 0 0 45%; /* Applied proportion change */
+  background-size: contain; /* Prevents horizontal cropping */
+  background-repeat: no-repeat; /* Prevents the image from tiling */
   background-position: center;
   min-height: 280px;
 }
 
-/* Event Details */
 .cc-ev-content {
   flex: 1;
   padding: 35px 40px;
@@ -155,16 +157,16 @@
 
 .cc-ev-title {
   color: #0F6CB8;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 700;
   margin-bottom: 8px;
-  line-height: 1.2;
+  line-height: 1.3;
 }
 
 .cc-ev-date {
   color: #2fd3c2;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px; /* Proportionally scaled down slightly */
   text-transform: uppercase;
   margin-bottom: 15px;
   letter-spacing: 0.5px;
@@ -172,22 +174,22 @@
 
 .cc-ev-desc {
   color: #626262;
-  font-size: 16px;
+  font-size: 15px;
   line-height: 1.6;
   margin-bottom: 25px;
 }
 
-/* Sign Up Button */
 .cc-ev-btn {
   align-self: flex-start;
   background: #0F6CB8;
   color: #fff !important;
-  padding: 12px 28px;
+  padding: 10px 24px; /* Applied button sizing change */
+  font-size: 14px;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: 1px;
   text-decoration: none;
-  border-radius: 2px;
+  border-radius: 3px;
   transition: background 0.3s ease;
 }
 
@@ -207,4 +209,5 @@
   .cc-ev-content {
     padding: 25px;
   }
+}
 }
