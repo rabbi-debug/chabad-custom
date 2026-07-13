@@ -1,277 +1,62 @@
 /* ============================================================
-   TEST styles — only visible in preview mode (bookmarklet ON).
-   Visitors never load this file.
-   Note: in preview mode this file REPLACES live.css, so when
-   testing, this file should contain live.css's rules plus the
-   new experiment.
+   chabadwhiteplains.com — LIVE scripts (all visitors see this)
+   Loaded on every page by the footer snippet.
    ============================================================ */
 
-/* live.css rules: (none yet) */
+var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customizations site-wide */
 
-/* ============================================================
-   EXPERIMENT: footer redesign + dead-space cleanup
-   (email sign-up band left at the site's default styling)
-   ============================================================ */
-
-/* ---- 1) Remove dead space ----
-   The homepage stacks ~130 empty <div class="clear"> spacers before
-   the footer; flatten them (clearing still works at zero height).
-   Article pages get stretched by a min-height on the content area. */
-#content div.clear {
-  height: 0 !important;
-  line-height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  font-size: 0;
-}
-.content-footer {
-  height: 0;
-  padding: 0;
-  margin: 0;
-}
-#content,
-#BodyContainer,
-.body_container,
-.sites-article article {
-  min-height: 0 !important;
-}
-.sites-article article {
-  padding-bottom: 12px;
-  margin-bottom: 0;
-}
-
-/* ---- 2) Footer ---- */
-
-/* Hide the old full-width gray rule and the little spacer image */
-#footer .footer_hr,
-#footer .footer_inner_container > img {
-  display: none;
-}
-
-/* Tighter overall block, centered */
-#footer {
-  padding-top: 26px !important;
-  padding-bottom: 20px !important;
-}
-#footer .footer_inner_container {
-  text-align: center;
-  padding: 0;
-  line-height: 1.5;
-}
-#footer .bottom_padding {
-  padding-bottom: 8px;
-}
-
-/* The inner wrapper around the name/phone/copyright: no padding */
-#footer .bottom_padding.clear_float {
-  padding: 0 !important;
-}
-
-/* The name + phone block: no padding of its own */
-#footer .footer3 {
-  padding: 0 !important;
-}
-
-/* Line 1: The organization name */
-#footer .cc-foot-place {
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: #ffffff; /* Crisp white for better contrast */
-  margin-bottom: 4px; /* Adds a little breathing room between the lines */
-}
-
-/* Line 2: The address and phone number */
-#footer .cc-foot-phone {
-  margin: 0 !important;
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  color: #e0e0e0; /* Slightly softer white/grey for visual hierarchy */
-}
-
-/* Make the phone number a tappable gold link */
-#footer .cc-foot-phone a {
-  color: #c9b788;
-  text-decoration: none;
-  letter-spacing: 0.12em;
-}
-
-#footer .cc-foot-phone a:hover {
-  color: #ffffff;
-}
-
-/* Social icons: larger, lighter, with a hover state */
-#footer .cs-f-social-icons {
-  margin-top: 16px;
-}
-#footer .cs-f-social-icons a {
-  font-size: 19px !important;
-  color: #c9b788 !important;
-  margin: 0 10px;
-  transition: color 0.15s ease;
-}
-#footer .cs-f-social-icons a:hover {
-  color: #ffffff !important;
-}
-
-/* ============================================================
-   EXPERIMENT: Dynamic Upcoming Event Widget Layout
-   ============================================================ */
-
-#cc-upcoming-event-placeholder {
-  max-width: 960px;
-  margin: 40px auto;
-  padding: 0 15px;
-}
-
-/* Spacing and alignments for the automated injection engine on the homepage */
-.hp-table .cc-automated-event-row {
-  margin: 0 0 40px 0 !important;
-  padding: 0 !important;
-  width: 100%;
-}
-
-.cc-event-card {
-  display: flex;
-  flex-direction: column;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  border: 1px solid #eef0f2;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  max-width: 960px; /* Force structural alignment match with desktop grid */
-  margin: 0 auto;   /* Center item cleanly within parent row view */
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.cc-event-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-}
-
-/* Flex row split layout on desktop (tablet screens and up) */
-@media (min-width: 768px) {
-  .cc-event-card {
-    flex-direction: row;
-    min-height: 420px;
+(function () {
+  if (!CC_ENABLED) {
+    /* Remove the injected stylesheet(s) so the site returns to stock */
+    var links = document.querySelectorAll('link[href*="rabbi-debug.github.io/chabad-custom"]');
+    for (var i = 0; i < links.length; i++) links[i].parentNode.removeChild(links[i]);
+    return;
   }
-  
-  .cc-event-image-wrap {
-    flex: 1.1;
-    max-width: 50%;
-  }
-  
-  .cc-event-details {
-    flex: 1.2;
-    padding: 40px !important;
-  }
-}
 
-/* Flyer Image styling container */
-.cc-event-image-wrap {
-  position: relative;
-  background: #faf9f6; /* Soft warm backdrop that complements natural paper flyers */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px; /* Adds safe breathing room so flyer doesn't touch the card borders */
-  box-sizing: border-box;
-}
+  /* ---- Page registry: aid number -> page type (manual overrides) ---- */
+  var PAGE_TYPES = {
+    "6072929": "info", /* About */
+    "6528138": "info"  /* Kosher Explained */
+  };
 
-.cc-event-flyer {
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* Prevents text cropping by fitting the whole image naturally */
-  display: block;
-}
+  /* ---- Identify the current page ---- */
+  var m = location.pathname.match(/\/aid\/(\d+)\//);
+  var aid = m ? m[1] : null;
+  var type = (aid && PAGE_TYPES[aid]) || null;
 
-/* Event Details Area */
-.cc-event-details {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+  /* Auto-detect form pages: Chabad One puts a "form" class on <body>
+     of every form page, so new forms are recognized automatically. */
+  if (!type && /(^|\s)form(\s|$)/.test(document.body.className)) type = "form";
 
-.cc-event-tag {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: #c9b788; /* Accent Gold */
-  margin-bottom: 8px;
-  display: inline-block;
-}
+  /* Auto-detect the homepage (no aid in URL) */
+  if (!type && (location.pathname === "/" || /^\/default\.asp/i.test(location.pathname))) type = "home";
 
-.cc-event-title {
-  font-family: inherit;
-  font-size: 28px;
-  font-weight: 700;
-  color: #0b2240; /* Dark Navy */
-  margin: 0 0 16px 0 !important;
-  line-height: 1.2;
-}
+  if (type) document.documentElement.className += " cc-type-" + type;
 
-.cc-event-meta {
-  margin-bottom: 20px;
-  border-bottom: 1px solid #f0f2f5;
-  padding-bottom: 16px;
-}
+  /* Proof-of-life message (visible in the browser console) */
+  try { console.log("[chabad-custom] live.js loaded", { aid: aid, type: type }); } catch (e) {}
 
-.cc-meta-item {
-  font-size: 14px;
-  color: #4a5568;
-  margin-bottom: 6px;
-  line-height: 1.4;
-}
+  /* ---- Helpers for page-specific JS ---- */
+  function onPage(id, fn) { if (aid === String(id)) fn(); }
+  function onType(t, fn) { if (type === t) fn(); }
 
-.cc-meta-item strong {
-  color: #1a202c;
-  font-weight: 600;
-}
-
-.cc-event-desc {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #4a5568;
-  margin-bottom: 24px;
-}
-
-/* Premium Gold Action Button */
-.cc-event-btn {
-  align-self: flex-start;
-  background-color: #c9b788;
-  color: #ffffff !important;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none !important;
-  padding: 12px 28px;
-  border-radius: 6px;
-  letter-spacing: 0.05em;
-  transition: background-color 0.15s ease, transform 0.1s ease;
-  box-shadow: 0 4px 12px rgba(201, 183, 136, 0.2);
-  text-align: center;
-}
-
-.cc-event-btn:hover {
-  background-color: #bfae7e;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(201, 183, 136, 0.3);
-}
-
-.cc-event-btn:active {
-  transform: translateY(1px);
-}
-
-.cc-no-events {
-  text-align: center;
-  padding: 40px;
-  color: #718096;
-  font-size: 16px;
-  background: #f7f9fa;
-  border-radius: 8px;
-  border: 1px dashed #cbd5e0;
-}
+  /* ============================================
+     Customizations go below this line
+     ============================================ */
+/* --- Footer Text Formatting --- */
+  setTimeout(function() {
+    var footerEl = document.querySelector('#footer .footer3') || document.querySelector('#footer .bottom_padding');
+    
+    if (footerEl) {
+      var content = footerEl.innerHTML;
+      var targetRegex = /Chabad of White Plains[\s\S]*?White Plains,\s*NY[\s\S]*?914-998-6724/i;
+      
+      if (targetRegex.test(content)) {
+        var newFooterText = '<div class="cc-foot-place">Chabad of White Plains</div>' +
+                            '<div class="cc-foot-phone">White Plains, NY &bull; <a href="tel:914-998-6724">914-998-6724</a></div>';
+        
+        footerEl.innerHTML = content.replace(targetRegex, newFooterText);
+      }
+    }
+  }, 100);
+})();
