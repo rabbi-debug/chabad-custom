@@ -117,26 +117,13 @@
    Custom Next Upcoming Event Box
    ============================================================ */
 
+/* ============================================================
+   Custom Next Upcoming Event Box
+   ============================================================ */
+
 .cc-next-event-row {
-  background-color: #f9f9f9; /* Subtle contrast to separate it from the white rows */
+  background-color: #f9f9f9; 
   padding: 60px 10px;
-}
-
-.cc-ev-container {
-  max-width: 960px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-/* Section Header to match the "Programs" and "Latest Photos" headers */
-.cc-ev-section-title {
-  color: #0F6CB8;
-  font-family: Muli, sans-serif;
-  font-size: 36px;
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin-bottom: 30px;
 }
 
 /* The Event Card */
@@ -214,9 +201,6 @@
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .cc-ev-section-title {
-    font-size: 28px;
-  }
   .cc-ev-box {
     flex-direction: column;
   }
