@@ -122,6 +122,10 @@
    Custom Next Upcoming Event Box - Updated Final
    ============================================================ */
 
+/* ============================================================
+   Custom Next Upcoming Event Box - Updated Final
+   ============================================================ */
+
 .cc-next-event-row {
   background-color: #f9f9f9; /* Reverted to your original alternating gray */
   padding: 60px 10px;
@@ -209,5 +213,4 @@
   .cc-ev-content {
     padding: 25px;
   }
-}
 }
