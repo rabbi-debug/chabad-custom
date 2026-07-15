@@ -120,7 +120,7 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var section = document.createElement("div");
         section.className = "hp-row cc-next-event-row";
         
-        var img = nextEvent.flyer ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(nextEvent.flyer) + '&quot;)"></div>' : "";
+        var img = nextEvent.flyer ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(nextEvent.flyer) + '&quot;)"><img src="' + esc(nextEvent.flyer) + '" class="cc-mobile-flyer" /></div>' : "";
         var btnLabel = nextEvent.signUp ? "Sign Up" : "Learn More";
         var btnLink = nextEvent.signUp || "/templates/events.htm";
         var desc = snippet(nextEvent.description, 200);
