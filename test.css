@@ -137,10 +137,10 @@
 
 .cc-ev-img {
   flex: 0 0 45%;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
-  min-height: 280px;
+  background-position: left center;
+  min-height: 260px;
 }
 
 .cc-ev-content {
