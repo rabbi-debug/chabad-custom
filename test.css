@@ -197,11 +197,15 @@
 @media (max-width: 768px) {
   .cc-ev-box {
     flex-direction: column;
+    text-align: center; /* Centers the text on mobile */
   }
   .cc-ev-img {
     min-height: 220px;
   }
   .cc-ev-content {
     padding: 25px;
+  }
+  .cc-ev-btn {
+    align-self: center; /* Centers the button on mobile */
   }
 }
