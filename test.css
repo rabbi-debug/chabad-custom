@@ -194,18 +194,35 @@
   text-decoration: none;
 }
 
+/* Hide the real image on desktop so the original layout remains untouched */
+.cc-mobile-flyer {
+  display: none;
+}
+
+/* Updated Mobile View Settings */
 @media (max-width: 768px) {
   .cc-ev-box {
     flex-direction: column;
-    text-align: center; /* Centers the text on mobile */
+    text-align: center;
   }
+  
   .cc-ev-img {
-    min-height: 220px;
+    flex: none;
+    background-image: none !important; /* Turns off the inline background image */
+    min-height: 0; /* Removes the fixed desktop height */
   }
+  
+  .cc-mobile-flyer {
+    display: block; /* Reveals the real image only on mobile */
+    width: 100%;
+    height: auto; /* This forces the height to perfectly match the flyer! */
+  }
+  
   .cc-ev-content {
     padding: 25px;
   }
+  
   .cc-ev-btn {
-    align-self: center; /* Centers the button on mobile */
+    align-self: center;
   }
 }
