@@ -1,58 +1,186 @@
 <!--
-  Snapshot: Homepage (/) - CUSTOM HOME PAGE template - COMPLETE
-  Captured 2026-07-10 from view-source. Trimmed for reference use:
-  - latest-photos image JSON, analytics, and nav submenu internals condensed
-  All class names, IDs, and structural elements preserved.
+  Snapshot: Homepage (/) — FULL LIVE DOM
+  Captured 2026-07-16 via Chrome outerHTML copy (post-JS, includes our injected elements).
 
   KEY FACTS:
-  - URL is / (or /default.asp) - NO aid number, so the loader's cc-aid-* class
-    is NOT added here. But homepage widget classes are unique to the homepage,
-    so targeting them directly is effectively homepage-only scoping.
-  - Body classes: lang_en dir_ltr cco_body   (no sites-article, no form)
+  - URL is / — NO aid number, so cc-aid-* class is NOT added by the loader.
+    Body classes: lang_en dir_ltr cco_body home   (cc-type-home added by live.js)
   - Internal page id: primaryArticleId 5618929 ("Custom Home Page")
-  - Both chabad-custom loader snippets confirmed installed.
+  - Both chabad-custom loader snippets confirmed installed and loading live.css / live.js.
+  - Our footer customizations (cc-foot-place, cc-foot-phone) confirmed rendering.
+
+  HOMEPAGE ROW ORDER (inside .hp-table):
+    1. .hp-row.hp-row-first   — Hero slider (.widget-4.promo_slider)
+    2. .hp-row                — About section (.widget-4.message)
+       *** Our event box JS inserts a new .hp-row AFTER this row ***
+    3. .hp-row                — Programs grid (.sneak-peek-container)
+    4. .hp-row                — Latest Photos (.widget-4.latest_photos)
+    5. .hp-row.hp_content_wrapper — 3-column: Upcoming Events + Shabbat & Holidays + Daily Thought
+    6. .hp-row.hp_subscribe   — Mailing list (.widget-4.subscribe)
 
   SELECTOR CHEAT SHEET (homepage):
-    Layout grid:        .hp-table > .hp-row (first row: .hp-row-first)
-    Widget shell:       .widget-4 (+ variant class), inner .wrapper,
-                        header .widget_header > h5, body .widget_content
-    Hero slider:        .widget-4.promo_slider ; slides .slider > .slides >
-                        .slide_wrapper img ; captions ul.captionList li.cycle-html-caption
-                        (caption title inside <big>), link a.readMore
-    About message box:  .widget-4.message .widget_content.message_format ; a.readMore
-    Programs grid:      .sneak-peek-container ; section title .header-title ;
-                        tiles .sneak-peek-item (item-1..6, odd/even) ;
-                        tile title h6.title_only a ; image a.thumbnail img
-                        (image set via background-image on spacer img)
-    Latest photos:      .widget-4.latest_photos (populated by JS from Facebook/site)
+    Layout grid:        .hp-table > .hp-row   (first row also has .hp-row-first)
+    Widget shell:       [class*="widget-"] > .wrapper > .widget_header > h5
+                                             > .widget_content
+    Hero slider:        .widget-4.promo_slider .slider .slides .slide_wrapper
+                        Captions: ul.captionList li.cycle-html-caption
+                        Caption title: <big>text</big> inside <span>
+                        Caption link: a.readMore
+    About section:      .widget-4.message .widget_content.message_format
+                        Text: .bottom_padding
+                        Button: a.readMore[href="/about"]
+    Programs grid:      .sneak-peek-container
+                        Section title: .header-title
+                        Tiles: .sneak-peek-item.item-{1-6} (also .even/.odd, .g320)
+                        Tile title: h6.title_only > a
+                        Tile image: a.thumbnail > img (background-image on spacer gif)
+    Latest photos:      .widget-4.latest_photos (JS-populated from Images array)
+                        Items: .widget_content ul li a
     Upcoming events:    .widget-4.upcoming_events .widget_content.list_format ul li
-                        (small = date, h6 a = event) ; a.readMore
-    Shabbat times:      .widget-4.candlelighting ; .candlelighting_content ;
-                        .section_heading / .section_subheading ; .times_wrapper ;
-                        .when_to_light ; .parsha_content ; .upcomingholiday_content
-    Daily thought:      .widget-4.daily_thought .widget_content.article_format ;
-                        .item .title a ; .body.text_expandable
-    Mailing list:       .hp-row.hp_subscribe .widget-4.subscribe ; #formContainer
-                        fieldset ; inputs .co_global_input ; submit input.buttonStyle1
-    Header/nav/footer:  identical to inner pages - see other snapshots
+                        Date: small   |   Title: h6 > a
+                        More link: a.readMore[href="/templates/events.htm"]
+    Shabbat & Holidays: .widget-4.candlelighting
+                        Heading: .section_heading / .section_subheading
+                        Times wrapper: .times_wrapper
+                        Time label: small.when_to_light
+                        Time value: span.bold.large inside a[href="...candlelighting.htm"]
+                        Torah portion: .parsha_content span.bold.large > a
+                        Holiday: .upcomingholiday_content span.bold.large > a
+    Daily Thought:      .widget-4.daily_thought .widget_content.article_format
+                        Title: .item .title > a
+                        Body: .body.text_expandable span.inner
+    Mailing list:       .hp-row.hp_subscribe .widget-4.subscribe
+                        Form: #formContainer > form > fieldset
+                        Inputs: .co_global_input (Fname, Lname, Email)
+                        Submit: input.buttonStyle1[value="Subscribe"]
+    Our event box:      .hp-row.cc-next-event-row (injected by live.js after About row)
+    Footer:             #footer .footer3 .cc-foot-place / .cc-foot-phone (our custom markup)
+                        Social icons: .cs-f-social-icons a.fa-facebook / .fa-whatsapp / .fa-instagram
+    Header:             #header (class "on-scroll" when scrolled)
+                        Logo: #header_branding .site-logo-wrapper img
+                        Site title: a.site_title
+                        Nav: #co_menu_container #tabContentMain .co_menu_item
+                        Donate: .co_menu_item.donate_link
+                        Mobile open: button.cs-mobile-menu-open
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en" class=" cc-on cc-type-home">
 <head>
-<!-- meta omitted; canonical: https://www.chabadwhiteplains.com/ -->
-<!-- stylesheets: same core set as inner pages, plus calendarpicker.css and prettyPhoto.min.css -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="canonical" href="https://www.chabadwhiteplains.com/">
+<!-- Platform stylesheets (in load order):
+  calendarpicker.css, reader-comments.css, flexcroll.css, font-awesome-5.css,
+  DefaultGrid.css, Elements.css, vendor/ds/tokens/sites.css, new/main.css,
+  global.css, global-print.css (print only), cco/home/widget-styles.css,
+  sites6/blue-theme.css, old/global.css, cco/home/default/prettyPhoto.min.css
+  + our: https://rabbi-debug.github.io/chabad-custom/live.css -->
 <title>Chabad of White Plains</title>
-<!-- dataLayer: primaryArticleId 5618929 "Custom Home Page" -->
-<!-- chabad-custom HEADER loader snippet confirmed here -->
+<!-- Co.Settings: ArticleId=5618929, SiteId=11728, DbDomain=ChabadWhitePlains.com -->
 </head>
-<body class="lang_en dir_ltr cco_body">
+<body class="lang_en dir_ltr cco_body home">
 
 <div id="PrintCreditHeader" class="show_for_print">Printed from<b>ChabadWhitePlains.com</b></div>
-<div id="header">
-  <!-- identical structure to inner pages: top bar (.cco_topbar_link ...), branding
-       (.site-logo-wrapper, a.site_title), search (#MainSearchForm), nav
-       (#co_menu_container), mobile menu button - see snapshots/info-page.html -->
+
+<!-- ═══════════════════════════════════════════════════════════════
+     HEADER
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="header" class="on-scroll">
+  <div class="wrapper header-wrapper">
+    <div id="header_container" class="header_container">
+      <div class="clearfix links">
+        <!-- Top bar links: Ask the Rabbi, Subscribe (dropdown), Contact, Search, Home, About, Sign In -->
+        <div class="float_right">
+          <div class="topBarLink cco_topbar_link ask_the_rabbi_link">
+            <a href="/asktherabbi/default_cdo/jewish/Ask-the-Rabbi.htm">Ask the Rabbi</a>
+          </div>
+          <div id="HeaderSubscribe" class="top_bar_item topBarLink cco_topbar_link subscribe_link">Subscribe
+            <div id="HeaderSubscribeContainer" class="topBarLayer" style="display:none;width:295px;">
+              <!-- subscribe form: inputs Fname, Lname, SubscribeEmail + submit button -->
+            </div>
+          </div>
+          <div class="topBarLink cco_topbar_link contact_link">
+            <a href="/article.asp?aid=6449033">Contact</a>
+          </div>
+          <div class="search-trigger-container">
+            <a href="#" class="search-trigger"><i class="fa fa-search"></i></a>
+          </div>
+          <div class="g260 no_margin cco_search_header float_right">
+            <!-- #MainSearchForm: .co_global_input (search), .co_global_submit button -->
+          </div>
+        </div>
+        <div class="float_left">
+          <div class="topBarLink cco_topbar_link home_link"><a href="/">Home</a></div>
+          <div class="topBarLink cco_topbar_link about_link"><a href="/6072929">About</a></div>
+          <div class="topBarLink mychabad_login_bar" id="mychabad_login_bar">
+            <a href="/tools/login/default.asp?" class="login_link">Sign In</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix branding-search">
+      <div id="header_branding" class="no_outline logo">
+        <div class="float_left site-logo-wrapper">
+          <a href="/"><img src="https://w2.chabad.org/media/images/1345/LJvC13457818.png" width="100" height="100" border="0"></a>
+        </div>
+        <a href="/default.asp" title="Chabad of White Plains" class="site_title">Chabad of White Plains<span class="site_subtitle clearfix"> </span></a>
+      </div>
+    </div>
+    <button type="button" class="cs-mobile-menu-open js-mobile-menu-open"><i class="fa fa-bars"></i></button>
+    <div class="site-nav-wrapper">
+      <div id="co_menu_container_wrapper" class="co_menu_container_wrapper" data-list-name="primary navigation">
+        <button type="button" class="cs-mobile-menu-close-back js-mobile-menu-close">&nbsp;</button>
+        <div class="co_menu_container clearfix" id="co_menu_container">
+          <button type="button" class="cs-mobile-menu-close js-mobile-menu-close"><i class="fa fa-times">&nbsp;</i></button>
+          <a class="menu_logo" href="/"></a>
+          <table cellpadding="0" cellspacing="0" border="0" class="main_menu_container first global">
+            <tbody><tr id="tabContentMain" tab="Main" style="display:table-row;">
+              <!-- Nav items (each a .co_menu_item):
+                   Home (hidden), About (aid 6072929), Community & Synagogue (aid 7134056),
+                   Youth & Family (aid 6309094), Visitors (aid 7127259),
+                   On Campus (aid 7121994), Donate (.donate_link)
+                   Each has .co_submenu_container with .co_column > a.item links
+                   and .menu_child panels for 3rd-level items -->
+              <td class="co_menu_item home" data-menu-level="1"><!-- home icon --></td>
+              <td class="co_menu_item arrow multi_level" aid="6072929" data-menu-level="1">
+                <span class="parent"><div><a href="/templates/articlecco_cdo/aid/6072929/jewish/About.htm" class="parent">About</a></div></span>
+                <!-- submenu: About Chabad, Contact Us, Upcoming Events, Volunteer, Subscribe, Support Us -->
+              </td>
+              <td class="co_menu_item arrow multi_level" aid="7134056" data-menu-level="1">
+                <span class="parent"><div><a href="/templates/articlecco_cdo/aid/7134056/jewish/Community-Synagogue.htm" class="parent">Community&nbsp;&amp; Synagogue</a></div></span>
+                <!-- submenu: Friday Nights Summer Shabbat, Adult Education, Young Adults,
+                     Kosher-Explained, Mezuzah Campaign, Shabbat Services -->
+              </td>
+              <td class="co_menu_item arrow multi_level" aid="6309094" data-menu-level="1">
+                <span class="parent"><div><a href="/templates/articlecco_cdo/aid/6309094/jewish/Youth-Family.htm" class="parent">Youth&nbsp;&amp; Family</a></div></span>
+                <!-- submenu: Cteen (Events/Join/Shop), Hebrew School, Preschool, Aleph Bet -->
+              </td>
+              <td class="co_menu_item arrow multi_level" aid="7127259" data-menu-level="1">
+                <span class="parent"><div><a href="/templates/section_cdo/aid/7127259/jewish/Visitors.htm" class="parent">Visitors</a></div></span>
+                <!-- submenu: Kosher Food, Lodging, Eruv, Hospital Visitation Request -->
+              </td>
+              <td class="co_menu_item" aid="7121994" data-menu-level="1">
+                <span class="parent"><div><a href="/templates/articlecco_cdo/aid/7121994/jewish/On-Campus.htm" class="parent">On Campus</a></div></span>
+              </td>
+              <td class="co_menu_item donate_link" aid="0" data-menu-level="1">
+                <span class="parent"><div><a href="/4970020" class="parent">Donate</a></div></span>
+              </td>
+            </tr></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mobile-menu-bottom-links">
+        <a href="/6072929">About</a>
+        <a href="/search">Search</a>
+        <a href="/article.asp?aid=6449033">Contact</a>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     MAIN CONTENT
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="content">
   <div id="BodyContainer" class="wrapper">
     <div class="body_wrapper no-hero-image clearfix">
@@ -60,111 +188,189 @@
         <div class="g960 no_margin">
           <div class="hp-table">
 
+            <!-- ── ROW 1: HERO SLIDER ── -->
             <div class="hp-row hp-row-first">
               <div class="widget-4 promo_slider custom v380 feed">
-                <div class="wrapper">
+                <div class="wrapper" style="overflow: visible;">
                   <div class="widget_content html_format">
                     <div class="slider">
                       <div class="slides">
-                        <div class="slide_wrapper" caption=".caption-0"><img src="https://w2.chabad.org/media/images/1273/CLed12735052.png" alt="" /></div>
-                        <div class="slide_wrapper" caption=".caption-1"><a target="" href="/6735906"><img src="https://w2.chabad.org/media/images/707/jrYN7075892.jpg" alt="" /></a></div>
-                        <div class="slide_wrapper" caption=".caption-2"><a target="" href="/7108468"><img src="https://w2.chabad.org/media/images/817/IWjl8173045.jpg" alt="" /></a></div>
+                        <div class="slide_wrapper" caption=".caption-0">
+                          <img src="/images/global/spacer.gif" alt="" style="background: url('https://w2.chabad.org/media/images/1273/CLed12735052.png') center center / cover no-repeat;">
+                        </div>
+                        <div class="slide_wrapper" caption=".caption-1">
+                          <a href="/6735906"><img src="/images/global/spacer.gif" alt="" style="background: url('https://w2.chabad.org/media/images/707/jrYN7075892.jpg') center center / cover no-repeat;"></a>
+                        </div>
+                        <div class="slide_wrapper" caption=".caption-2">
+                          <a href="/7108468"><img src="/images/global/spacer.gif" alt="" style="background: url('https://w2.chabad.org/media/images/817/IWjl8173045.jpg') center center / cover no-repeat;"></a>
+                        </div>
+                      </div>
+                      <div class="cycle-caption">
+                        <p><span><big>Cteen</big>CTeen offers programs that bring teens together...</span>
+                        <a href="/7108468" class="readMore">Read More</a></p>
                       </div>
                       <ul class="captionList">
-                        <li class="cycle-html-caption caption-0"><span><big>Chabad of White Plains</big>Welcome to our online center.<br/>Check out our innovative, informative and lively programs for every age and stage</span></li>
-                        <li class="cycle-html-caption caption-1"><span><big>Synagogue Services</big>A community that prays together stays together. Join us for regular daily, shabbat and holiday services in a warm, friendly environment.</span><a href="/6735906" class="readMore" target="">Learn More</a></li>
-                        <li class="cycle-html-caption caption-2"><span><big>Cteen</big>CTeen offers programs that bring teens together to embrace their shared faith and give back to their communities and the environment.</span><a href="/7108468" class="readMore" target="">Read More</a></li>
+                        <li class="cycle-html-caption caption-0"><span><big>Chabad of White Plains</big>Welcome to our online center.<br>Check out our innovative, informative and lively programs for every age and stage</span></li>
+                        <li class="cycle-html-caption caption-1"><span><big>Synagogue Services</big>A community that prays together stays together. Join us for regular daily, shabbat and holiday services in a warm, friendly environment.</span><a href="/6735906" class="readMore">Learn More</a></li>
+                        <li class="cycle-html-caption caption-2"><span><big>Cteen</big>CTeen offers programs that bring teens together to embrace their shared faith and give back to their communities and the environment.</span><a href="/7108468" class="readMore">Read More</a></li>
                       </ul>
+                      <div class="cycle-directionNav no_selection">
+                        <a class="cycle-prevNav"><span>Previous</span></a>
+                        <a class="cycle-nextNav"><span>Next</span></a>
+                      </div>
+                      <div class="cycle-controlNav no_selection">
+                        <a href="#">1</a><a href="#">2</a><a href="#" class="active">3</a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
+            <!-- ── ROW 2: ABOUT ── -->
+            <!-- *** Our live.js inserts .hp-row.cc-next-event-row AFTER this row *** -->
             <div class="hp-row">
               <div class="widget-4 message custom v380 feed">
                 <div class="wrapper">
                   <div class="widget_header"><h5>About</h5></div>
                   <div class="widget_content message_format">
-                    <div class="bottom_padding">Welcome to Chabad of White Plains, the vibrant hub of Jewish life in our community, guided by the Chabad-Lubavitch philosophy of love for humanity and inclusion. <br/>Discover Jewish values, culture, and heritage through Torah classes, holiday celebrations, Shabbat meals, and youth programs. Join our welcoming Chabad family by exploring our website and engaging in our programs today!</div>
+                    <div class="bottom_padding">Welcome to Chabad of White Plains, the vibrant hub of Jewish life in our community, guided by the Chabad-Lubavitch philosophy of love for humanity and inclusion. <br>Discover Jewish values, culture, and heritage through Torah classes, holiday celebrations, Shabbat meals, and youth programs. Join our welcoming Chabad family by exploring our website and engaging in our programs today!</div>
                     <a class="readMore" href="/about"> Learn More </a>
                   </div>
                 </div>
               </div>
             </div>
 
+            <!-- ── ROW 3: PROGRAMS GRID ── -->
             <div class="hp-row">
               <div class="sneak-peek-container clearfix">
                 <div class="header-title">Programs</div>
                 <div class="sneak-peek-item item-1 even g320 no_margin">
                   <div class="widget-1 sneak_peek custom v200 feed"><div class="wrapper"><div class="widget_content">
-                    <h6 class="title_only"><a target="" href="/6735906"> Synagogue Services </a></h6>
-                    <a href="/6735906" class="thumbnail" target=""><img src="https://w2.chabad.org/images/global/spacer.gif" style="background-image:url(https://w2.chabad.org/media/images/1097/PgBS10976181.jpg);" alt="" /><span></span></a>
+                    <h6 class="title_only"><a href="/6735906"> Synagogue Services </a></h6>
+                    <a href="/6735906" class="thumbnail"><img src="https://w2.chabad.org/images/global/spacer.gif" style="background-image:url(https://w2.chabad.org/media/images/1097/PgBS10976181.jpg);" alt=""><span></span></a>
                   </div></div></div>
                 </div>
-                <!-- items 2-6 identical structure: Adult Education (/6441808), Youth Programs (/contact),
-                     Holiday Celebrations (/tools/subscribe/default.htm), Women's Events (/contact),
-                     Community Services (/contact) -->
+                <div class="sneak-peek-item item-2 odd g320">
+                  <div class="widget-1 sneak_peek custom v200 feed"><div class="wrapper"><div class="widget_content">
+                    <h6 class="title_only"><a href="/6441808"> Adult Education </a></h6>
+                    <a href="/6441808" class="thumbnail"><img src="https://w2.chabad.org/images/global/spacer.gif" style="background-image:url(https://w2.chabad.org/media/images/1097/cGxY10976222.jpg);" alt=""><span></span></a>
+                  </div></div></div>
+                </div>
+                <div class="sneak-peek-item item-3 even g320">
+                  <div class="widget-1 sneak_peek custom v200 feed"><div class="wrapper"><div class="widget_content">
+                    <h6 class="title_only"><a href="/contact"> Youth Programs </a></h6>
+                    <a href="/contact" class="thumbnail"><img src="https://w2.chabad.org/images/global/spacer.gif" style="background-image:url(https://w2.chabad.org/media/images/1097/ggex10976226.jpg);" alt=""><span></span></a>
+                  </div></div></div>
+                </div>
+                <div class="clear"></div>
+                <div class="sneak-peek-item item-4 odd g320 no_margin">
+                  <div class="widget-1 sneak_peek custom v200 feed"><div class="wrapper"><div class="widget_content">
+                    <h6 class="title_only"><a href="/tools/subscribe/default.htm"> Holiday Celebrations </a></h6>
+                    <a href="/tools/subscribe/default.htm" class="thumbnail"><img src="https://w2.chabad.org/images/global/spacer.gif" style="background-image:url(https://w2.chabad.org/media/images/1097/tBBf10976224.jpg);" alt=""><span></span></a>
+                  </div></div></div>
+                </div>
+                <div class="sneak-peek-item item-5 even g320">
+                  <div class="widget-1 sneak_peek custom v200 feed"><div class="wrapper"><div class="widget_content">
+                    <h6 class="title_only"><a href="/contact"> Women's Events </a></h6>
+                    <a href="/contact" class="thumbnail"><img src="https://w2.chabad.org/images/global/spacer.gif" style="background-image:url(https://w2.chabad.org/media/images/1097/OITJ10976225.jpg);" alt=""><span></span></a>
+                  </div></div></div>
+                </div>
+                <div class="sneak-peek-item item-6 odd g320">
+                  <div class="widget-1 sneak_peek custom v200 feed"><div class="wrapper"><div class="widget_content">
+                    <h6 class="title_only"><a href="/contact"> Community Services </a></h6>
+                    <a href="/contact" class="thumbnail"><img src="https://w2.chabad.org/images/global/spacer.gif" style="background-image:url(https://w2.chabad.org/media/images/1097/Wfzu10976223.jpg);" alt=""><span></span></a>
+                  </div></div></div>
+                </div>
+                <div class="clear"></div>
               </div>
             </div>
 
+            <!-- ── ROW 4: LATEST PHOTOS ── -->
             <div class="hp-row">
-              <div class="widget-4 latest_photos custom v420 feed widget_index_3 loading" max_items="27">
+              <div class="widget-4 latest_photos custom v420 feed widget_index_3 functional" max_items="27">
                 <div class="wrapper">
                   <div class="widget_header"><h5>Latest Photos</h5></div>
-                  <div class="widget_content"></div>
-                  <!-- populated by LatestPhotos JS from an Images array (site + Facebook photos);
-                       lightbox via prettyPhoto -->
+                  <div class="widget_content">
+                    <ul>
+                      <!-- JS-populated: li > a[href="...#photoId"] > img with background-image set inline -->
+                      <!-- Source: Facebook photos + site photo albums, populated by LatestPhotos.js -->
+                      <!-- Lightbox: prettyPhoto jQuery plugin -->
+                    </ul>
+                    <a href="/6386220" class="readMore" title="See More Photos"><span>See More Photos</span></a>
+                  </div>
                 </div>
               </div>
             </div>
 
+            <!-- ── ROW 5: THREE-COLUMN (Events + Shabbat + Daily Thought) ── -->
             <div class="hp-row hp_content_wrapper">
+
+              <!-- Column 1: Upcoming Events -->
               <div class="no_margin g320 no_margin">
                 <div class="widget-4 upcoming_events custom v400 feed">
                   <div class="wrapper">
                     <div class="widget_header"><h5>Upcoming Events</h5></div>
-                    <div class="widget_content list_format"><ul>
-                      <li><small>Fri, July 10, 2026 - 7:30pm</small><h6><a href="/calendar/view/day.asp?tdate=7/10/2026" target="">Friday Night Summer Shabbat</a></h6></li>
-                      <li><small>Fri, August 7, 2026 - 7:30pm</small><h6><a href="/calendar/view/day.asp?tdate=8/7/2026" target="">Friday Night Summer Shabbat</a></h6></li>
-                    </ul>
-                    <a href="/templates/events.htm" target="" class="readMore">View more Upcoming Events</a>
+                    <div class="widget_content list_format">
+                      <ul>
+                        <li>
+                          <small>Fri, August 7, 2026 - 7:30pm</small>
+                          <h6><a href="/calendar/view/day.asp?tdate=8/7/2026">Friday Night Summer Shabbat</a></h6>
+                        </li>
+                        <li>
+                          <small>Sat, August 8, 2026 - 10:00am - 12:30pm</small>
+                          <h6><a href="/calendar/view/day.asp?tdate=8/8/2026">☕️ Coffee, Connection, &amp; Minyan</a></h6>
+                        </li>
+                      </ul>
+                      <a href="/templates/events.htm" class="readMore">View more Upcoming Events</a>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <!-- Column 2: Shabbat & Holidays -->
               <div class="g320">
                 <div class="widget-4 candlelighting custom v400 feed">
                   <div class="wrapper">
-                    <div class="widget_header"><h5>Shabbat & Holidays</h5></div>
+                    <div class="widget_header"><h5>Shabbat &amp; Holidays</h5></div>
                     <div class="widget_content"><div>
                       <div class="clearfix horizontal_padding vertical_padding">
-                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_candles.png" alt="" /></div>
+                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_candles.png" alt=""></div>
                         <div class="candlelighting_content">
                           <div class="large_left_margin candlelighting_heading">
                             <div class="medium_left_margin uppercase bold section_heading">Candle Lighting Times</div>
                             <div class="medium_left_margin bold section_subheading">White Plains, NY</div>
                           </div>
                           <div class="times_wrapper make_scrollable">
-                            <div class="medium_top_padding clearfix"><small class="when_to_light uppercase float_left small_right_margin">Light Candles at</small><div class="float_left"><a href="/calendar/candlelighting.htm"><span class="bold large">8:11 PM</span>&#160;&#160;-&#160;&#160;Friday, July 10</a></div></div>
-                            <div class="medium_top_padding clearfix"><small class="when_to_light uppercase float_left small_right_margin">Shabbat Ends</small><div class="float_left"><a href="/calendar/candlelighting.htm"><span class="bold large">9:18 PM</span>&#160;&#160;-&#160;&#160;Shabbat, July 11</a></div></div>
+                            <div class="medium_top_padding clearfix">
+                              <small class="when_to_light uppercase float_left small_right_margin">Light Candles at</small>
+                              <div class="float_left"><a href="/calendar/candlelighting.htm"><span class="bold large">8:07 PM</span>&nbsp;&nbsp;-&nbsp;&nbsp;Friday, July 17</a></div>
+                            </div>
+                            <div class="medium_top_padding clearfix">
+                              <small class="when_to_light uppercase float_left small_right_margin">Shabbat Ends</small>
+                              <div class="float_left"><a href="/calendar/candlelighting.htm"><span class="bold large">9:13 PM</span>&nbsp;&nbsp;-&nbsp;&nbsp;Shabbat, July 18</a></div>
+                            </div>
                           </div>
                         </div>
                       </div>
                       <div class="separator"></div>
                       <div class="clearfix horizontal_padding vertical_padding">
-                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_torah.png" alt="" /></div>
+                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_torah.png" alt=""></div>
                         <div class="large_left_margin parsha_content">
                           <div class="medium_left_margin uppercase bold section_heading">Weekly Torah Portion</div>
-                          <div class="medium_left_margin small_top_padding"><span class="bold large"><a href="/parshah/default.asp?tdate=7/10/2026">Matot-Massei</a></span></div>
+                          <div class="medium_left_margin small_top_padding">
+                            <span class="bold large"><a href="/parshah/default.asp?tdate=7/16/2026">Devarim</a></span>
+                          </div>
                         </div>
                       </div>
                       <div class="separator"></div>
                       <div class="clearfix horizontal_padding top_padding">
-                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_calendar.png" alt="" /></div>
+                        <div class="float_left"><img src="https://w2.chabad.org/images/1/home/icon_calendar.png" alt=""></div>
                         <div class="large_left_margin upcomingholiday_content">
                           <div class="medium_left_margin uppercase bold section_heading">Upcoming Holiday</div>
-                          <div class="medium_left_margin small_vertical_padding"><span class="bold large"><a href="/article.asp?aid=144558">The Three Weeks</a></span></div>
+                          <div class="medium_left_margin small_vertical_padding">
+                            <span class="bold large"><a href="/article.asp?aid=144558">The Three Weeks</a></span>
+                          </div>
                           <div class="medium_left_margin">Jul. 2 - Jul. 23</div>
                         </div>
                       </div>
@@ -172,56 +378,96 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Column 3: Daily Thought -->
               <div class="rightColumn g320">
                 <div class="widget-4 daily_thought custom v400 feed">
                   <div class="wrapper">
                     <div class="widget_header"><h5>Daily Thought</h5></div>
                     <div class="widget_content article_format">
                       <div class="item first last clearfix">
-                        <div class="title"><a href="/article.asp?aid=7419853" target="">Unconditional Love</a></div>
-                        <div class="body text_expandable" container="widget-4" TextContainerClass="inner"><!-- daily thought text, refreshed daily --></div>
+                        <div class="title"><a href="/article.asp?aid=7427392">Constructive Demolition</a></div>
+                        <div class="body text_expandable active" container="widget-4" textcontainerclass="inner">
+                          <span class="inner">In Torah, we mirror on earth that which G‑d performs on every plane of reality.
+If so, since the Torah prohibits dislocating even a single stone of the Holy Temple in Jerusalem, how could it be that G‑d brought the entire structure to ruins?...</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
 
+            </div><!-- end .hp_content_wrapper -->
+
+            <!-- ── ROW 6: MAILING LIST ── -->
             <div class="hp-row hp_subscribe">
               <div class="widget-4 subscribe custom v280 feed">
                 <div class="wrapper">
                   <div class="widget_header"><h5>Join our mailing list</h5></div>
-                  <div class="widget_content"><div id="formContainer">
-                    <form novalidate="true" action="" method="get" target="">
-                      <fieldset>
-                        <label for="Fname">First Name</label>
-                        <input id="Fname" type="text" name="fname" maxlength="50" placeholder="First Name" class="co_global_input" required="visible" />
-                        <label for="Lname">Last Name</label>
-                        <input id="Lname" type="text" name="lname" maxlength="50" placeholder="Last Name" class="co_global_input" required="visible" />
-                        <label for="Email">Email Address</label>
-                        <input id="Email" type="email" name="email" placeholder="Email Address" class="co_global_input" required="true" data_type="email" />
-                        <input type="submit" id="submit" name="submit" value="Subscribe" class="buttonStyle1" />
-                        <small>Weekly articles in your inbox</small>
-                      </fieldset>
-                    </form>
+                  <div class="widget_content">
+                    <div id="formContainer">
+                      <form novalidate="true" action="" method="get">
+                        <fieldset>
+                          <label for="Fname">First Name</label>
+                          <input id="Fname" type="text" name="fname" maxlength="50" placeholder="First Name" class="co_global_input active" required="visible">
+                          <label for="Lname">Last Name</label>
+                          <input id="Lname" type="text" name="lname" maxlength="50" placeholder="Last Name" class="co_global_input active" required="visible">
+                          <label for="Email">Email Address</label>
+                          <input id="Email" type="email" name="email" placeholder="Email Address" class="co_global_input active" required="true">
+                          <input type="submit" id="submit" name="submit" value="Subscribe" class="buttonStyle1">
+                          <small>Weekly articles in your inbox</small>
+                          <input type="hidden" name="subscriptionid" id="subscriptionid" value="52398">
+                        </fieldset>
+                      </form>
+                    </div>
+                    <small id="response" style="display:none;height:147px;"></small>
                   </div>
-                  <small id="response" style="display:none;height:147px;"></small></div>
                 </div>
               </div>
             </div>
 
-          </div>
+          </div><!-- end .hp-table -->
         </div>
       </div></div>
-      <div class="break_floats"></div>
     </div>
   </div>
 </div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FOOTER
+     ═══════════════════════════════════════════════════════════════ -->
 <div id="footer">
-  <!-- identical to inner pages: .footer_container, .footer3, .cs-f-social-icons -->
+  <div class="wrapper body_container">
+    <div class="g960 footer_family_text bottom_padding">
+      <div class="footer_container footer_text copyright_text">
+        <div class="bottom_padding clear_float">
+          <div class="footer_inner_container clearfix">
+            <div class="footer3">
+              <b>
+                <!-- Our custom markup (injected by live.js): -->
+                <div class="cc-foot-place">Chabad of White Plains</div>
+                <div class="cc-foot-phone">White Plains, NY • <a href="tel:914-998-6724">914-998-6724</a></div>
+              </b>
+            </div>
+            <br>
+            Powered by <a href="https://www.chabad.org/" target="_new">Chabad.org</a> © 1993-2026 <a href="/4026210" target="_blank">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="cs-f-social-icons">
+        <a href="https://www.facebook.com/jewishwhiteplains" class="fa fa-facebook facebook_homepage" title="Facebook"></a>
+        <a href="https://wa.me/19149986724" class="fa fa-whatsapp whatsapp_homepage" title="Whatsapp"></a>
+        <a href="https://www.instagram.com/jewishwhiteplains" class="fa fa-instagram instagram_homepage" title="Instagram"></a>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- scripts: jquery, jquery.cycle (slider), prettyPhoto (photo lightbox), LatestPhotos.js, CoLib, sites6.js, etc. -->
-<!-- Co.Settings: ArticleId 5618929, SiteId 11728 -->
-<!-- chabad-custom FOOTER loader snippet confirmed here -->
+
+<!-- Platform JS (in load order):
+  jquery-latest.min.js, jquery.defaultValue.min.js, jquery.prettyPhoto.js,
+  jquery.cycle.all.js, CoLib.js, magen-cdo-global.js, ChabadLocator.js,
+  sites6.js, primarynavigation.js, LatestPhotos.js, textexpander.js, etc.
+  + our: https://rabbi-debug.github.io/chabad-custom/live.js -->
+
 </body>
 </html>
