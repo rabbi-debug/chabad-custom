@@ -1,21 +1,11 @@
 /* ============================================================
    chabadwhiteplains.com — LIVE styles (all visitors see this)
    Loaded on every page by the header snippet.
-
-   Global rule:            .some-element { ... }
-   One page only:          html.cc-aid-6072929 .some-element { ... }
-   (6072929 = the aid number from the page's URL)
-   ============================================================ */
-
-/* -- no customizations yet -- */
-/* ============================================================
-   LIVE styles — visible to all visitors.
    ============================================================ */
 
 /* ---- 1) Remove dead space ----
    The homepage stacks ~130 empty <div class="clear"> spacers before
-   the footer; flatten them (clearing still works at zero height).
-   Article pages get stretched by a min-height on the content area. */
+   the footer; flatten them (clearing still works at zero height). */
 #content div.clear {
   height: 0 !important;
   line-height: 0 !important;
@@ -41,13 +31,10 @@
 
 /* ---- 2) Footer ---- */
 
-/* Hide the old full-width gray rule and the little spacer image */
 #footer .footer_hr,
 #footer .footer_inner_container > img {
   display: none;
 }
-
-/* Tighter overall block, centered */
 #footer {
   padding-top: 26px !important;
   padding-bottom: 20px !important;
@@ -60,47 +47,34 @@
 #footer .bottom_padding {
   padding-bottom: 8px;
 }
-
-/* The inner wrapper around the name/phone/copyright: no padding */
 #footer .bottom_padding.clear_float {
   padding: 0 !important;
 }
-
-/* The name + phone block: no padding of its own */
 #footer .footer3 {
   padding: 0 !important;
 }
-
-/* Line 1: The organization name */
 #footer .cc-foot-place {
   font-family: inherit;
   font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: #ffffff; 
-  margin-bottom: 4px; 
+  color: #ffffff;
+  margin-bottom: 4px;
 }
-
-/* Line 2: The address and phone number */
 #footer .cc-foot-phone {
   margin: 0 !important;
   font-size: 14px;
   letter-spacing: 0.05em;
-  color: #e0e0e0; 
+  color: #e0e0e0;
 }
-
-/* Make the phone number a tappable gold link */
 #footer .cc-foot-phone a {
   color: #c9b788;
   text-decoration: none;
   letter-spacing: 0.12em;
 }
-
 #footer .cc-foot-phone a:hover {
   color: #ffffff;
 }
-
-/* Social icons: larger, lighter, with a hover state */
 #footer .cs-f-social-icons {
   margin-top: 16px;
 }
@@ -115,7 +89,46 @@
 }
 
 /* ============================================================
-   Custom Next Upcoming Event Box - Updated Final
+   NEW V2: About-style Next Upcoming Event section
+   Mirrors the native .widget-4.message widget so it looks
+   like it belongs — uses the platform's own widget_header h5
+   and message_format styles, with small overrides for the
+   event-specific title, date, and description lines.
+   ============================================================ */
+
+/* Event title inside the message body — styled like a sub-heading */
+.cc-msg-ev-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0F6CB8;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+/* Date line — teal eyebrow text, matching the platform's accent style */
+.cc-msg-ev-date {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2fd3c2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+}
+
+/* Description paragraph — same as the native About text */
+.cc-msg-ev-desc {
+  color: #343333;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* The readMore link for the new widget inherits the platform's
+   .readMore style — no extra CSS needed unless overriding */
+
+/* ============================================================
+   OLD V1: Custom card-style Next Upcoming Event box
+   (unchanged from previous version)
    ============================================================ */
 
 .cc-next-event-row {
@@ -194,34 +207,28 @@
   text-decoration: none;
 }
 
-/* Hide the real image on desktop so the original layout remains untouched */
 .cc-mobile-flyer {
   display: none;
 }
 
-/* Updated Mobile View Settings */
 @media (max-width: 768px) {
   .cc-ev-box {
     flex-direction: column;
     text-align: center;
   }
-  
   .cc-ev-img {
     flex: none;
-    background-image: none !important; /* Turns off the inline background image */
-    min-height: 0; /* Removes the fixed desktop height */
+    background-image: none !important;
+    min-height: 0;
   }
-  
   .cc-mobile-flyer {
-    display: block; /* Reveals the real image only on mobile */
+    display: block;
     width: 100%;
-    height: auto; /* This forces the height to perfectly match the flyer! */
+    height: auto;
   }
-  
   .cc-ev-content {
     padding: 25px;
   }
-  
   .cc-ev-btn {
     align-self: center;
   }
