@@ -62,7 +62,6 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
       });
     }
 
-    /* Format date as "FRIDAY, AUGUST 7 · 7:30 PM" (screenshot style) */
     function fmtDateShort(iso) {
       var d = new Date(iso);
       if (isNaN(d.getTime())) return "";
@@ -74,7 +73,6 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
       } catch (e) { return d.toLocaleString(); }
     }
 
-    /* Format date as "Wednesday, August 7 • 7:30 PM" (V1 style) */
     function fmtDateLong(iso) {
       var d = new Date(iso);
       if (isNaN(d.getTime())) return "";
@@ -119,11 +117,9 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var btnLink  = ev.signUp || "/templates/events.htm";
         var desc     = snippet(ev.description, 120);
 
-        /* ── NEW V2: clean two-column card (screenshot style) ── */
+        /* ── NEW V2: real <img> tag so the card grows with the image, never crops ── */
         var flyerHtml = ev.flyer
-          ? '<div class="cc-msg-ev-flyer" style="background-image:url(&quot;' + esc(ev.flyer) + '&quot;)">' +
-              '<img src="' + esc(ev.flyer) + '" class="cc-msg-ev-flyer-img" alt="' + esc(ev.title) + '">' +
-            '</div>'
+          ? '<div class="cc-msg-ev-flyer"><img src="' + esc(ev.flyer) + '" class="cc-msg-ev-flyer-img" alt="' + esc(ev.title) + '"></div>'
           : '';
 
         var v2 = document.createElement("div");
