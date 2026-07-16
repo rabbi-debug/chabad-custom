@@ -3,9 +3,7 @@
    Loaded on every page by the header snippet.
    ============================================================ */
 
-/* ---- 1) Remove dead space ----
-   The homepage stacks ~130 empty <div class="clear"> spacers before
-   the footer; flatten them (clearing still works at zero height). */
+/* ---- 1) Remove dead space ---- */
 #content div.clear {
   height: 0 !important;
   line-height: 0 !important;
@@ -30,206 +28,159 @@
 }
 
 /* ---- 2) Footer ---- */
-
 #footer .footer_hr,
-#footer .footer_inner_container > img {
-  display: none;
-}
-#footer {
-  padding-top: 26px !important;
-  padding-bottom: 20px !important;
-}
-#footer .footer_inner_container {
-  text-align: center;
-  padding: 0;
-  line-height: 1.5;
-}
-#footer .bottom_padding {
-  padding-bottom: 8px;
-}
-#footer .bottom_padding.clear_float {
-  padding: 0 !important;
-}
-#footer .footer3 {
-  padding: 0 !important;
-}
-#footer .cc-foot-place {
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  margin-bottom: 4px;
-}
-#footer .cc-foot-phone {
-  margin: 0 !important;
-  font-size: 14px;
-  letter-spacing: 0.05em;
-  color: #e0e0e0;
-}
-#footer .cc-foot-phone a {
-  color: #c9b788;
-  text-decoration: none;
-  letter-spacing: 0.12em;
-}
-#footer .cc-foot-phone a:hover {
-  color: #ffffff;
-}
-#footer .cs-f-social-icons {
-  margin-top: 16px;
-}
-#footer .cs-f-social-icons a {
-  font-size: 19px !important;
-  color: #c9b788 !important;
-  margin: 0 10px;
-  transition: color 0.15s ease;
-}
-#footer .cs-f-social-icons a:hover {
-  color: #ffffff !important;
-}
+#footer .footer_inner_container > img { display: none; }
+#footer { padding-top: 26px !important; padding-bottom: 20px !important; }
+#footer .footer_inner_container { text-align: center; padding: 0; line-height: 1.5; }
+#footer .bottom_padding { padding-bottom: 8px; }
+#footer .bottom_padding.clear_float { padding: 0 !important; }
+#footer .footer3 { padding: 0 !important; }
+#footer .cc-foot-place { font-family: inherit; font-size: 18px; font-weight: 600; letter-spacing: 0.08em; color: #ffffff; margin-bottom: 4px; }
+#footer .cc-foot-phone { margin: 0 !important; font-size: 14px; letter-spacing: 0.05em; color: #e0e0e0; }
+#footer .cc-foot-phone a { color: #c9b788; text-decoration: none; letter-spacing: 0.12em; }
+#footer .cc-foot-phone a:hover { color: #ffffff; }
+#footer .cs-f-social-icons { margin-top: 16px; }
+#footer .cs-f-social-icons a { font-size: 19px !important; color: #c9b788 !important; margin: 0 10px; transition: color 0.15s ease; }
+#footer .cs-f-social-icons a:hover { color: #ffffff !important; }
 
 /* ============================================================
-   NEW V2: About-style Next Upcoming Event section
-   Mirrors the native .widget-4.message widget so it looks
-   like it belongs — uses the platform's own widget_header h5
-   and message_format styles, with small overrides for the
-   event-specific title, date, and description lines.
+   NEW V2: Clean two-column event card (screenshot style)
+   Left: flyer image. Right: title, date, desc, text link.
+   No section header — blends as a standalone card in the flow.
    ============================================================ */
 
-/* Event title inside the message body — styled like a sub-heading */
-.cc-msg-ev-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: #0F6CB8;
-  margin-bottom: 6px;
-  line-height: 1.3;
-}
-
-/* Date line — teal eyebrow text, matching the platform's accent style */
-.cc-msg-ev-date {
-  font-size: 13px;
-  font-weight: 700;
-  color: #2fd3c2;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 12px;
-}
-
-/* Description paragraph — same as the native About text */
-.cc-msg-ev-desc {
-  color: #343333;
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 0;
-}
-
-/* The readMore link for the new widget inherits the platform's
-   .readMore style — no extra CSS needed unless overriding */
-
-/* ============================================================
-   OLD V1: Custom card-style Next Upcoming Event box
-   (unchanged from previous version)
-   ============================================================ */
-
-.cc-next-event-row {
-  background-color: #f9f9f9;
-  padding: 100px 10px;
-}
-
-.cc-ev-box {
-  display: flex;
+.cc-msg-ev-row {
   background: #fff;
-  border: 1px solid #e2e2e2;
-  border-radius: 4px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-  overflow: hidden;
-  text-align: left;
-  margin: 0 auto;
+  padding: 60px 10px;
+}
+
+/* The card itself: two columns, white bg, subtle shadow */
+.cc-msg-ev-card {
+  display: flex;
+  align-items: stretch;
   max-width: 960px;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+  overflow: hidden;
 }
 
-.cc-ev-img {
+/* Left: flyer image — fills the column, no distortion */
+.cc-msg-ev-flyer {
   flex: 0 0 45%;
-  background-size: cover;
+  background-size: contain;
   background-repeat: no-repeat;
-  background-position: left center;
-  min-height: 260px;
+  background-position: center center;
+  background-color: #f5f1ea; /* warm cream fallback matching typical flyer bg */
+  min-height: 220px;
 }
 
-.cc-ev-content {
+/* Mobile: real <img> tag shown instead of background (never cropped) */
+.cc-msg-ev-flyer-img {
+  display: none;
+  width: 100%;
+  height: auto;
+}
+
+/* Right: content area */
+.cc-msg-ev-body {
   flex: 1;
-  padding: 35px 40px;
+  padding: 40px 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.cc-ev-title {
-  color: #0F6CB8;
-  font-size: 24px;
+/* Event title: large, dark navy, generous line-height */
+.cc-msg-ev-title {
+  font-size: 28px;
   font-weight: 700;
-  margin-bottom: 8px;
-  line-height: 1.3;
+  color: #0A3459;
+  line-height: 1.25;
+  margin: 0 0 12px 0;
 }
 
-.cc-ev-date {
+/* Date line: small, teal, uppercase, spaced — "FRIDAY, AUGUST 7 · 7:30 PM" */
+.cc-msg-ev-date {
+  font-size: 12px;
+  font-weight: 700;
   color: #2fd3c2;
-  font-weight: 700;
-  font-size: 13px;
   text-transform: uppercase;
-  margin-bottom: 15px;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
 }
 
-.cc-ev-desc {
+/* Description: gray, compact */
+.cc-msg-ev-desc {
   color: #626262;
   font-size: 15px;
   line-height: 1.6;
-  margin-bottom: 25px;
+  margin-bottom: 24px;
 }
 
-.cc-ev-btn {
-  align-self: flex-start;
-  background: #0F6CB8;
-  color: #fff !important;
-  padding: 10px 24px;
-  font-size: 18px;
-  text-transform: uppercase;
+/* CTA: teal text link with arrow — no background, no border */
+.cc-msg-ev-link {
+  color: #2fd3c2;
+  font-size: 13px;
   font-weight: 700;
+  text-transform: uppercase;
   letter-spacing: 1px;
   text-decoration: none;
-  border-radius: 3px;
-  transition: background 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
 }
-
-.cc-ev-btn:hover {
-  background: #2fd3c2;
+.cc-msg-ev-link:hover {
+  color: #0F6CB8;
   text-decoration: none;
 }
-
-.cc-mobile-flyer {
-  display: none;
+.cc-msg-ev-link::after {
+  content: '\2192'; /* → arrow */
+  font-size: 15px;
 }
 
+/* Mobile */
 @media (max-width: 768px) {
-  .cc-ev-box {
+  .cc-msg-ev-card {
     flex-direction: column;
-    text-align: center;
   }
-  .cc-ev-img {
+  .cc-msg-ev-flyer {
     flex: none;
     background-image: none !important;
     min-height: 0;
+    background-color: transparent;
   }
-  .cc-mobile-flyer {
+  .cc-msg-ev-flyer-img {
     display: block;
-    width: 100%;
-    height: auto;
   }
-  .cc-ev-content {
-    padding: 25px;
+  .cc-msg-ev-body {
+    padding: 28px 24px;
   }
-  .cc-ev-btn {
-    align-self: center;
+  .cc-msg-ev-title {
+    font-size: 22px;
   }
+}
+
+/* ============================================================
+   OLD V1: Custom card-style Next Upcoming Event box (unchanged)
+   ============================================================ */
+
+.cc-next-event-row { background-color: #f9f9f9; padding: 100px 10px; }
+.cc-ev-box { display: flex; background: #fff; border: 1px solid #e2e2e2; border-radius: 4px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); overflow: hidden; text-align: left; margin: 0 auto; max-width: 960px; }
+.cc-ev-img { flex: 0 0 45%; background-size: cover; background-repeat: no-repeat; background-position: left center; min-height: 260px; }
+.cc-ev-content { flex: 1; padding: 35px 40px; display: flex; flex-direction: column; justify-content: center; }
+.cc-ev-title { color: #0F6CB8; font-size: 24px; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+.cc-ev-date { color: #2fd3c2; font-weight: 700; font-size: 13px; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 0.5px; }
+.cc-ev-desc { color: #626262; font-size: 15px; line-height: 1.6; margin-bottom: 25px; }
+.cc-ev-btn { align-self: flex-start; background: #0F6CB8; color: #fff !important; padding: 10px 24px; font-size: 18px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; text-decoration: none; border-radius: 3px; transition: background 0.3s ease; }
+.cc-ev-btn:hover { background: #2fd3c2; text-decoration: none; }
+.cc-mobile-flyer { display: none; }
+
+@media (max-width: 768px) {
+  .cc-ev-box { flex-direction: column; text-align: center; }
+  .cc-ev-img { flex: none; background-image: none !important; min-height: 0; }
+  .cc-mobile-flyer { display: block; width: 100%; height: auto; }
+  .cc-ev-content { padding: 25px; }
+  .cc-ev-btn { align-self: center; }
 }

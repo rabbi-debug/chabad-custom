@@ -7,34 +7,26 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
 
 (function () {
   if (!CC_ENABLED) {
-    /* Remove the injected stylesheet(s) so the site returns to stock */
     var links = document.querySelectorAll('link[href*="rabbi-debug.github.io/chabad-custom"]');
     for (var i = 0; i < links.length; i++) links[i].parentNode.removeChild(links[i]);
     return;
   }
 
-  /* ---- Page registry: aid number -> page type (manual overrides) ---- */
   var PAGE_TYPES = {
-    "6072929": "info", /* About */
-    "6528138": "info"  /* Kosher Explained */
+    "6072929": "info",
+    "6528138": "info"
   };
 
-  /* ---- Identify the current page ---- */
   var m = location.pathname.match(/\/aid\/(\d+)\//);
   var aid = m ? m[1] : null;
   var type = (aid && PAGE_TYPES[aid]) || null;
 
-  /* Auto-detect form pages */
-  if (!type && /(!|^|\s)form(\s|$)/.test(document.body.className)) type = "form";
-
-  /* Auto-detect the homepage */
+  if (!type && /(^|\s)form(\s|$)/.test(document.body.className)) type = "form";
   if (!type && (location.pathname === "/" || /^\/default\.asp/i.test(location.pathname))) type = "home";
-
   if (type) document.documentElement.className += " cc-type-" + type;
 
   try { console.log("[chabad-custom] live.js loaded", { aid: aid, type: type }); } catch (e) {}
 
-  /* ---- Helpers ---- */
   function onPage(id, fn) { if (aid === String(id)) fn(); }
   function onType(t, fn) { if (type === t) fn(); }
 
@@ -57,7 +49,7 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
   }, 100);
 
   /* ============================================================
-     Shared event data fetcher — runs once, feeds both widgets
+     Event widgets — shared fetch, feeds both V2 and V1
      ============================================================ */
   (function () {
     if (type !== "home") return;
@@ -70,11 +62,24 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
       });
     }
 
-    function fmtDate(iso) {
+    /* Format date as "FRIDAY, AUGUST 7 · 7:30 PM" (screenshot style) */
+    function fmtDateShort(iso) {
       var d = new Date(iso);
       if (isNaN(d.getTime())) return "";
       try {
-        var day = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" }).format(d);
+        var dayName  = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(d).toUpperCase();
+        var monthDay = new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric" }).format(d).toUpperCase();
+        var time     = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(d);
+        return dayName + ", " + monthDay + " \u00b7 " + time;
+      } catch (e) { return d.toLocaleString(); }
+    }
+
+    /* Format date as "Wednesday, August 7 • 7:30 PM" (V1 style) */
+    function fmtDateLong(iso) {
+      var d = new Date(iso);
+      if (isNaN(d.getTime())) return "";
+      try {
+        var day  = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" }).format(d);
         var time = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(d);
         return day + " \u2022 " + time;
       } catch (e) { return d.toLocaleString(); }
@@ -100,74 +105,64 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         }
         if (list.length === 0) return;
         list.sort(function (a, b) { return new Date(a.start) - new Date(b.start); });
-        var nextEvent = list[0];
+        var ev = list[0];
 
         var table = document.querySelector(".hp-table");
         var aboutWidget = document.querySelector(".hp-table .widget-4.message");
         if (!table || !aboutWidget) return;
 
-        /* Find the About row (direct child of .hp-table) */
         var aboutRow = aboutWidget;
-        while (aboutRow && aboutRow.parentNode !== table) {
-          aboutRow = aboutRow.parentNode;
-        }
+        while (aboutRow && aboutRow.parentNode !== table) aboutRow = aboutRow.parentNode;
         if (!aboutRow) return;
 
-        /* ── NEW V2: About-style event section ──────────────────────────
-           Mirrors the About section's native .widget-4.message structure
-           so it blends in as if it were a built-in homepage widget.
-           Inserted immediately after the About row, before the old box.
-        ────────────────────────────────────────────────────────────────── */
-        var btnLabel = nextEvent.signUp ? "Sign Up" : "Learn More";
-        var btnLink  = nextEvent.signUp || "/templates/events.htm";
-        var desc     = snippet(nextEvent.description, 220);
-        var dateStr  = fmtDate(nextEvent.start);
+        var btnLabel = ev.signUp ? "Sign Up" : "Learn More";
+        var btnLink  = ev.signUp || "/templates/events.htm";
+        var desc     = snippet(ev.description, 120);
 
-        var msgRow = document.createElement("div");
-        msgRow.className = "hp-row cc-msg-ev-row";
-        msgRow.innerHTML =
-          '<div class="widget-4 message custom feed">' +
-            '<div class="wrapper">' +
-              '<div class="widget_header"><h5>Next Upcoming Event</h5></div>' +
-              '<div class="widget_content message_format">' +
-                '<div class="bottom_padding">' +
-                  '<div class="cc-msg-ev-title">' + esc(nextEvent.title) + '</div>' +
-                  '<div class="cc-msg-ev-date">' + esc(dateStr) + '</div>' +
-                  (desc ? '<div class="cc-msg-ev-desc">' + esc(desc) + '</div>' : '') +
-                '</div>' +
-                '<a class="readMore cc-msg-ev-btn" href="' + esc(btnLink) + '">' + esc(btnLabel) + '</a>' +
-              '</div>' +
+        /* ── NEW V2: clean two-column card (screenshot style) ── */
+        var flyerHtml = ev.flyer
+          ? '<div class="cc-msg-ev-flyer" style="background-image:url(&quot;' + esc(ev.flyer) + '&quot;)">' +
+              '<img src="' + esc(ev.flyer) + '" class="cc-msg-ev-flyer-img" alt="' + esc(ev.title) + '">' +
+            '</div>'
+          : '';
+
+        var v2 = document.createElement("div");
+        v2.className = "hp-row cc-msg-ev-row";
+        v2.innerHTML =
+          '<div class="cc-msg-ev-card">' +
+            flyerHtml +
+            '<div class="cc-msg-ev-body">' +
+              '<div class="cc-msg-ev-title">' + esc(ev.title) + '</div>' +
+              '<div class="cc-msg-ev-date">' + esc(fmtDateShort(ev.start)) + '</div>' +
+              (desc ? '<div class="cc-msg-ev-desc">' + esc(desc) + '</div>' : '') +
+              '<a class="cc-msg-ev-link" href="' + esc(btnLink) + '">' + esc(btnLabel) + '</a>' +
             '</div>' +
           '</div>';
 
-        /* Insert after About row */
-        table.insertBefore(msgRow, aboutRow.nextSibling);
+        table.insertBefore(v2, aboutRow.nextSibling);
 
-        /* ── OLD V1: Custom card-style event box (unchanged) ────────────
-           Inserted after the new v2 row (i.e. after msgRow).
-        ────────────────────────────────────────────────────────────────── */
-        var img = nextEvent.flyer
-          ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(nextEvent.flyer) + '&quot;)"><img src="' + esc(nextEvent.flyer) + '" class="cc-mobile-flyer" /></div>'
-          : "";
+        /* ── OLD V1: original card with header title (unchanged) ── */
+        var v1img = ev.flyer
+          ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(ev.flyer) + '&quot;)"><img src="' + esc(ev.flyer) + '" class="cc-mobile-flyer" /></div>'
+          : '';
 
-        var cardRow = document.createElement("div");
-        cardRow.className = "hp-row cc-next-event-row";
-        cardRow.innerHTML =
+        var v1 = document.createElement("div");
+        v1.className = "hp-row cc-next-event-row";
+        v1.innerHTML =
           '<div class="wrapper">' +
             '<div class="header-title">Next Upcoming Event</div>' +
             '<div class="cc-ev-box">' +
-              img +
+              v1img +
               '<div class="cc-ev-content">' +
-                '<h3 class="cc-ev-title">' + esc(nextEvent.title) + '</h3>' +
-                '<div class="cc-ev-date">' + esc(dateStr) + '</div>' +
+                '<h3 class="cc-ev-title">' + esc(ev.title) + '</h3>' +
+                '<div class="cc-ev-date">' + esc(fmtDateLong(ev.start)) + '</div>' +
                 (desc ? '<div class="cc-ev-desc">' + esc(desc) + '</div>' : '') +
                 '<a class="cc-ev-btn" href="' + esc(btnLink) + '">' + esc(btnLabel) + '</a>' +
               '</div>' +
             '</div>' +
           '</div>';
 
-        /* Insert after the new v2 row */
-        table.insertBefore(cardRow, msgRow.nextSibling);
+        table.insertBefore(v1, v2.nextSibling);
       })
       .catch(function (e) { console.error("Event fetch error:", e); });
   })();
