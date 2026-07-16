@@ -44,9 +44,7 @@
 #footer .cs-f-social-icons a:hover { color: #ffffff !important; }
 
 /* ============================================================
-   NEW V2: Clean two-column event card (screenshot style)
-   Left: flyer image. Right: title, date, desc, text link.
-   No section header — blends as a standalone card in the flow.
+   NEW V2: Clean two-column event card
    ============================================================ */
 
 .cc-msg-ev-row {
@@ -54,7 +52,7 @@
   padding: 60px 10px;
 }
 
-/* The card itself: two columns, white bg, subtle shadow */
+/* Card: two columns, white, subtle shadow */
 .cc-msg-ev-card {
   display: flex;
   align-items: stretch;
@@ -65,24 +63,25 @@
   overflow: hidden;
 }
 
-/* Left: flyer image — fills the column, no distortion */
+/* Left: flyer — flush to left/top/bottom, no background color */
 .cc-msg-ev-flyer {
   flex: 0 0 45%;
-  background-size: contain;
+  background-color: #fff;        /* white — no tint */
+  background-size: cover;        /* fills the column top-to-bottom */
   background-repeat: no-repeat;
-  background-position: center center;
-  background-color: #f5f1ea; /* warm cream fallback matching typical flyer bg */
-  min-height: 220px;
+  background-position: left center; /* image anchored to the left edge */
+  min-height: 240px;
+  align-self: stretch;           /* forces full height of the card */
 }
 
-/* Mobile: real <img> tag shown instead of background (never cropped) */
+/* Mobile: real <img> shown instead */
 .cc-msg-ev-flyer-img {
   display: none;
   width: 100%;
   height: auto;
 }
 
-/* Right: content area */
+/* Right: content */
 .cc-msg-ev-body {
   flex: 1;
   padding: 40px 48px;
@@ -91,7 +90,7 @@
   justify-content: center;
 }
 
-/* Event title: large, dark navy, generous line-height */
+/* Title */
 .cc-msg-ev-title {
   font-size: 28px;
   font-weight: 700;
@@ -100,7 +99,7 @@
   margin: 0 0 12px 0;
 }
 
-/* Date line: small, teal, uppercase, spaced — "FRIDAY, AUGUST 7 · 7:30 PM" */
+/* Date — "FRIDAY, AUGUST 7 · 7:30 PM" */
 .cc-msg-ev-date {
   font-size: 12px;
   font-weight: 700;
@@ -110,7 +109,7 @@
   margin-bottom: 16px;
 }
 
-/* Description: gray, compact */
+/* Description */
 .cc-msg-ev-desc {
   color: #626262;
   font-size: 15px;
@@ -118,7 +117,7 @@
   margin-bottom: 24px;
 }
 
-/* CTA: teal text link with arrow — no background, no border */
+/* CTA: teal text link + arrow, no box */
 .cc-msg-ev-link {
   color: #2fd3c2;
   font-size: 13px;
@@ -136,30 +135,22 @@
   text-decoration: none;
 }
 .cc-msg-ev-link::after {
-  content: '\2192'; /* → arrow */
+  content: '\2192';
   font-size: 15px;
 }
 
 /* Mobile */
 @media (max-width: 768px) {
-  .cc-msg-ev-card {
-    flex-direction: column;
-  }
+  .cc-msg-ev-card { flex-direction: column; }
   .cc-msg-ev-flyer {
     flex: none;
     background-image: none !important;
     min-height: 0;
-    background-color: transparent;
+    background-color: #fff;
   }
-  .cc-msg-ev-flyer-img {
-    display: block;
-  }
-  .cc-msg-ev-body {
-    padding: 28px 24px;
-  }
-  .cc-msg-ev-title {
-    font-size: 22px;
-  }
+  .cc-msg-ev-flyer-img { display: block; }
+  .cc-msg-ev-body { padding: 28px 24px; }
+  .cc-msg-ev-title { font-size: 22px; }
 }
 
 /* ============================================================
