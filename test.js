@@ -117,7 +117,7 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var btnLink  = ev.signUp || "/templates/events.htm";
         var desc     = snippet(ev.description, 120);
 
-        /* —— NEW V2: image wrapped in link, button is dark navy —— */
+        /* —— NEW V2 —— */
         var flyerHtml = ev.flyer
           ? '<div class="cc-msg-ev-flyer">' +
               '<a href="' + esc(btnLink) + '" class="cc-msg-ev-flyer-link">' +
@@ -129,6 +129,8 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var v2 = document.createElement("div");
         v2.className = "hp-row cc-msg-ev-row";
         v2.innerHTML =
+          /* Section header — same element/style as About's h5 */
+          '<div class="cc-msg-ev-header">Next Upcoming Event</div>' +
           '<div class="cc-msg-ev-card">' +
             flyerHtml +
             '<div class="cc-msg-ev-body">' +

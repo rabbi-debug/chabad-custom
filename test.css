@@ -33,12 +33,26 @@
 
 /* ============================================================
    NEW V2: Clean two-column event card
-   Flyer is a real <img> — card grows with image, never crops.
    ============================================================ */
 
 .cc-msg-ev-row {
   background: #fff;
   padding: 60px 10px;
+}
+
+/* Section header — mirrors the platform's .widget_header h5 exactly:
+   36px, 800 weight, #0F6CB8, UPPERCASE, centered, letter-spacing 1px */
+.cc-msg-ev-row .cc-msg-ev-header {
+  color: #0F6CB8;
+  font-family: inherit;
+  font-size: 36px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  line-height: 1.3em;
+  text-align: center;
+  margin-bottom: 40px;
+  display: block;
 }
 
 /* Card wrapper */
@@ -59,11 +73,11 @@
   align-items: stretch;
 }
 
-/* Flyer link wraps the image — fills the full column */
+/* Flyer link fills the column */
 .cc-msg-ev-flyer-link {
   display: block;
   width: 100%;
-  line-height: 0; /* removes gap below inline img */
+  line-height: 0;
 }
 
 /* Flyer image: full width, never cropped, anchored left */
@@ -111,7 +125,7 @@
   margin-bottom: 28px;
 }
 
-/* CTA button: dark navy, bigger than before */
+/* CTA button: dark navy */
 .cc-msg-ev-link {
   align-self: flex-start;
   background: #0A3459;
@@ -130,12 +144,16 @@
   text-decoration: none;
 }
 
-/* Mobile */
+/* Mobile: stack, center everything */
 @media (max-width: 768px) {
   .cc-msg-ev-card { flex-direction: column; }
   .cc-msg-ev-flyer { flex: none; }
   .cc-msg-ev-flyer-img { height: auto; object-position: center; }
-  .cc-msg-ev-body { padding: 28px 24px; }
+  .cc-msg-ev-body {
+    padding: 28px 24px;
+    align-items: center;   /* centers the button */
+    text-align: center;    /* centers title, date, desc */
+  }
   .cc-msg-ev-title { font-size: 22px; }
   .cc-msg-ev-link { align-self: center; }
 }
