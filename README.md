@@ -5,10 +5,11 @@ Custom CSS/JS for **chabadwhiteplains.com** (Chabad of White Plains), injected v
 ## Note for Claude (or any assistant) starting a new session
 
 Read this file top to bottom — it is the complete system documentation. Then:
-1. For styling work, consult the snapshots — all complete, each with a selector cheat sheet in its header comment: `snapshots/form-page.html`, `snapshots/info-page.html`, `snapshots/home-page.html`.
+1. For styling work, first read `ui-blueprint.md` (the design rulebook: colors, typography, component patterns), then consult the snapshots — all complete, each with a selector cheat sheet in its header comment: `snapshots/form-page.html`, `snapshots/info-page.html`, `snapshots/home-page.html`.
 2. Make changes in `test.css`/`test.js` first; the owner previews them with the bookmarklet, then says "promote" → copy test into live.
 3. Keep `test.*` mirroring `live.*` plus the current experiment (in preview mode, test files REPLACE live files).
-4. The owner is new to GitHub/coding — explain in plain language and handle the technical steps.
+4. If a styling decision is made or changed, update `ui-blueprint.md` in the same commit.
+5. The owner is new to GitHub/coding — explain in plain language and handle the technical steps.
 
 ## How it works
 
@@ -23,6 +24,7 @@ Read this file top to bottom — it is the complete system documentation. Then:
 |---|---|
 | `live.css` / `live.js` | What every visitor gets |
 | `test.css` / `test.js` | Private sandbox, visible only in preview mode |
+| `ui-blueprint.md` | Design rulebook — colors, fonts, component patterns, conventions |
 | `snapshots/form-page.html` | Form-page template (aid 6735906) with selector cheat sheet |
 | `snapshots/info-page.html` | Info/article-page template (aid 6072929) with selector cheat sheet |
 | `snapshots/home-page.html` | Homepage widget template with selector cheat sheet |
