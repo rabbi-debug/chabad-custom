@@ -41,7 +41,7 @@
   padding: 60px 10px;
 }
 
-/* Card wrapper: side by side, white, subtle shadow */
+/* Card wrapper */
 .cc-msg-ev-card {
   display: flex;
   align-items: stretch;
@@ -52,20 +52,27 @@
   overflow: hidden;
 }
 
-/* Left: flyer column — width fixed, height driven by the image */
+/* Left: flyer column */
 .cc-msg-ev-flyer {
   flex: 0 0 45%;
-  display: flex;          /* so the img fills the column */
+  display: flex;
   align-items: stretch;
 }
 
-/* The actual flyer image: full width, natural height, flush left/top/bottom */
+/* Flyer link wraps the image — fills the full column */
+.cc-msg-ev-flyer-link {
+  display: block;
+  width: 100%;
+  line-height: 0; /* removes gap below inline img */
+}
+
+/* Flyer image: full width, never cropped, anchored left */
 .cc-msg-ev-flyer-img {
   display: block;
   width: 100%;
-  height: 100%;           /* stretches to match the right column's height */
-  object-fit: contain;    /* never cropped — shows the whole image */
-  object-position: left center; /* anchored to left edge */
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
 }
 
 /* Right: content */
@@ -101,32 +108,36 @@
   color: #626262;
   font-size: 15px;
   line-height: 1.6;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
-/* CTA text link */
+/* CTA button: dark navy, bigger than before */
 .cc-msg-ev-link {
-  color: #2fd3c2;
-  font-size: 13px;
+  align-self: flex-start;
+  background: #0A3459;
+  color: #fff !important;
+  font-size: 15px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: color 0.2s ease;
+  padding: 13px 30px;
+  border-radius: 3px;
+  transition: background 0.2s ease;
 }
-.cc-msg-ev-link:hover { color: #0F6CB8; text-decoration: none; }
-.cc-msg-ev-link::after { content: '\2192'; font-size: 15px; }
+.cc-msg-ev-link:hover {
+  background: #2fd3c2;
+  text-decoration: none;
+}
 
-/* Mobile: stack vertically, image natural width */
+/* Mobile */
 @media (max-width: 768px) {
   .cc-msg-ev-card { flex-direction: column; }
   .cc-msg-ev-flyer { flex: none; }
   .cc-msg-ev-flyer-img { height: auto; object-position: center; }
   .cc-msg-ev-body { padding: 28px 24px; }
   .cc-msg-ev-title { font-size: 22px; }
+  .cc-msg-ev-link { align-self: center; }
 }
 
 /* ============================================================

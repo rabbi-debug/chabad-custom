@@ -117,9 +117,13 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var btnLink  = ev.signUp || "/templates/events.htm";
         var desc     = snippet(ev.description, 120);
 
-        /* ── NEW V2: real <img> tag so the card grows with the image, never crops ── */
+        /* —— NEW V2: image wrapped in link, button is dark navy —— */
         var flyerHtml = ev.flyer
-          ? '<div class="cc-msg-ev-flyer"><img src="' + esc(ev.flyer) + '" class="cc-msg-ev-flyer-img" alt="' + esc(ev.title) + '"></div>'
+          ? '<div class="cc-msg-ev-flyer">' +
+              '<a href="' + esc(btnLink) + '" class="cc-msg-ev-flyer-link">' +
+                '<img src="' + esc(ev.flyer) + '" class="cc-msg-ev-flyer-img" alt="' + esc(ev.title) + '">' +
+              '</a>' +
+            '</div>'
           : '';
 
         var v2 = document.createElement("div");
@@ -137,7 +141,7 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
 
         table.insertBefore(v2, aboutRow.nextSibling);
 
-        /* ── OLD V1: original card with header title (unchanged) ── */
+        /* —— OLD V1: unchanged —— */
         var v1img = ev.flyer
           ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(ev.flyer) + '&quot;)"><img src="' + esc(ev.flyer) + '" class="cc-mobile-flyer" /></div>'
           : '';
