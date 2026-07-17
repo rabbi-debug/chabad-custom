@@ -49,7 +49,7 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
   }, 100);
 
   /* ============================================================
-     Event widgets — shared fetch, feeds both V2 and V1
+     Event widgets — V2 next upcoming event card
      ============================================================ */
   (function () {
     if (type !== "home") return;
@@ -70,16 +70,6 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var monthDay = new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric" }).format(d).toUpperCase();
         var time     = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(d);
         return dayName + ", " + monthDay + " \u00b7 " + time;
-      } catch (e) { return d.toLocaleString(); }
-    }
-
-    function fmtDateLong(iso) {
-      var d = new Date(iso);
-      if (isNaN(d.getTime())) return "";
-      try {
-        var day  = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" }).format(d);
-        var time = new Intl.DateTimeFormat("en-US", { hour: "numeric", minute: "2-digit" }).format(d);
-        return day + " \u2022 " + time;
       } catch (e) { return d.toLocaleString(); }
     }
 
@@ -117,7 +107,7 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var btnLink  = ev.signUp || "/templates/events.htm";
         var desc     = snippet(ev.description, 120);
 
-        /* —— NEW V2 —— */
+        /* V2: clean two-column event card with section header */
         var flyerHtml = ev.flyer
           ? '<div class="cc-msg-ev-flyer">' +
               '<a href="' + esc(btnLink) + '" class="cc-msg-ev-flyer-link">' +
@@ -129,7 +119,6 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
         var v2 = document.createElement("div");
         v2.className = "hp-row cc-msg-ev-row";
         v2.innerHTML =
-          /* Section header — same element/style as About's h5 */
           '<div class="cc-msg-ev-header">Next Upcoming Event</div>' +
           '<div class="cc-msg-ev-card">' +
             flyerHtml +
@@ -142,29 +131,6 @@ var CC_ENABLED = true; /* KILL SWITCH: set to false to disable ALL customization
           '</div>';
 
         table.insertBefore(v2, aboutRow.nextSibling);
-
-        /* —— OLD V1: unchanged —— */
-        var v1img = ev.flyer
-          ? '<div class="cc-ev-img" style="background-image:url(&quot;' + esc(ev.flyer) + '&quot;)"><img src="' + esc(ev.flyer) + '" class="cc-mobile-flyer" /></div>'
-          : '';
-
-        var v1 = document.createElement("div");
-        v1.className = "hp-row cc-next-event-row";
-        v1.innerHTML =
-          '<div class="wrapper">' +
-            '<div class="header-title">Next Upcoming Event</div>' +
-            '<div class="cc-ev-box">' +
-              v1img +
-              '<div class="cc-ev-content">' +
-                '<h3 class="cc-ev-title">' + esc(ev.title) + '</h3>' +
-                '<div class="cc-ev-date">' + esc(fmtDateLong(ev.start)) + '</div>' +
-                (desc ? '<div class="cc-ev-desc">' + esc(desc) + '</div>' : '') +
-                '<a class="cc-ev-btn" href="' + esc(btnLink) + '">' + esc(btnLabel) + '</a>' +
-              '</div>' +
-            '</div>' +
-          '</div>';
-
-        table.insertBefore(v1, v2.nextSibling);
       })
       .catch(function (e) { console.error("Event fetch error:", e); });
   })();
