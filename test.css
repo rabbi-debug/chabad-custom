@@ -215,3 +215,49 @@ html.cc-type-info .co_body.article-body {
   outline: 3px solid #2fd3c2;
   outline-offset: 2px;
 }
+
+/* ============================================================
+   MOBILE SPACING FIX (mobile only — desktop unchanged)
+   The platform puts padding:100px top/bottom on every .hp-row.
+   On desktop that's elegant; on mobile it stacks to ~200px of
+   dead space between every section, forcing endless scrolling.
+   Tighten it on small screens so sections sit closer together.
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Reduce the giant vertical gaps between all homepage sections */
+  .hp-table .hp-row {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  /* Our event card row uses its own padding — bring it in line */
+  .cc-msg-ev-row {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  /* Programs grid + Latest Photos have inner wrappers that add more
+     space; trim their top/bottom too */
+  .hp-table .sneak-peek-container,
+  .hp-table .latest_photos .wrapper {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* Section headers (ABOUT / PROGRAMS / etc.) sit a bit tighter */
+  .hp-table .widget_header h5,
+  .hp-table .header-title,
+  .hp-table .sneak-peek-container .header-title {
+    margin-bottom: 18px;
+  }
+
+  /* "See More Photos" + "View more Upcoming Events" buttons:
+     give them more presence and a comfortable tap size */
+  .hp-table .latest_photos a.readMore,
+  .hp-table .upcoming_events a.readMore {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 12px 26px;
+    min-height: 44px;
+    line-height: 1.4;
+    box-sizing: border-box;
+  }
+}
