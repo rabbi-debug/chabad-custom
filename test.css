@@ -157,3 +157,61 @@
   .cc-msg-ev-title { font-size: 22px; }
   .cc-msg-ev-link { align-self: center; }
 }
+
+/* ============================================================
+   SITE-WIDE UX / ACCESSIBILITY IMPROVEMENTS
+   (added on top of existing customizations)
+   ============================================================ */
+
+/* ---- A) Article readability (info/article pages only) ----
+   Long paragraph lines are hard to read when they stretch the full
+   width of the screen. Constrain measure to ~68 characters and open
+   up the line spacing. Scoped to info pages so nothing else changes. */
+html.cc-type-info .article-body p,
+html.cc-type-info .article-body li {
+  max-width: 68ch;
+  line-height: 1.7;
+}
+/* Keep images, embeds, and tables full-width (only constrain text) */
+html.cc-type-info .article-body img,
+html.cc-type-info .article-body iframe,
+html.cc-type-info .article-body table {
+  max-width: 100%;
+}
+
+/* ---- B) A little breathing room at the top of article content ---- */
+html.cc-type-info .co_body.article-body {
+  padding-top: 8px;
+}
+
+/* ---- C) Mobile tap targets (accessibility) ----
+   On phones, the top-bar links and mobile menu items are small and
+   cramped. Give them a comfortable minimum height and padding so they
+   are easy to tap. Font size is unchanged. */
+@media (max-width: 768px) {
+  .cco_topbar_link a,
+  #mychabad_login_bar a.login_link,
+  .mobile-menu-bottom-links a {
+    display: block;
+    min-height: 44px;
+    line-height: 44px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  /* Primary nav items in the mobile drawer */
+  #co_menu_container td.co_menu_item a.parent {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ---- D) Visible focus states (keyboard accessibility) ----
+   Our custom links had no visible focus ring. Add a clear one so
+   keyboard users can see where they are. Mouse users are unaffected. */
+.cc-msg-ev-link:focus-visible,
+.cc-msg-ev-flyer-link:focus-visible,
+#footer .cc-foot-phone a:focus-visible {
+  outline: 3px solid #2fd3c2;
+  outline-offset: 2px;
+}
