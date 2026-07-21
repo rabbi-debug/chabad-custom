@@ -25,10 +25,10 @@
 #footer .footer3 { padding: 0 !important; }
 #footer .cc-foot-place { font-family: inherit; font-size: 18px; font-weight: 600; letter-spacing: 0.08em; color: #ffffff; margin-bottom: 4px; }
 #footer .cc-foot-phone { margin: 0 !important; font-size: 14px; letter-spacing: 0.05em; color: #e0e0e0; }
-#footer .cc-foot-phone a { color: #c9b788; text-decoration: none; letter-spacing: 0.12em; }
+#footer .cc-foot-phone a { color: #f47721; text-decoration: none; letter-spacing: 0.12em; }
 #footer .cc-foot-phone a:hover { color: #ffffff; }
 #footer .cs-f-social-icons { margin-top: 16px; }
-#footer .cs-f-social-icons a { font-size: 19px !important; color: #c9b788 !important; margin: 0 10px; transition: color 0.15s ease; }
+#footer .cs-f-social-icons a { font-size: 19px !important; color: #f47721 !important; margin: 0 10px; transition: color 0.15s ease; }
 #footer .cs-f-social-icons a:hover { color: #ffffff !important; }
 
 /* ============================================================
@@ -41,9 +41,9 @@
 }
 
 /* Section header — mirrors the platform's .widget_header h5 exactly:
-   36px, 800 weight, #0F6CB8, UPPERCASE, centered, letter-spacing 1px */
+   36px, 800 weight, theme orange #f47721, UPPERCASE, centered, letter-spacing 1px */
 .cc-msg-ev-row .cc-msg-ev-header {
-  color: #0F6CB8;
+  color: #f47721;
   font-family: inherit;
   font-size: 36px;
   font-weight: 800;
@@ -98,20 +98,20 @@
   justify-content: center;
 }
 
-/* Title — from old V1: 24px, 700, #0F6CB8 */
+/* Title — 24px, 700, theme burgundy #891738 (matches platform H2 / message titles) */
 .cc-msg-ev-title {
   font-size: 24px;
   font-weight: 700;
-  color: #0F6CB8;
+  color: #891738;
   line-height: 1.3;
   margin-bottom: 8px;
 }
 
-/* Date — from old V1: 13px, 700, #2fd3c2, uppercase, 0.5px letter-spacing */
+/* Date — 13px, 700, theme orange #f47721, uppercase, 0.5px letter-spacing */
 .cc-msg-ev-date {
   font-size: 13px;
   font-weight: 700;
-  color: #2fd3c2;
+  color: #f47721;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 15px;
@@ -125,11 +125,16 @@
   margin-bottom: 25px;
 }
 
-/* CTA button — from old V1: 18px, 700, #0F6CB8 background, 10px 24px padding */
+/* CTA button — OUTLINE style to match the platform's own buttons
+   (e.g. the slider "Learn More"): transparent bg, orange border + text,
+   fills orange with white text on hover. 18px, 700, 10px 24px padding.
+   border-box keeps the size identical between rest/hover despite the border. */
 .cc-msg-ev-link {
   align-self: flex-start;
-  background: #0F6CB8;
-  color: #fff !important;
+  background: transparent;
+  color: #f47721 !important;
+  border: 2px solid #f47721;
+  box-sizing: border-box;
   font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
@@ -137,10 +142,11 @@
   text-decoration: none;
   padding: 10px 24px;
   border-radius: 3px;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 .cc-msg-ev-link:hover {
-  background: #2fd3c2;
+  background: #f47721;
+  color: #fff !important;
   text-decoration: none;
 }
 
@@ -212,7 +218,7 @@ html.cc-type-info .co_body.article-body {
 .cc-msg-ev-link:focus-visible,
 .cc-msg-ev-flyer-link:focus-visible,
 #footer .cc-foot-phone a:focus-visible {
-  outline: 3px solid #2fd3c2;
+  outline: 3px solid #891738;
   outline-offset: 2px;
 }
 
