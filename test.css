@@ -250,21 +250,29 @@
 /* ---- A) Article readability (info/article pages only) ----
    Long paragraph lines are hard to read when they stretch the full
    width of the screen. Constrain measure to ~68 characters and open
-   up the line spacing. Scoped to info pages so nothing else changes. */
-html.cc-type-info .article-body p,
-html.cc-type-info .article-body li {
+   up the line spacing.
+
+   SCOPING: uses body.sites-article:not(.form) — a class Chabad One
+   puts on the page itself, so the rule applies the instant the page
+   renders. Previously this used html.cc-type-info, which our JS adds
+   only after load, so text appeared full-width and then visibly
+   jumped narrower. Never scope CSS by cc-type-* (see ui-blueprint
+   section 7); info pages carry sites-article WITHOUT form, form
+   pages carry both, and the homepage carries neither. */
+body.sites-article:not(.form) .article-body p,
+body.sites-article:not(.form) .article-body li {
   max-width: 68ch;
   line-height: 1.7;
 }
 /* Keep images, embeds, and tables full-width (only constrain text) */
-html.cc-type-info .article-body img,
-html.cc-type-info .article-body iframe,
-html.cc-type-info .article-body table {
+body.sites-article:not(.form) .article-body img,
+body.sites-article:not(.form) .article-body iframe,
+body.sites-article:not(.form) .article-body table {
   max-width: 100%;
 }
 
 /* ---- B) A little breathing room at the top of article content ---- */
-html.cc-type-info .co_body.article-body {
+body.sites-article:not(.form) .co_body.article-body {
   padding-top: 8px;
 }
 
