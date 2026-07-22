@@ -1,7 +1,85 @@
 /* ============================================================
-   chabadwhiteplains.com — LIVE styles (all visitors see this)
-   Loaded on every page by the header snippet.
+   chabadwhiteplains.com — TEST styles (preview mode only)
+   Sandbox: preview with the bookmarklet, then promote to live.*
+
+   STRUCTURE:
+     1) DESIGN TOKENS      — the single source of truth for all colors
+     2) Custom components  — our footer + event card (read tokens)
+     3) UX / accessibility — readability, tap targets, focus, spacing
+     4) NATIVE OVERRIDES   — re-color Chabad One's own elements (tokens)
+
+   To re-theme the entire site, edit ONLY the DESIGN TOKENS block.
+   No rule outside that block should contain a raw hex color.
    ============================================================ */
+
+/* ============================================================
+   1) DESIGN TOKENS — single source of truth for ALL colors
+   ============================================================
+   Every color on the site — both our custom components AND the
+   native Chabad One elements we override below — reads from the
+   variables defined here. To re-theme the whole site, change the
+   values in THIS block only. Nothing else should contain a raw
+   hex color.
+
+   Named by ROLE (what the thing is), not by hue, so the names stay
+   correct even if the actual colors change again later. The current
+   values match the platform's "purple-theme.css" (which is actually
+   orange + burgundy — see ui-blueprint.md).
+
+   NOTE: the native platform theme file (/css/sites6/purple-theme.css)
+   is served by Chabad One and cannot be edited by us. We can't feed
+   it these tokens; instead, the "NATIVE PLATFORM OVERRIDES" section
+   far below re-colors the platform's own elements using these tokens.
+   Because our stylesheet loads after theirs, our values win.
+   ============================================================ */
+:root {
+  /* ---- Brand palette (the raw colors; edit these to re-theme) ---- */
+  --cc-brand-primary:        #f47721;  /* orange  — primary accent */
+  --cc-brand-primary-hover:  #d9640f;  /* darker orange for hover on filled orange */
+  --cc-brand-secondary:      #891738;  /* burgundy — actions, secondary headings */
+  --cc-brand-secondary-dark: #67112A;  /* darkest burgundy — form submit, hover-darken */
+
+  /* ---- Neutrals ---- */
+  --cc-text-body:      #343333;  /* default paragraph text */
+  --cc-text-muted:     #626262;  /* synopsis, captions, secondary text */
+  --cc-text-heading:   #333333;  /* dark-gray sidebar/label headings */
+  --cc-border-light:   #E1E1E1;  /* card borders, dividers */
+  --cc-surface:        #ffffff;  /* page / card background */
+  --cc-footer-text:    #919191;  /* footer body text */
+  --cc-footer-text-2:  #e0e0e0;  /* footer secondary line (e.g. phone row) */
+  --cc-footer-link:    #A4A4A4;  /* footer default link (platform) */
+  --cc-on-brand:       #ffffff;  /* text/icon sitting ON a brand-colored fill */
+
+  /* ---- Semantic ROLES — reference these in rules, not the raw brand vars ----
+     (Roles map to brand colors here, so a rule says WHAT it is, and this
+      mapping decides the color. Change a mapping to recolor just that role.) */
+  --cc-color-header:        var(--cc-brand-primary);    /* section headers, H1, article/page titles */
+  --cc-color-subheading:    var(--cc-brand-secondary);  /* H2 / H3 */
+  --cc-color-link:          var(--cc-brand-secondary);  /* body links, titles-as-links, nav hover */
+  --cc-color-link-accent:   var(--cc-brand-primary);    /* "more" / accent links, breadcrumbs */
+  --cc-color-accent:        var(--cc-brand-primary);    /* small accent text (e.g. event date) */
+
+  /* Buttons — OUTLINE style (matches the platform's own outline buttons) */
+  --cc-btn-border:          var(--cc-brand-primary);
+  --cc-btn-text:            var(--cc-brand-primary);
+  --cc-btn-fill-hover:      var(--cc-brand-primary);
+  --cc-btn-text-hover:      var(--cc-on-brand);
+
+  /* Solid button (platform primary action buttons / form submit) */
+  --cc-btn-solid-bg:        var(--cc-brand-secondary);
+  --cc-btn-solid-bg-hover:  var(--cc-brand-secondary-dark);
+  --cc-btn-solid-text:      var(--cc-on-brand);
+  --cc-btn-submit-bg:       var(--cc-brand-secondary-dark);
+  --cc-btn-submit-bg-hover: #4a0d1e;  /* even darker burgundy for submit hover */
+
+  /* Focus ring (keyboard accessibility) */
+  --cc-focus-ring:          var(--cc-brand-secondary);
+
+  /* Footer accents (our overrides) */
+  --cc-footer-accent:       var(--cc-brand-primary);    /* footer title, phone link, social icons */
+  --cc-footer-accent-hover: var(--cc-on-brand);
+}
+
 
 /* ---- 1) Remove dead space ---- */
 #content div.clear {
@@ -23,27 +101,27 @@
 #footer .bottom_padding { padding-bottom: 8px; }
 #footer .bottom_padding.clear_float { padding: 0 !important; }
 #footer .footer3 { padding: 0 !important; }
-#footer .cc-foot-place { font-family: inherit; font-size: 18px; font-weight: 600; letter-spacing: 0.08em; color: #ffffff; margin-bottom: 4px; }
-#footer .cc-foot-phone { margin: 0 !important; font-size: 14px; letter-spacing: 0.05em; color: #e0e0e0; }
-#footer .cc-foot-phone a { color: #f47721; text-decoration: none; letter-spacing: 0.12em; }
-#footer .cc-foot-phone a:hover { color: #ffffff; }
+#footer .cc-foot-place { font-family: inherit; font-size: 18px; font-weight: 600; letter-spacing: 0.08em; color: var(--cc-on-brand); margin-bottom: 4px; }
+#footer .cc-foot-phone { margin: 0 !important; font-size: 14px; letter-spacing: 0.05em; color: var(--cc-footer-text-2); }
+#footer .cc-foot-phone a { color: var(--cc-footer-accent); text-decoration: none; letter-spacing: 0.12em; }
+#footer .cc-foot-phone a:hover { color: var(--cc-footer-accent-hover); }
 #footer .cs-f-social-icons { margin-top: 16px; }
-#footer .cs-f-social-icons a { font-size: 19px !important; color: #f47721 !important; margin: 0 10px; transition: color 0.15s ease; }
-#footer .cs-f-social-icons a:hover { color: #ffffff !important; }
+#footer .cs-f-social-icons a { font-size: 19px !important; color: var(--cc-footer-accent) !important; margin: 0 10px; transition: color 0.15s ease; }
+#footer .cs-f-social-icons a:hover { color: var(--cc-footer-accent-hover) !important; }
 
 /* ============================================================
    NEW V2: Clean two-column event card (V1 styling)
    ============================================================ */
 
 .cc-msg-ev-row {
-  background: #fff;
+  background: var(--cc-surface);
   padding: 60px 10px;
 }
 
 /* Section header — mirrors the platform's .widget_header h5 exactly:
-   36px, 800 weight, theme orange #f47721, UPPERCASE, centered, letter-spacing 1px */
+   36px, 800 weight, UPPERCASE, centered, letter-spacing 1px (header role) */
 .cc-msg-ev-row .cc-msg-ev-header {
-  color: #f47721;
+  color: var(--cc-color-header);
   font-family: inherit;
   font-size: 36px;
   font-weight: 800;
@@ -61,7 +139,7 @@
   align-items: stretch;
   max-width: 960px;
   margin: 0 auto;
-  background: #fff;
+  background: var(--cc-surface);
   box-shadow: 0 2px 20px rgba(0,0,0,0.08);
   overflow: hidden;
 }
@@ -98,28 +176,28 @@
   justify-content: center;
 }
 
-/* Title — 24px, 700, theme burgundy #891738 (matches platform H2 / message titles) */
+/* Title — 24px, 700 (subheading role — matches platform H2 / message titles) */
 .cc-msg-ev-title {
   font-size: 24px;
   font-weight: 700;
-  color: #891738;
+  color: var(--cc-color-subheading);
   line-height: 1.3;
   margin-bottom: 8px;
 }
 
-/* Date — 13px, 700, theme orange #f47721, uppercase, 0.5px letter-spacing */
+/* Date — 13px, 700, uppercase, 0.5px letter-spacing (accent role) */
 .cc-msg-ev-date {
   font-size: 13px;
   font-weight: 700;
-  color: #f47721;
+  color: var(--cc-color-accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 15px;
 }
 
-/* Description */
+/* Description (muted text) */
 .cc-msg-ev-desc {
-  color: #626262;
+  color: var(--cc-text-muted);
   font-size: 15px;
   line-height: 1.6;
   margin-bottom: 25px;
@@ -132,8 +210,8 @@
 .cc-msg-ev-link {
   align-self: flex-start;
   background: transparent;
-  color: #f47721 !important;
-  border: 2px solid #f47721;
+  color: var(--cc-btn-text) !important;
+  border: 2px solid var(--cc-btn-border);
   box-sizing: border-box;
   font-size: 18px;
   font-weight: 700;
@@ -145,8 +223,8 @@
   transition: background 0.3s ease, color 0.3s ease;
 }
 .cc-msg-ev-link:hover {
-  background: #f47721;
-  color: #fff !important;
+  background: var(--cc-btn-fill-hover);
+  color: var(--cc-btn-text-hover) !important;
   text-decoration: none;
 }
 
@@ -218,7 +296,7 @@ html.cc-type-info .co_body.article-body {
 .cc-msg-ev-link:focus-visible,
 .cc-msg-ev-flyer-link:focus-visible,
 #footer .cc-foot-phone a:focus-visible {
-  outline: 3px solid #891738;
+  outline: 3px solid var(--cc-focus-ring);
   outline-offset: 2px;
 }
 
@@ -266,4 +344,151 @@ html.cc-type-info .co_body.article-body {
     line-height: 1.4;
     box-sizing: border-box;
   }
+}
+
+/* ============================================================
+   NATIVE PLATFORM OVERRIDES  (Part 1)
+   ============================================================
+   Re-colors Chabad One's OWN elements so the whole site's palette
+   is driven by the design tokens above — not by the platform's
+   purple-theme.css (which we can't edit). Our stylesheet loads
+   after the platform's, so these win.
+
+   High-impact scope: headers, titles, links, nav, buttons, and
+   form submit — ~90% of what a visitor sees. Selectors are taken
+   from ui-blueprint.md; if the platform changes its markup, a rule
+   here might need updating (a stray theme color would reappear).
+   Each block notes WHAT native element it targets.
+   ============================================================ */
+
+/* ---- Section headers & big titles (widget headers, header-title,
+        hero slide title, message titles) → header role ---- */
+.chabad_updates .widget_header.widget_header h5,
+[class*="widget-"] .widget_header.widget_header h5,
+.header-title,
+.message .wrapper .widget_content .item .title,
+.message .wrapper .widget_content .item .title a,
+.message .wrapper .widget_content.message_format h6,
+.hp-table .hp-row-first .promo_slider .slider .cycle-caption big {
+  color: var(--cc-color-header) !important;
+}
+
+/* ---- Page / article H1 and content titles → header role ---- */
+.article-header__title,
+.content_title_container .content_title,
+.content_title_container h1,
+.Content_Title,
+.co_body .content .Content_Title,
+.co_body .content .SCHeading_1,
+.co_body h1,
+.form-header-group h1 {
+  color: var(--cc-color-header) !important;
+}
+
+/* ---- Content H2 / H3 → subheading role ---- */
+.co_body .content .Content_Large,
+.co_body .content .SCHeading_2,
+.co_body h2,
+.form-header-group h2,
+.co_body .content .SCHeading_3,
+.co_body h3,
+.form-header-group h3 {
+  color: var(--cc-color-subheading) !important;
+}
+
+/* ---- Body links / titles-as-links → link role ---- */
+.child_title a,
+.co_body .content .child_title,
+.co_body .content .child_title a,
+.co_body .content .lt_blue a,
+.lt_blue,
+.lt_blue a,
+.hp_content_wrapper .upcoming_events .widget_content > ul > li h6,
+.hp_content_wrapper .upcoming_events .widget_content > ul > li h6 a,
+.hp_content_wrapper .widget_content > ul > li h6,
+.hp_content_wrapper .widget_content > ul > li h6 a,
+.hp_content_wrapper .mini_slider .title,
+.hp_content_wrapper .chabad_updates .item a,
+.co_index .item .title,
+.co_index .item .title a {
+  color: var(--cc-color-link) !important;
+}
+
+/* ---- "More" / accent links + breadcrumbs → accent-link role ---- */
+.hp_content_wrapper .readMore,
+.hp_content_wrapper .chabad_updates .item a.readMore,
+.hp_content_wrapper .latest_photos .readMore span,
+.latest_photos .readMore span,
+#BodyContainer #co_content_container > .clearfix > .g960:not(.categorized) .article-header .breadcrumbs .breadcrumbs__crumb,
+#BodyContainer #co_content_container > .clearfix > .g960:not(.categorized) .article-header .breadcrumbs .breadcrumbs__divider {
+  color: var(--cc-color-link-accent) !important;
+}
+
+/* ---- Top-bar links & nav on scroll/interior → link role ---- */
+#header.on-scroll #header_container .links .topBarLink,
+#header.on-scroll #header_container .links .topBarLink a,
+body.sites-article #header_container .links .topBarLink,
+body.sites-article #header_container .links .topBarLink a,
+body.cco_body #header.on-scroll #tabContentMain .co_menu_item span.parent a,
+body.cco_body.sites-article #tabContentMain .co_menu_item span.parent a {
+  color: var(--cc-color-link) !important;
+}
+
+/* ---- Native SOLID buttons (.co_global_button / _submit) → solid-button role ---- */
+.co_global_button .button,
+.co_global_submit .button {
+  background: var(--cc-btn-solid-bg) !important;
+  color: var(--cc-btn-solid-text) !important;
+}
+.co_global_button .button:hover,
+.co_global_button .button:focus,
+.co_global_submit .button:hover,
+.co_global_submit .button:focus {
+  background: var(--cc-btn-solid-bg-hover) !important;
+  color: var(--cc-btn-solid-text) !important;
+}
+
+/* ---- Native OUTLINE buttons (Donate, slider "Learn More", parsha,
+        message readMore) → outline-button role ---- */
+.cco_body #tabContentMain .donate_link a,
+body.cco_body #tabContentMain .co_menu_item.donate_link span.parent a,
+.hp-table .hp-row-first .promo_slider .slider .cycle-caption .readMore,
+.hp-table > :not(:first-child) .promo_slider .cycle-caption .readMore,
+[class^="widget-"].parsha .readMore,
+.message .wrapper .widget_content .readMore {
+  border-color: var(--cc-btn-border) !important;
+  color: var(--cc-btn-text) !important;
+}
+.cco_body #tabContentMain .donate_link a:hover,
+.hp-table .hp-row-first .promo_slider .slider .cycle-caption .readMore:hover,
+.hp-table > :not(:first-child) .promo_slider .cycle-caption .readMore:hover,
+[class^="widget-"].parsha .readMore:hover,
+.message .wrapper .widget_content .readMore:hover {
+  background: var(--cc-btn-fill-hover) !important;
+  color: var(--cc-btn-text-hover) !important;
+}
+
+/* ---- Form submit button → submit role ---- */
+.co_body .content .form-all .form-submit-button {
+  background: var(--cc-btn-submit-bg) !important;
+  color: var(--cc-on-brand) !important;
+}
+.co_body .content .form-all .form-submit-button:hover,
+.co_body .content .form-all .form-submit-button:focus {
+  background: var(--cc-btn-submit-bg-hover) !important;
+}
+
+/* ---- Mailing-list (hp_subscribe) background → solid brand ---- */
+.hp-table .hp_subscribe {
+  background: var(--cc-btn-solid-bg) !important;
+}
+
+/* ---- Footer accents (title, links, social icons) → footer-accent role ---- */
+#footer .footer_text .footer3 .footer-title,
+#footer .footer_text .footer3 b .footer-title {
+  color: var(--cc-footer-accent) !important;
+}
+.cs-f-social-icons a:hover {
+  background: var(--cc-brand-secondary) !important;
+  color: var(--cc-on-brand) !important;
 }
