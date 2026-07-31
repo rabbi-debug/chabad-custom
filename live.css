@@ -3,6 +3,75 @@
    Loaded on every page by the header snippet.
    ============================================================ */
 
+/* ============================================================
+   1) DESIGN TOKENS — single source of truth for ALL colors
+   ============================================================
+   Every color on the site — both our custom components AND the
+   native Chabad One elements we override below — reads from the
+   variables defined here. To re-theme the whole site, change the
+   values in THIS block only. Nothing else should contain a raw
+   hex color.
+
+   Named by ROLE (what the thing is), not by hue, so the names stay
+   correct even if the actual colors change again later. The current
+   values match the platform's "purple-theme.css" (which is actually
+   orange + burgundy — see ui-blueprint.md).
+
+   NOTE: the native platform theme file (/css/sites6/purple-theme.css)
+   is served by Chabad One and cannot be edited by us. We can't feed
+   it these tokens; instead, the "NATIVE PLATFORM OVERRIDES" section
+   far below re-colors the platform's own elements using these tokens.
+   Because our stylesheet loads after theirs, our values win.
+   ============================================================ */
+:root {
+  /* ---- Brand palette (the raw colors; edit these to re-theme) ---- */
+  --cc-brand-primary:        #f47721;  /* orange  — primary accent */
+  --cc-brand-primary-hover:  #d9640f;  /* darker orange for hover on filled orange */
+  --cc-brand-secondary:      #891738;  /* burgundy — actions, secondary headings */
+  --cc-brand-secondary-dark: #67112A;  /* darkest burgundy — form submit, hover-darken */
+
+  /* ---- Neutrals ---- */
+  --cc-text-body:      #343333;  /* default paragraph text */
+  --cc-text-muted:     #626262;  /* synopsis, captions, secondary text */
+  --cc-text-heading:   #333333;  /* dark-gray sidebar/label headings */
+  --cc-border-light:   #E1E1E1;  /* card borders, dividers */
+  --cc-surface:        #ffffff;  /* page / card background */
+  --cc-footer-text:    #919191;  /* footer body text */
+  --cc-footer-text-2:  #e0e0e0;  /* footer secondary line (e.g. phone row) */
+  --cc-footer-link:    #A4A4A4;  /* footer default link (platform) */
+  --cc-on-brand:       #ffffff;  /* text/icon sitting ON a brand-colored fill */
+
+  /* ---- Semantic ROLES — reference these in rules, not the raw brand vars ----
+     (Roles map to brand colors here, so a rule says WHAT it is, and this
+      mapping decides the color. Change a mapping to recolor just that role.) */
+  --cc-color-header:        var(--cc-brand-primary);    /* section headers, H1, article/page titles */
+  --cc-color-subheading:    var(--cc-brand-secondary);  /* H2 / H3 */
+  --cc-color-link:          var(--cc-brand-secondary);  /* body links, titles-as-links, nav hover */
+  --cc-color-link-accent:   var(--cc-brand-primary);    /* "more" / accent links, breadcrumbs */
+  --cc-color-accent:        var(--cc-brand-primary);    /* small accent text (e.g. event date) */
+
+  /* Buttons — OUTLINE style (matches the platform's own outline buttons) */
+  --cc-btn-border:          var(--cc-brand-primary);
+  --cc-btn-text:            var(--cc-brand-primary);
+  --cc-btn-fill-hover:      var(--cc-brand-primary);
+  --cc-btn-text-hover:      var(--cc-on-brand);
+
+  /* Solid button (platform primary action buttons / form submit) */
+  --cc-btn-solid-bg:        var(--cc-brand-secondary);
+  --cc-btn-solid-bg-hover:  var(--cc-brand-secondary-dark);
+  --cc-btn-solid-text:      var(--cc-on-brand);
+  --cc-btn-submit-bg:       var(--cc-brand-secondary-dark);
+  --cc-btn-submit-bg-hover: #4a0d1e;  /* even darker burgundy for submit hover */
+
+  /* Focus ring (keyboard accessibility) */
+  --cc-focus-ring:          var(--cc-brand-secondary);
+
+  /* Footer accents (our overrides) */
+  --cc-footer-accent:       var(--cc-brand-primary);    /* footer title, phone link, social icons */
+  --cc-footer-accent-hover: var(--cc-on-brand);
+}
+
+
 /* ---- 1) Remove dead space ---- */
 #content div.clear {
   height: 0 !important;
@@ -36,14 +105,14 @@
    ============================================================ */
 
 .cc-msg-ev-row {
-  background: #fff;
+  background: var(--cc-surface);
   padding: 60px 10px;
 }
 
 /* Section header — mirrors the platform's .widget_header h5 exactly:
-   36px, 800 weight, #0F6CB8, UPPERCASE, centered, letter-spacing 1px */
+   36px, 800 weight, UPPERCASE, centered, letter-spacing 1px (header role) */
 .cc-msg-ev-row .cc-msg-ev-header {
-  color: #0F6CB8;
+  color: var(--cc-color-header);
   font-family: inherit;
   font-size: 36px;
   font-weight: 800;
@@ -61,7 +130,7 @@
   align-items: stretch;
   max-width: 960px;
   margin: 0 auto;
-  background: #fff;
+  background: var(--cc-surface);
   box-shadow: 0 2px 20px rgba(0,0,0,0.08);
   overflow: hidden;
 }
@@ -98,38 +167,43 @@
   justify-content: center;
 }
 
-/* Title — from old V1: 24px, 700, #0F6CB8 */
+/* Title — 24px, 700 (subheading role — matches platform H2 / message titles) */
 .cc-msg-ev-title {
   font-size: 24px;
   font-weight: 700;
-  color: #0F6CB8;
+  color: var(--cc-color-subheading);
   line-height: 1.3;
   margin-bottom: 8px;
 }
 
-/* Date — from old V1: 13px, 700, #2fd3c2, uppercase, 0.5px letter-spacing */
+/* Date — 13px, 700, uppercase, 0.5px letter-spacing (accent role) */
 .cc-msg-ev-date {
   font-size: 13px;
   font-weight: 700;
-  color: #2fd3c2;
+  color: var(--cc-color-accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 15px;
 }
 
-/* Description */
+/* Description (muted text) */
 .cc-msg-ev-desc {
-  color: #626262;
+  color: var(--cc-text-muted);
   font-size: 15px;
   line-height: 1.6;
   margin-bottom: 25px;
 }
 
-/* CTA button — from old V1: 18px, 700, #0F6CB8 background, 10px 24px padding */
+/* CTA button — OUTLINE style to match the platform's own buttons
+   (e.g. the slider "Learn More"): transparent bg, orange border + text,
+   fills orange with white text on hover. 18px, 700, 10px 24px padding.
+   border-box keeps the size identical between rest/hover despite the border. */
 .cc-msg-ev-link {
   align-self: flex-start;
-  background: #0F6CB8;
-  color: #fff !important;
+  background: transparent;
+  color: var(--cc-btn-text) !important;
+  border: 2px solid var(--cc-btn-border);
+  box-sizing: border-box;
   font-size: 18px;
   font-weight: 700;
   text-transform: uppercase;
@@ -137,10 +211,11 @@
   text-decoration: none;
   padding: 10px 24px;
   border-radius: 3px;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 .cc-msg-ev-link:hover {
-  background: #2fd3c2;
+  background: var(--cc-btn-fill-hover);
+  color: var(--cc-btn-text-hover) !important;
   text-decoration: none;
 }
 
